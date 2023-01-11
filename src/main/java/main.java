@@ -1,9 +1,10 @@
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+
 import java.io.*;
-import java.net.URI;
-import java.net.URL;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
+import java.net.*;
+import java.net.http.*;
 import java.time.*;
 
 import static java.time.temporal.ChronoUnit.SECONDS;
@@ -15,6 +16,7 @@ public class main {
             "https://metaltech4x4.com/ford-bronco/";
     private static final String FILE_NAME_SAVE_FILE_WITH_STREAM = "C:\\Users\\dmitr\\IdeaProjects\\htmlTocsv\\savedFileWstream.html";
     private static final String FILE_NAME_RESPONSE_BODY = "C:\\Users\\dmitr\\IdeaProjects\\htmlTocsv\\savedResponse.html";
+    private static final String FILE_NAME_JSOUP_DOC_HTML = "C:\\Users\\dmitr\\IdeaProjects\\htmlTocsv\\JSOUP_DOC_HTML.html";
 
     public static void main(String[] args) {
 
@@ -58,6 +60,26 @@ public class main {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        // saving file via Jsoup.get
+        String blogUrl =
+                "https://metaltech4x4.com/metal-tech-5th-gen-4runner-trd-pro-2014-2019-fortress-front-bumper/";
+        Document doc = null;
+        try {
+            doc = Jsoup.connect(blogUrl).get();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String docHtml = doc.html();
+        try {
+            writer = new BufferedWriter(new FileWriter(FILE_NAME_JSOUP_DOC_HTML));
+            writer.write(docHtml);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // doc = Jsoup.parse(responseBody);
 
     }
 }
