@@ -1,6 +1,8 @@
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.io.*;
 import java.net.*;
@@ -15,6 +17,7 @@ public class main {
     private static final String FILE_URL_SAVE_WITH_STREAM =
             "https://metaltech4x4.com/ford-bronco/";
     private static final String FILE_NAME_SAVE_FILE_WITH_STREAM = "C:\\Users\\dmitr\\IdeaProjects\\htmlTocsv\\savedFileWstream.html";
+    private static final String JSOUP_GET_URL = "https://metaltech4x4.com/metal-tech-5th-gen-4runner-trd-pro-2014-2019-fortress-front-bumper/";
     private static final String FILE_NAME_RESPONSE_BODY = "C:\\Users\\dmitr\\IdeaProjects\\htmlTocsv\\savedResponse.html";
     private static final String FILE_NAME_JSOUP_DOC_HTML = "C:\\Users\\dmitr\\IdeaProjects\\htmlTocsv\\JSOUP_DOC_HTML.html";
 
@@ -39,7 +42,7 @@ public class main {
 
         // file save via httpclient
         String responseBody = response.body();
-        System.out.println(responseBody);
+       // System.out.println(responseBody);
         BufferedWriter writer = null;
         try {
             writer = new BufferedWriter(new FileWriter(FILE_NAME_RESPONSE_BODY));
@@ -61,23 +64,31 @@ public class main {
             e.printStackTrace();
         }
 
-        // saving file via Jsoup.get
-        String blogUrl =
-                "https://metaltech4x4.com/metal-tech-5th-gen-4runner-trd-pro-2014-2019-fortress-front-bumper/";
+
         Document doc = null;
         try {
-            doc = Jsoup.connect(blogUrl).get();
+            doc = Jsoup.connect(JSOUP_GET_URL).get();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        String docHtml = doc.html();
+        Elements links = doc.select("a");
+        for(Element element:links){
+            //System.out.println(element.html());
+            System.out.println(element.attr("href"));
+            //System.out.println(element.attr("img src"));
+        }
+
+
+
+        // saving file via Jsoup.get
+       /* String docHtml = doc.html();
         try {
             writer = new BufferedWriter(new FileWriter(FILE_NAME_JSOUP_DOC_HTML));
             writer.write(docHtml);
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
 
         // doc = Jsoup.parse(responseBody);
 
