@@ -110,7 +110,7 @@ public class main {
 
         // file save via httpclient
         String responseBody = response.body();
-       // System.out.println(responseBody);
+        // System.out.println(responseBody);
         BufferedWriter writer = null;
         try {
             writer = new BufferedWriter(new FileWriter(FILE_NAME_RESPONSE_BODY));
@@ -132,13 +132,37 @@ public class main {
             e.printStackTrace();
         }
 
-
         /*Document doc = null;
         try {
             doc = Jsoup.connect(JSOUP_GET_URL).get();
         } catch (IOException e) {
             e.printStackTrace();
         }*/
+
+
+        // reading links from file
+        File linksFile = new File("C:\\Users\\dmitr\\IdeaProjects\\htmlTocsv\\links.txt");
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new FileReader("C:\\Users\\dmitr\\IdeaProjects\\htmlTocsv\\links.txt"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        String currentLine = "1";
+        ArrayList<String> linksList = new ArrayList<>();
+        try {
+          //  System.out.println(currentLine);
+            while ((currentLine=reader.readLine())!=null) {
+                linksList.add(currentLine);}
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println(linksList);
 
 
         File input = new File("C:\\Users\\dmitr\\IdeaProjects\\htmlTocsv\\JSOUP_DOC_HTML.html");
@@ -149,9 +173,9 @@ public class main {
             e.printStackTrace();
         }
         Elements links = doc.select("a");
-        for(Element element:links){
-           // System.out.println(element.html());
-            //System.out.println(element.attr("href"));
+        for (Element element : links) {
+            // System.out.println(element.html());
+            // System.out.println(element.attr("href"));
             //System.out.println(element.attr("src"));
         }
 
@@ -159,34 +183,43 @@ public class main {
         // XElements xElements =  Xsoup.compile("//*/h1").evaluate(doc);
 
         ArrayList<Element> jsoupElementsList1 = Xsoup.compile("//*[@id='tab-description']").evaluate(doc).getElements();
-        for (int i = 0; i <jsoupElementsList1.size() ; i++) {
-            System.out.println(jsoupElementsList1.get(i).text()); }
+        for (int i = 0; i < jsoupElementsList1.size(); i++) {
+            //   System.out.println(jsoupElementsList1.get(i).text());
+        }
         ArrayList<Element> jsoupElementsList2 = Xsoup.compile("//*/h1").evaluate(doc).getElements();
-        for (int i = 0; i <jsoupElementsList2.size() ; i++) {
-            System.out.println(jsoupElementsList2.get(i).text()); }
+        for (int i = 0; i < jsoupElementsList2.size(); i++) {
+            //  System.out.println(jsoupElementsList2.get(i).text());
+        }
         ArrayList<Element> jsoupElementsList3 = Xsoup.compile("//*/h2").evaluate(doc).getElements();
-        for (int i = 0; i <jsoupElementsList3.size() ; i++) {
-            System.out.println(jsoupElementsList3.get(i).text()); }
+        for (int i = 0; i < jsoupElementsList3.size(); i++) {
+            //   System.out.println(jsoupElementsList3.get(i).text());
+        }
         ArrayList<Element> jsoupElementsList4 = Xsoup.compile("//*[@class='price price--withoutTax']").evaluate(doc).getElements();
-        for (int i = 0; i <jsoupElementsList4.size() ; i++) {
-            System.out.println(jsoupElementsList4.get(i).text()); }
+        for (int i = 0; i < jsoupElementsList4.size(); i++) {
+            //  System.out.println(jsoupElementsList4.get(i).text());
+        }
         ArrayList<Element> jsoupElementsList5 = Xsoup.compile("//*[@itemprop='sku']").evaluate(doc).getElements();
-        for (int i = 0; i <jsoupElementsList5.size() ; i++) {
-            System.out.println(jsoupElementsList5.get(i).text()); }
+        for (int i = 0; i < jsoupElementsList5.size(); i++) {
+            //   System.out.println(jsoupElementsList5.get(i).text());
+        }
         ArrayList<Element> jsoupElementsList6 = Xsoup.compile("//*/a/img/@src").evaluate(doc).getElements();
-        for (int i = 0; i <jsoupElementsList6.size() ; i++) {
-            System.out.println(jsoupElementsList6.get(i).text()); }
+        for (int i = 0; i < jsoupElementsList6.size(); i++) {
+            //  System.out.println(jsoupElementsList6.get(i).text());
+        }
         ArrayList<Element> jsoupElementsList7 = Xsoup.compile("//*[@id='tab-description']").evaluate(doc).getElements();
-        for (int i = 0; i <jsoupElementsList7.size() ; i++) {
-            System.out.println(jsoupElementsList7.get(i).text()); }
+        for (int i = 0; i < jsoupElementsList7.size(); i++) {
+            //  System.out.println(jsoupElementsList7.get(i).text());
+        }
         ArrayList<Element> jsoupElementsList8 = Xsoup.compile("//*[@id='tab-additional-information']").evaluate(doc).getElements();
-        for (int i = 0; i <jsoupElementsList8.size() ; i++) {
-            System.out.println(jsoupElementsList8.get(i).text()); }
+        for (int i = 0; i < jsoupElementsList8.size(); i++) {
+            // System.out.println(jsoupElementsList8.get(i).text());
+        }
         ArrayList<Element> jsoupElementsList9 = Xsoup.compile("//*[@class='form']").evaluate(doc).getElements();
-        for (int i = 0; i <jsoupElementsList9.size() ; i++) {
-            System.out.println("------------");
+        for (int i = 0; i < jsoupElementsList9.size(); i++) {
+          /*  System.out.println("------------");
             System.out.println(jsoupElementsList9.get(i).text());
-            System.out.println("------------");}
+            System.out.println("------------");*/
+        }
 
 
         /* for (int i = 0; i <jsoupElementsList1.size() ; i++) {
@@ -232,7 +265,7 @@ public class main {
 
         // write one row - string array to csv
         String[] elementsStringArray = new String[jsoupElementsList9.size()];
-        for (int i = 0; i <jsoupElementsList9.size() ; i++) {
+        for (int i = 0; i < jsoupElementsList9.size(); i++) {
             elementsStringArray[i] = jsoupElementsList9.get(i).text();
         }
         try {
