@@ -11,16 +11,28 @@ import java.io.*;
 import java.net.*;
 import java.net.http.*;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static java.time.temporal.ChronoUnit.SECONDS;
 
 public class main {
+
+    // getting list of files from folder
+    public static Set<String> listFilesUsingJavaIO(String dir) {
+        return Stream.of(new File(dir).listFiles())
+                .filter(file -> !file.isDirectory())
+                .map(File::getName)
+                .collect(Collectors.toSet());
+    }
 
     public static void writeAll(String[] args) throws IOException {
 
@@ -34,9 +46,8 @@ public class main {
         entries.add(items2);
         entries.add(items3);*/
 
-        String fileName = "C:\\Users\\dmitr\\IdeaProjects\\htmlTocsv\\writeAll.csv";
 
-        try (var fos = new FileOutputStream(fileName);
+        try (var fos = new FileOutputStream(writeAllCSV_fileName);
              var osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8);
              var writer = new CSVWriter(osw)) {
 
@@ -80,6 +91,7 @@ public class main {
         return clt;
     }
 
+    static String writeAllCSV_fileName = "C:\\Users\\dmitr\\IdeaProjects\\htmlTocsv\\writeAll.csv";
     private static URI uri = URI.create("https://metaltech4x4.com/ford-bronco/");
     private static final String FILE_URL_SAVE_WITH_STREAM =
             "https://metaltech4x4.com/ford-bronco/";
@@ -91,7 +103,7 @@ public class main {
 
     public static void main(String[] args) {
 
-        HttpClient client = HttpClient.newHttpClient();
+       /* HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = null;
         request = HttpRequest.newBuilder()
                 .uri(uri)
@@ -118,10 +130,10 @@ public class main {
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
 
         // file save via stream w/o httpclient
-        try (BufferedInputStream in = new BufferedInputStream(new URL(FILE_URL_SAVE_WITH_STREAM).openStream());
+      /* try (BufferedInputStream in = new BufferedInputStream(new URL(FILE_URL_SAVE_WITH_STREAM).openStream());
              FileOutputStream fileOutputStream = new FileOutputStream(FILE_NAME_SAVE_FILE_WITH_STREAM)) {
             byte dataBuffer[] = new byte[1024];
             int bytesRead;
@@ -131,7 +143,7 @@ public class main {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+*/
         /*Document doc = null;
         try {
             doc = Jsoup.connect(JSOUP_GET_URL).get();
@@ -141,7 +153,7 @@ public class main {
 
 
         // reading links from file
-        File linksFile = new File("C:\\Users\\dmitr\\IdeaProjects\\htmlTocsv\\links.txt");
+     /*   File linksFile = new File("C:\\Users\\dmitr\\IdeaProjects\\htmlTocsv\\links.txt");
         BufferedReader reader = null;
         try {
             reader = new BufferedReader(new FileReader("C:\\Users\\dmitr\\IdeaProjects\\htmlTocsv\\links.txt"));
@@ -164,62 +176,107 @@ public class main {
         }
         System.out.println(linksList);
 
+        for(String linkString:linksList) {
+            // file save via stream w/o httpclient
+            Path newFilePath = Paths.get("C:\\Users\\dmitr\\IdeaProjects\\htmlTocsv\\"+"savedHtml\\"
+                    +linkString.split("/")[linkString.split("/").length-1]+".html");
+            File newFile = new File("C:\\Users\\dmitr\\IdeaProjects\\htmlTocsv\\"+"savedHtml\\"
+                    +linkString.split("/")[linkString.split("/").length-1]+".html");
 
-        File input = new File("C:\\Users\\dmitr\\IdeaProjects\\htmlTocsv\\JSOUP_DOC_HTML.html");
-        Document doc = null;
-        try {
-            doc = Jsoup.parse(input, "UTF-8", "https://metaltech4x4.com/");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Elements links = doc.select("a");
-        for (Element element : links) {
-            // System.out.println(element.html());
-            // System.out.println(element.attr("href"));
-            //System.out.println(element.attr("src"));
-        }
+            try (BufferedInputStream in = new BufferedInputStream(new URL(linkString).openStream());
+                 FileOutputStream fileOutputStream = new FileOutputStream("C:\\Users\\dmitr\\IdeaProjects\\htmlTocsv\\"+"savedHtml\\"
+                         +linkString.split("/")[linkString.split("/").length-1]+".html");
+             )
+            {
+                System.out.println("C:\\Users\\dmitr\\IdeaProjects\\htmlTocsv\\"+"savedHtml\\"
+                        +linkString.split("/")[linkString.split("/").length-1]) ;
+                byte dataBuffer[] = new byte[1024];
+                int bytesRead;
+                while ((bytesRead = in.read(dataBuffer, 0, 1024)) != -1) {
+                    fileOutputStream.write(dataBuffer, 0, bytesRead);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }*/
 
-        // get Jsoup element by xpath = XSoup
-        // XElements xElements =  Xsoup.compile("//*/h1").evaluate(doc);
+        // reading files from folder into Set<String>
+        Set<String> filesStringsListInDir = listFilesUsingJavaIO("C:\\Users\\dmitr\\IdeaProjects\\htmlTocsv\\" + "savedHtml\\");
+        System.out.println(filesStringsListInDir);
+        System.out.println("--------");
 
-        ArrayList<Element> jsoupElementsList1 = Xsoup.compile("//*[@id='tab-description']").evaluate(doc).getElements();
-        for (int i = 0; i < jsoupElementsList1.size(); i++) {
-            //   System.out.println(jsoupElementsList1.get(i).text());
-        }
-        ArrayList<Element> jsoupElementsList2 = Xsoup.compile("//*/h1").evaluate(doc).getElements();
-        for (int i = 0; i < jsoupElementsList2.size(); i++) {
-            //  System.out.println(jsoupElementsList2.get(i).text());
-        }
-        ArrayList<Element> jsoupElementsList3 = Xsoup.compile("//*/h2").evaluate(doc).getElements();
-        for (int i = 0; i < jsoupElementsList3.size(); i++) {
-            //   System.out.println(jsoupElementsList3.get(i).text());
-        }
-        ArrayList<Element> jsoupElementsList4 = Xsoup.compile("//*[@class='price price--withoutTax']").evaluate(doc).getElements();
-        for (int i = 0; i < jsoupElementsList4.size(); i++) {
-            //  System.out.println(jsoupElementsList4.get(i).text());
-        }
-        ArrayList<Element> jsoupElementsList5 = Xsoup.compile("//*[@itemprop='sku']").evaluate(doc).getElements();
-        for (int i = 0; i < jsoupElementsList5.size(); i++) {
-            //   System.out.println(jsoupElementsList5.get(i).text());
-        }
-        ArrayList<Element> jsoupElementsList6 = Xsoup.compile("//*/a/img/@src").evaluate(doc).getElements();
-        for (int i = 0; i < jsoupElementsList6.size(); i++) {
-            //  System.out.println(jsoupElementsList6.get(i).text());
-        }
-        ArrayList<Element> jsoupElementsList7 = Xsoup.compile("//*[@id='tab-description']").evaluate(doc).getElements();
-        for (int i = 0; i < jsoupElementsList7.size(); i++) {
-            //  System.out.println(jsoupElementsList7.get(i).text());
-        }
-        ArrayList<Element> jsoupElementsList8 = Xsoup.compile("//*[@id='tab-additional-information']").evaluate(doc).getElements();
-        for (int i = 0; i < jsoupElementsList8.size(); i++) {
-            // System.out.println(jsoupElementsList8.get(i).text());
-        }
-        ArrayList<Element> jsoupElementsList9 = Xsoup.compile("//*[@class='form']").evaluate(doc).getElements();
-        for (int i = 0; i < jsoupElementsList9.size(); i++) {
+
+        ArrayList<String[]> arrayListOfAllStringsForCSV = new ArrayList<>();
+
+        for (String fileString : filesStringsListInDir) {
+            File input = new File("C:\\Users\\dmitr\\IdeaProjects\\htmlTocsv\\" + "savedHtml\\" + fileString);
+            Document doc = null;
+            try {
+                doc = Jsoup.parse(input, "UTF-8", "https://metaltech4x4.com/");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Elements links = doc.select("a");
+            for (Element element : links) {
+                // System.out.println(element.html());
+                // System.out.println(element.attr("href"));
+                //System.out.println(element.attr("src"));
+            }
+
+
+            // get Jsoup element by xpath = XSoup
+            // XElements xElements =  Xsoup.compile("//*/h1").evaluate(doc);
+
+            ArrayList<ArrayList<Element>> listOfListsOfElements = new ArrayList<>();
+
+            ArrayList<Element> jsoupElementsList1 = Xsoup.compile("//*[@id='tab-description']").evaluate(doc).getElements();
+            for (int i = 0; i < jsoupElementsList1.size(); i++) {
+                //   System.out.println(jsoupElementsList1.get(i).text());
+            }
+            listOfListsOfElements.add(jsoupElementsList1);
+            ArrayList<Element> jsoupElementsList2 = Xsoup.compile("//*/h1").evaluate(doc).getElements();
+            for (int i = 0; i < jsoupElementsList2.size(); i++) {
+                //  System.out.println(jsoupElementsList2.get(i).text());
+            }
+            listOfListsOfElements.add(jsoupElementsList2);
+            ArrayList<Element> jsoupElementsList3 = Xsoup.compile("//*/h2").evaluate(doc).getElements();
+            for (int i = 0; i < jsoupElementsList3.size(); i++) {
+                //   System.out.println(jsoupElementsList3.get(i).text());
+            }
+            listOfListsOfElements.add(jsoupElementsList3);
+            ArrayList<Element> jsoupElementsList4 = Xsoup.compile("//*[@class='price price--withoutTax']").evaluate(doc).getElements();
+            for (int i = 0; i < jsoupElementsList4.size(); i++) {
+                //  System.out.println(jsoupElementsList4.get(i).text());
+            }
+            listOfListsOfElements.add(jsoupElementsList4);
+            ArrayList<Element> jsoupElementsList5 = Xsoup.compile("//*[@itemprop='sku']").evaluate(doc).getElements();
+            for (int i = 0; i < jsoupElementsList5.size(); i++) {
+                //   System.out.println(jsoupElementsList5.get(i).text());
+            }
+            listOfListsOfElements.add(jsoupElementsList5);
+            ArrayList<Element> jsoupElementsList6 = Xsoup.compile("//*/a/img/@src").evaluate(doc).getElements();
+            for (int i = 0; i < jsoupElementsList6.size(); i++) {
+                //  System.out.println(jsoupElementsList6.get(i).text());
+            }
+            listOfListsOfElements.add(jsoupElementsList6);
+            ArrayList<Element> jsoupElementsList7 = Xsoup.compile("//*[@id='tab-description']").evaluate(doc).getElements();
+            for (int i = 0; i < jsoupElementsList7.size(); i++) {
+                //  System.out.println(jsoupElementsList7.get(i).text());
+            }
+            listOfListsOfElements.add(jsoupElementsList7);
+            ArrayList<Element> jsoupElementsList8 = Xsoup.compile("//*[@id='tab-additional-information']").evaluate(doc).getElements();
+            for (int i = 0; i < jsoupElementsList8.size(); i++) {
+                // System.out.println(jsoupElementsList8.get(i).text());
+            }
+            listOfListsOfElements.add(jsoupElementsList8);
+            ArrayList<Element> jsoupElementsList9 = Xsoup.compile("//*[@class='form']").evaluate(doc).getElements();
+            for (int i = 0; i < jsoupElementsList9.size(); i++) {
           /*  System.out.println("------------");
             System.out.println(jsoupElementsList9.get(i).text());
             System.out.println("------------");*/
-        }
+            }
+            listOfListsOfElements.add(jsoupElementsList9);
+
 
 
         /* for (int i = 0; i <jsoupElementsList1.size() ; i++) {
@@ -251,7 +308,7 @@ public class main {
         ArrayList<Element> jsoupElementsList11 = Xsoup.compile("//*[@id=\"tab-instructions-info\"]/h2/following-sibling/a/@href").evaluate(doc).getElements();
         System.out.println(jsoupElementsList11.size()*//*.get(0).text()*//*);*/
 
-        // saving file via Jsoup.get
+            // saving file via Jsoup.get
        /* String docHtml = doc.html();
         try {
             writer = new BufferedWriter(new FileWriter(FILE_NAME_JSOUP_DOC_HTML));
@@ -261,18 +318,60 @@ public class main {
             e.printStackTrace();
         }*/
 
-        // doc = Jsoup.parse(responseBody);
+            // doc = Jsoup.parse(responseBody);
 
-        // write one row - string array to csv
-        String[] elementsStringArray = new String[jsoupElementsList9.size()];
-        for (int i = 0; i < jsoupElementsList9.size(); i++) {
-            elementsStringArray[i] = jsoupElementsList9.get(i).text();
+            // write one row - string array to csv
+            // String[] elementsStringArray = new String[jsoupElementsList9.size()];
+
+
+            String[] elementsStringArrayOneRow = new String[9];
+            for (int i = 0; i < listOfListsOfElements.size(); i++) {
+                elementsStringArrayOneRow[i] = listOfListsOfElements.get(i).toString();
+            }
+            arrayListOfAllStringsForCSV.add(elementsStringArrayOneRow);
         }
+
+
+        CSVWriter csvWriter = null;
         try {
-            writeAll(elementsStringArray);
+            csvWriter = new CSVWriter(new FileWriter(writeAllCSV_fileName));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //Create record
+
+
+       /* for (String[] stringArray : arrayListOfAllStringsForCSV) {
+            //Write the record to file
+            csvWriter.writeNext(stringArray, false);
+        }*/
+        // TODO: вернуть назад запись по одному, сраынить производительность с writeAll
+        csvWriter.writeAll(arrayListOfAllStringsForCSV, false);
+
+
+        //close the writer
+        try {
+            csvWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+       /* try {
+            writeAll(elementsStringArray);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
+        //generate 1row for each item + /n
+
+
+        //write all rows to csv at once
+        /*for(String[] elementsStringArrayOneRow:arrayListOfAllStringsForCSV)
+            try {
+                writeAll(elementsStringArrayOneRow);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }*/
+
     }
 }
+
