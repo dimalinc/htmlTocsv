@@ -245,7 +245,7 @@ public class metaltec {
                 //  System.out.println(jsoupElementsList2.get(i).text());
             }
             listOfListsOfElements.add(jsoupElementsList2);
-            ArrayList<Element> jsoupElementsList3 = Xsoup.compile("//*/h2/@text[1]").evaluate(doc).getElements();
+            ArrayList<Element> jsoupElementsList3 = Xsoup.compile("//*/h2[@class='productView-brand']").evaluate(doc).getElements();
             for (int i = 0; i < jsoupElementsList3.size(); i++) {
                 //   System.out.println(jsoupElementsList3.get(i).text());
             }
@@ -340,13 +340,19 @@ public class metaltec {
                 for (Element element : listOfListsOfElements.get(i)) {
                     // img links
                     if ( (i==6) && (element.attr("src").length()>0) )  {
+                       // System.out.println(element.attr("src"));
                         cellContents.append(element.attr("src")).append(System.getProperty("line.separator"));
                     }
-                    if ( (i!=6) && (element.text().length() > 0) )
+
+                    if ( (i!=6) && (element.text().length() > 0) ) {
+                       // System.out.println(element.text());
                         cellContents.append(element.text()).append(System.getProperty("line.separator"));
-                  //  else if ( (i!=6) && (element.text().length() == 0) ) cellContents.append("_").append(System.getProperty("line.separator"));
+                    }
+                   //   else if ( /*(i!=6) &&*/ (element.text().length() == 0) ) cellContents.append("_").append(System.getProperty("line.separator"));
                 }
                 elementsStringArrayOneRow[i+1] = cellContents.toString();
+                // remove 2 last empty rows
+                elementsStringArrayOneRow[i+1]=elementsStringArrayOneRow[i+1].replace(System.getProperty("line.separator")+System.getProperty("line.separator"),"");
             }
             arrayListOfAllStringsForCSV.add(elementsStringArrayOneRow);
           //  System.out.println("Added line: " + Arrays.toString(elementsStringArrayOneRow));
@@ -364,10 +370,7 @@ public class metaltec {
             //Write the record to file
             csvWriter.writeNext(stringArray, false);
         }*/
-        // TODO: вернуть назад запись по одному, сравнить производительность с writeAll
-
         csvWriter.writeAll(arrayListOfAllStringsForCSV, false);
-
         //close the writer
         try {
             csvWriter.close();
