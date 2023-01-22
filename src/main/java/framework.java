@@ -14,6 +14,22 @@ import java.util.stream.Stream;
 
 public class framework {
 
+    static class MultithreadingDemo extends Thread {
+        public void run()
+        {
+            try {
+                // Displaying the thread that is running
+                System.out.println(
+                        "Thread " + Thread.currentThread().getId()
+                                + " is running");
+            }
+            catch (Exception e) {
+                // Throwing an exception
+                System.out.println("Exception is caught");
+            }
+        }
+    }
+
     static ArrayList<String> xpathStringsList = new ArrayList<>();
     static String[] elementsStringArrayOneRow = new String[11];
     static StringBuilder cellContents = new StringBuilder();
@@ -94,6 +110,13 @@ public class framework {
         ArrayList<String[]> arrayListOfAllStringsForCSV = new ArrayList<>();
         csvWriter=csvWriterInit();
 
+        // TODO: добавить многопоточность
+            /*int n = 3; // Number of threads
+            for (int i = 0; i < n; i++) {
+                MultithreadingDemo object
+                        = new MultithreadingDemo();
+                object.start();
+            }*/
         for (String fileString : filesStringsListInDir) {
 
             n = n + 1;
@@ -103,7 +126,8 @@ public class framework {
             doc=docInit(input);
 
             listOfListsOfElements = new ArrayList<>();
-            // TODO: добавить многопоточность
+
+
             for(String xpathString:xpathStringsList) {
                 ArrayList<Element> jsoupElementsList = Xsoup.compile(xpathString).evaluate(doc).getElements();
                 listOfListsOfElements.add(jsoupElementsList);
@@ -183,7 +207,7 @@ public class framework {
                     // else if ( (i!=4) && (element.text().length() == 0) ) cellContents.append("_").append(System.getProperty("line.separator"));
 
                     if ((i == 8) && (element.attr("href").length() > 0)) {
-                        System.out.println("+++ 8th_element href =" + element.attr("href"));
+                      //  System.out.println("+++ 8th_element href =" + element.attr("href"));
                         cellContents = new StringBuilder();
                         cellContents.append(element.attr("href")).append(System.getProperty("line.separator"));
                     }
