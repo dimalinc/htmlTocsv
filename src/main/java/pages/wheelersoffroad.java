@@ -23,7 +23,7 @@ import java.util.stream.Stream;
 
 public class wheelersoffroad {
 
-    static String filesFolder = "D:\\Wheelersoffroad_BACKUP\\savedHtml_Replaced\\";
+    static String filesFolder = "D:\\Wheelersoffroad_BACKUP\\savedHtml_Replaced"+"\\";
 
     // getting list of files from folder
     public static Set<String> listFilesUsingJavaIO(String dir) {
@@ -91,14 +91,6 @@ public class wheelersoffroad {
     }
 
     static String writeAllCSV_fileName = "C:\\Users\\dmitr\\IdeaProjects\\htmlTocsv\\writeAll_WHEELERSOFFROAD.csv";
-    private static URI uri = URI.create("https://metaltech4x4.com/ford-bronco/");
-    private static final String FILE_URL_SAVE_WITH_STREAM =
-            "https://metaltech4x4.com/ford-bronco/";
-    private static final String FILE_NAME_SAVE_FILE_WITH_STREAM = "C:\\Users\\dmitr\\IdeaProjects\\htmlTocsv\\savedFileWstream.html";
-    private static final String JSOUP_GET_URL =
-            "https://metaltech4x4.com/metal-tech-5th-gen-4runner-trd-pro-2014-2019-fortress-front-bumper/";
-    private static final String FILE_NAME_RESPONSE_BODY = "C:\\Users\\dmitr\\IdeaProjects\\htmlTocsv\\savedResponse.html";
-    private static final String FILE_NAME_JSOUP_DOC_HTML = "C:\\Users\\dmitr\\IdeaProjects\\htmlTocsv\\JSOUP_DOC_HTML.html";
 
     public static void main(String[] args) {
 
@@ -205,16 +197,31 @@ public class wheelersoffroad {
         System.out.println("filesStringsListInDir " + filesStringsListInDir.size());
         System.out.println("--------");
 
+
         ArrayList<String[]> arrayListOfAllStringsForCSV = new ArrayList<>();
 
         int n = 0;
+        CSVWriter csvWriter = null;
+        try {
+            csvWriter = new CSVWriter(new FileWriter(writeAllCSV_fileName/*,true*/));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
         for (String fileString : filesStringsListInDir) {
             n=n+1;
+            long creatingFile = System.currentTimeMillis();
             File input = new File(filesFolder + fileString);
-            System.out.println(n + "___" + fileString);
+        //    System.out.println("creatingFile in " + (System.currentTimeMillis() - creatingFile) + " mili_seconds");
+                    System.out.println(n + "___" + fileString);
             Document doc = null;
             try {
+                long jsoupParseStart = System.currentTimeMillis();
                 doc = Jsoup.parse(input, "UTF-8", "https://wheelersoffroad.com/");
+
+                System.out.println("Jsoup.parsed in " + (System.currentTimeMillis() - jsoupParseStart) + " mili_seconds"
+                       /* + "__ OR __" + ((System.currentTimeMillis() - start) / 1000 / 60) + "minutes"*/);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -228,6 +235,7 @@ public class wheelersoffroad {
             // XElements xElements =  Xsoup.compile("//*/h1").evaluate(doc);
 
             ArrayList<ArrayList<Element>> listOfListsOfElements = new ArrayList<>();
+            long findingXpathElements = System.currentTimeMillis();
 
             ArrayList<Element> jsoupElementsList9 = Xsoup.compile("//h1").evaluate(doc).getElements();
             for (int i = 0; i < jsoupElementsList9.size(); i++) {
@@ -286,9 +294,6 @@ public class wheelersoffroad {
                 // System.out.println(jsoupElementsList8.get(i).text());
             }
             listOfListsOfElements.add(jsoupElementsList8);
-
-
-
 
 
         /* for (int i = 0; i <jsoupElementsList1.size() ; i++) {
@@ -355,7 +360,7 @@ public class wheelersoffroad {
                       // else if ( (i!=4) && (element.text().length() == 0) ) cellContents.append("_").append(System.getProperty("line.separator"));
 
                     if ((i == 8) && (element.attr("href").length() > 0)) {
-                          System.out.println("+++ 8th_element href =" + element.attr("href"));
+                        System.out.println("+++ 8th_element href =" + element.attr("href"));
                         cellContents = new StringBuilder();
                         cellContents.append(element.attr("href")).append(System.getProperty("line.separator"));
                     }
@@ -369,26 +374,36 @@ public class wheelersoffroad {
                 }
                 elementsStringArrayOneRow[i + 1] = cellContents.toString();
             }
+
             arrayListOfAllStringsForCSV.add(elementsStringArrayOneRow);
-           // if (n>100) break;
+            //  writing each row separately
+         //   csvWriter.writeNext(elementsStringArrayOneRow, false);
+          /*  if (n%500==0) {
+                try {
+                    csvWriter.flush();
+                    csvWriter.close();
+                    csvWriter=new CSVWriter(new FileWriter(writeAllCSV_fileName,true));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }*/
+           // if (n>200) break;
         }
 
-        CSVWriter csvWriter = null;
-        try {
-            csvWriter = new CSVWriter(new FileWriter(writeAllCSV_fileName));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         //Create record
-
-       /* for (String[] stringArray : arrayListOfAllStringsForCSV) {
+        /*for (String[] stringArray : arrayListOfAllStringsForCSV) {
             //Write the record to file
             csvWriter.writeNext(stringArray, false);
         }*/
         // TODO: вернуть назад запись по одному, сравнить производительность с writeAll
-        csvWriter.writeAll(arrayListOfAllStringsForCSV, false);
+
+        System.out.println("CSV writing STARTED " + (System.currentTimeMillis() - start) / 1000 + " seconds"
+                + "__ OR __" + ((System.currentTimeMillis() - start) / 1000 / 60) + "minutes");
+
+       csvWriter.writeAll(arrayListOfAllStringsForCSV, false);
         //close the writer
         try {
+           // csvWriter.flush();
             csvWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -411,8 +426,8 @@ public class wheelersoffroad {
                 e.printStackTrace();
             }*/
 
-
-        System.out.println((System.currentTimeMillis() - start) / 1000 + " seconds");
+        System.out.println("CSV writing finished " + (System.currentTimeMillis() - start) / 1000 + " seconds"
+                + "__ OR __" + ((System.currentTimeMillis() - start) / 1000 / 60) + "minutes");
 
     }
 }
