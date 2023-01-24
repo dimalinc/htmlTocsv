@@ -206,12 +206,15 @@ public class metaltec {
 
 
         ArrayList<String[]> arrayListOfAllStringsForCSV = new ArrayList<>();
-
+        int n=0;
         for (String fileString : filesStringsListInDir) {
+            n = n + 1;
             File input = new File(metaltec_html_folder + fileString);
             Document doc = null;
             try {
+                long jsoupParseStart = System.currentTimeMillis();
                 doc = Jsoup.parse(input, "UTF-8", "https://metaltech4x4.com/");
+                System.out.println(n + " " + fileString + " Jsoup.parsed in " + (System.currentTimeMillis() - jsoupParseStart) + " mili_seconds");
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -221,7 +224,6 @@ public class metaltec {
                 // System.out.println(element.attr("href"));
                 //System.out.println(element.attr("src"));
             }
-
 
             // get Jsoup element by xpath = XSoup
             // XElements xElements =  Xsoup.compile("//*/h1").evaluate(doc);
@@ -250,11 +252,16 @@ public class metaltec {
                 //   System.out.println(jsoupElementsList3.get(i).text());
             }
             listOfListsOfElements.add(jsoupElementsList3);
-            ArrayList<Element> jsoupElementsList4 = Xsoup.compile("//*[@class='price price--withoutTax']/@text").evaluate(doc).getElements();
+            //span[class='price-now-label']/span[@class='price price--withoutTax']
+            //*[@class='price price--withoutTax']/@text
+            ArrayList<Element> jsoupElementsList4 = Xsoup.compile("//span[@class='price price--withoutTax']").evaluate(doc).getElements();
             for (int i = 0; i < jsoupElementsList4.size(); i++) {
                 //  System.out.println(jsoupElementsList4.get(i).text());
             }
-            listOfListsOfElements.add(jsoupElementsList4);
+            // TODO: first price element
+            ArrayList<Element> priceArrayListOfFirsTelemt =  new ArrayList<Element>();
+            priceArrayListOfFirsTelemt.add(jsoupElementsList4.get(0));
+            listOfListsOfElements.add(priceArrayListOfFirsTelemt);
             ArrayList<Element> jsoupElementsList5 = Xsoup.compile("//*[@itemprop='sku']/@text").evaluate(doc).getElements();
             for (int i = 0; i < jsoupElementsList5.size(); i++) {
                 //   System.out.println(jsoupElementsList5.get(i).text());
@@ -284,7 +291,6 @@ public class metaltec {
           //  System.out.println("------------");
             }
             listOfListsOfElements.add(jsoupElementsList9);
-
 
 
         /* for (int i = 0; i <jsoupElementsList1.size() ; i++) {
@@ -356,6 +362,7 @@ public class metaltec {
             }
             arrayListOfAllStringsForCSV.add(elementsStringArrayOneRow);
           //  System.out.println("Added line: " + Arrays.toString(elementsStringArrayOneRow));
+            if (n>10) break;
         }
 
         CSVWriter csvWriter = null;

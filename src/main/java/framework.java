@@ -33,12 +33,12 @@ public class framework {
                     System.out.println(n + "___" + fileString);
                     doc = docInit(input);
 
-                    listOfListsOfElements = new ArrayList<>();
+                    jsoup_listOfListsOfElements = new ArrayList<>();
 
 
                     for (String xpathString : xpathStringsList) {
                         ArrayList<Element> jsoupElementsList = Xsoup.compile(xpathString).evaluate(doc).getElements();
-                        listOfListsOfElements.add(jsoupElementsList);
+                        jsoup_listOfListsOfElements.add(jsoupElementsList);
                     }
 
            /* ArrayList<Element> jsoupElementsList9 = Xsoup.compile("//h1").evaluate(doc).getElements();
@@ -101,8 +101,8 @@ public class framework {
 
                     //page link
                     elementsStringArrayOneRow[0] = domain + fileString;
-                    for (int i = 0; i < listOfListsOfElements.size(); i++) {
-                        for (Element element : listOfListsOfElements.get(i)) {
+                    for (int i = 0; i < jsoup_listOfListsOfElements.size(); i++) {
+                        for (Element element : jsoup_listOfListsOfElements.get(i)) {
                             // img links
                             if ((i == 4) && (element.attr("src").length() > 0)) {
                                 cellContents.append(element.attr("src")).append(System.getProperty("line.separator"));
@@ -145,7 +145,7 @@ public class framework {
         }
     }
 
-    static ArrayList<String[]> arrayListOfAllStringsForCSV = new ArrayList<>();
+    static ArrayList<String[]> arrayListOfAllStringsForCSV = new ArrayList<String[]>();
     static ArrayList<String> xpathStringsList = new ArrayList<>();
     static String[] elementsStringArrayOneRow = new String[11];
     static StringBuilder cellContents;
@@ -172,10 +172,10 @@ public class framework {
     static String writeAllCSV_fileName = "C:\\Users\\dmitr\\IdeaProjects\\htmlTocsv\\writeAll_WHEELERSOFFROAD.csv";
     static CSVWriter csvWriter;
     static Document doc = null;
-    static ArrayList<ArrayList<Element>> listOfListsOfElements;
+    static ArrayList<ArrayList<Element>> jsoup_listOfListsOfElements;
 
-    public static List<String> listFilesUsingJavaIO(String dir) {
-        return Stream.of(new File(dir).listFiles())
+    public static ArrayList<String> listFilesUsingJavaIO(String dir) {
+        return (ArrayList<String>) Stream.of(new File(dir).listFiles())
                 .filter(file -> !file.isDirectory())
                 .map(File::getName)
                 .collect(Collectors.toList());
@@ -217,11 +217,9 @@ public class framework {
     public static void main(String[] args) {
 
         xpathStringsList = xpathStringsListInit();
-
         long start = System.currentTimeMillis();
-
-        // reading files from folder into Set<String>
-        List<String> filesStringsListInDir = listFilesUsingJavaIO(filesFolder);
+        // reading files from folder into List<String>
+        ArrayList<String> filesStringsListInDir = listFilesUsingJavaIO(filesFolder);
         /*System.out.println("filesStringsListInDir " + filesStringsListInDir.size());
         System.out.println("--------");*/
 
@@ -239,16 +237,17 @@ public class framework {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }*/
+            System.out.println("fileString = " + fileString);
             n = n + 1;
             input = new File(filesFolder + fileString);
             System.out.println(n + "___" + fileString);
             doc = docInit(input);
 
-            listOfListsOfElements = new ArrayList<>();
-
+            //jsoup elements list init
+            jsoup_listOfListsOfElements = new ArrayList<>();
             for (String xpathString : xpathStringsList) {
                 ArrayList<Element> jsoupElementsList = Xsoup.compile(xpathString).evaluate(doc).getElements();
-                listOfListsOfElements.add(jsoupElementsList);
+                jsoup_listOfListsOfElements.add(jsoupElementsList);
             }
 
            /* ArrayList<Element> jsoupElementsList9 = Xsoup.compile("//h1").evaluate(doc).getElements();
@@ -308,21 +307,23 @@ public class framework {
                 // System.out.println(jsoupElementsList8.get(i).text());
             }
             listOfListsOfElements.add(jsoupElementsList8);*/
+            String[] elementsStringArrayOneRow = new String[jsoup_listOfListsOfElements.size()+1];
             //page link
             elementsStringArrayOneRow[0] = domain + fileString;
-            for (int i = 0; i < listOfListsOfElements.size(); i++) {
-                for (Element element : listOfListsOfElements.get(i)) {
-                    cellContents = new StringBuilder();
+            for (int i = 0; i < jsoup_listOfListsOfElements.size(); i++) {
+                cellContents = new StringBuilder();
+                for (Element element : jsoup_listOfListsOfElements.get(i)) {
                     // img links
                     if ((i == 4) && (element.attr("src").length() > 0)) {
                         cellContents.append(element.attr("src")).append(System.getProperty("line.separator"));
                     }
+                  //  else cellContents.append("_").append(System.getProperty("line.separator"));
 
                     if (((i != 4) || (i != 8)) /*&& (element.text().length() > 0)*/) {
                         //  System.out.println(element.text());
                         cellContents.append(element.text()).append(System.getProperty("line.separator"));
                     }
-                    // else if ( (i!=4) && (element.text().length() == 0) ) cellContents.append("_").append(System.getProperty("line.separator"));
+                   //  if ( (i!=4) && (element.text().length() == 0) ) cellContents.append("_").append(System.getProperty("line.separator"));
 
                     if ((i == 8) && (element.attr("href").length() > 0)) {
                         //  System.out.println("+++ 8th_element href =" + element.attr("href"));
@@ -332,20 +333,26 @@ public class framework {
                 }
                 elementsStringArrayOneRow[i + 1] = cellContents.toString();
             }
-
             arrayListOfAllStringsForCSV.add(elementsStringArrayOneRow);
-
-            if (n > 2) break;
+            //  System.out.println("Added line: " + Arrays.toString(elementsStringArrayOneRow));
+            //if (n > 10) break;
         }
 
-        System.out.println("arrayListOfAllStringsForCSV SIZE= " + arrayListOfAllStringsForCSV.size());
-
+       // System.out.println("arrayListOfAllStringsForCSV SIZE= " + arrayListOfAllStringsForCSV.size());
         System.out.println("CSV writing STARTED " + (System.currentTimeMillis() - start) / 1000 + " seconds"
                 + "__ OR __" + ((System.currentTimeMillis() - start) / 1000 / 60) + "minutes");
 
+/*
+        for (String[] stringArray:arrayListOfAllStringsForCSV ) {
+            for (int i = 0; i <stringArray.length; i++) {
+                System.out.print(stringArray[i] + " /// ");
+            }
+            System.out.println("----------");
+        }
+*/
+
         csvWriter.writeAll(arrayListOfAllStringsForCSV, false);
         try {
-            csvWriter.flush();
             csvWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
