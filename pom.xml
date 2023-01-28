@@ -16,11 +16,13 @@
             <version>4.5.14</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
         <dependency>
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
-            <version>1.10.2</version>
+            <version>1.15.3</version>
         </dependency>
+
 
         <dependency>
             <groupId>us.codecraft</groupId>
@@ -58,6 +60,15 @@
             <artifactId>jericho-html</artifactId>
             <version>3.4</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/us.codecraft/webmagic-saxon -->
+        <dependency>
+            <groupId>us.codecraft</groupId>
+            <artifactId>webmagic-saxon</artifactId>
+            <version>0.8.0</version>
+        </dependency>
+
+
 
     </dependencies>
 

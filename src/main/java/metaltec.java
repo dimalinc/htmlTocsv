@@ -204,7 +204,6 @@ public class metaltec {
         System.out.println(filesStringsListInDir);
         System.out.println("--------");
 
-
         ArrayList<String[]> arrayListOfAllStringsForCSV = new ArrayList<>();
         int n=0;
         for (String fileString : filesStringsListInDir) {
