@@ -245,67 +245,10 @@ public class wheelersoffroad {
             //jsoup elements list init
             jsoup_listOfListsOfElements = new ArrayList<>();
             for (String xpathString : xpathStringsList) {
-                ArrayList<Element> jsoupElementsList = Xsoup.compile(xpathString).evaluate(doc).getElements();
+                ArrayList<Element> jsoupElementsList=doc.selectXpath(xpathString);
                 jsoup_listOfListsOfElements.add(jsoupElementsList);
             }
 
-           /* ArrayList<Element> jsoupElementsList9 = Xsoup.compile("//h1").evaluate(doc).getElements();
-            for (int i = 0; i < jsoupElementsList9.size(); i++) {
-                //  System.out.println("------------");
-                //  System.out.println(jsoupElementsList9.get(i).text());
-                //  System.out.println("------------");
-            }
-            listOfListsOfElements.add(jsoupElementsList9);
-            ArrayList<Element> jsoupElementsList0 = Xsoup.compile("//span[@class='price']").evaluate(doc).getElements();
-            for (int i = 0; i < jsoupElementsList0.size(); i++) {
-                // System.out.println(jsoupElementsList0.get(i).text());
-                // System.out.println("-----");
-            }
-            listOfListsOfElements.add(jsoupElementsList0);
-
-            ArrayList<Element> jsoupElementsList1 = Xsoup.compile("//span[contains(@class, 'amstockstatus')]").evaluate(doc).getElements();
-            for (int i = 0; i < jsoupElementsList1.size(); i++) {
-                //   System.out.println(jsoupElementsList1.get(i).text());
-            }
-            listOfListsOfElements.add(jsoupElementsList1);
-            ArrayList<Element> jsoupElementsList2 = Xsoup.compile("//div[@itemprop='sku']").evaluate(doc).getElements();
-            for (int i = 0; i < jsoupElementsList2.size(); i++) {
-                //  System.out.println(jsoupElementsList2.get(i).text());
-            }
-            listOfListsOfElements.add(jsoupElementsList2);
-            ArrayList<Element> jsoupElementsList3 = Xsoup.compile("//img[starts-with(@src,'https://trail-gear.com/media/catalog/')]").evaluate(doc).getElements();
-            for (int i = 0; i < jsoupElementsList3.size(); i++) {
-                //   System.out.println(jsoupElementsList3.get(i).text());
-            }
-            listOfListsOfElements.add(jsoupElementsList3);
-            ArrayList<Element> jsoupElementsList4 = Xsoup.compile("//div[@class='product attribute description']").evaluate(doc).getElements();
-            for (int i = 0; i < jsoupElementsList4.size(); i++) {
-                //  System.out.println(jsoupElementsList4.get(i).text());
-            }
-            listOfListsOfElements.add(jsoupElementsList4);
-            //
-            ////h2[contains(text(),'Specifications')]
-            ArrayList<Element> jsoupElementsList5 = Xsoup.compile("//div[@id='specstab']/ul/li").evaluate(doc).getElements();
-            for (int i = 0; i < jsoupElementsList5.size(); i++) {
-                //   System.out.println(jsoupElementsList5.get(i).text());
-            }
-            listOfListsOfElements.add(jsoupElementsList5);
-            //[contains(text(),'Application Data')]
-            ArrayList<Element> jsoupElementsList6 = Xsoup.compile("//div[@id='apptab']/ul/li").evaluate(doc).getElements();
-            for (int i = 0; i < jsoupElementsList6.size(); i++) {
-                //   System.out.println(jsoupElementsList6.get(i).text());
-            }
-            listOfListsOfElements.add(jsoupElementsList6);
-            ArrayList<Element> jsoupElementsList7 = Xsoup.compile("//div[@id='instructionstab']/a/@href").evaluate(doc).getElements();
-            for (int i = 0; i < jsoupElementsList7.size(); i++) {
-                //   System.out.println(jsoupElementsList7.get(i).text());
-            }
-            listOfListsOfElements.add(jsoupElementsList7);
-            ArrayList<Element> jsoupElementsList8 = Xsoup.compile("//div[@class='data item content']").evaluate(doc).getElements();
-            for (int i = 0; i < jsoupElementsList8.size(); i++) {
-                // System.out.println(jsoupElementsList8.get(i).text());
-            }
-            listOfListsOfElements.add(jsoupElementsList8);*/
             String[] elementsStringArrayOneRow = new String[jsoup_listOfListsOfElements.size()+1];
             //page link
             elementsStringArrayOneRow[0] = domain + fileString;
