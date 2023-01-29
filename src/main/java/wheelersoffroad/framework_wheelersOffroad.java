@@ -1,3 +1,5 @@
+package wheelersoffroad;
+
 import com.opencsv.CSVWriter;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -9,11 +11,10 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class framework {
+public class framework_wheelersOffroad {
 
    /* static class MultithreadingDemo extends Thread {
         private final String fileString;
@@ -41,7 +42,8 @@ public class framework {
                         jsoup_listOfListsOfElements.add(jsoupElementsList);
                     }
 
-           *//* ArrayList<Element> jsoupElementsList9 = Xsoup.compile("//h1").evaluate(doc).getElements();
+           */
+   /* ArrayList<Element> jsoupElementsList9 = Xsoup.compile("//h1").evaluate(doc).getElements();
             for (int i = 0; i < jsoupElementsList9.size(); i++) {
                 //  System.out.println("------------");
                 //  System.out.println(jsoupElementsList9.get(i).text());
@@ -97,7 +99,8 @@ public class framework {
             for (int i = 0; i < jsoupElementsList8.size(); i++) {
                 // System.out.println(jsoupElementsList8.get(i).text());
             }
-            listOfListsOfElements.add(jsoupElementsList8);*//*
+            listOfListsOfElements.add(jsoupElementsList8);*/
+   /*
 
                     //page link
                     elementsStringArrayOneRow[0] = domain + fileString;
@@ -367,7 +370,6 @@ public class framework {
 
 
         //write all rows to csv at once
-
        /* for(String[] elementsStringArrayOneRow:arrayListOfAllStringsForCSV)
             try {
                 writeAll(elementsStringArrayOneRow);

@@ -4,6 +4,7 @@ import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.ArrayList;
 
@@ -21,7 +22,7 @@ public class downloadHtml {
             e.printStackTrace();
         }*/
 
-    static final int delay = 750;
+    static final int delay = 1750;
     static String linksFilePath = "C:\\Users\\dmitr\\IdeaProjects\\htmlTocsv\\src\\main\\java\\stage3motorsports\\stage3motorsports_links.txt";
     static String htmlDir = "D:\\savedHtml\\savedHtml_stage3motorsports\\";
 
@@ -30,7 +31,7 @@ public class downloadHtml {
         HttpRequest request;
 
         for (String linkString : linksList) {
-            request = HttpRequest.newBuilder().uri(URI.create(linkString)).timeout(Duration.of(10, SECONDS)).GET().build();
+            request = HttpRequest.newBuilder().uri(URI.create(linkString.replace(" ","%20"))).timeout(Duration.of(10, SECONDS)).GET().build();
             long downloadingStart = System.currentTimeMillis();
 
             HttpResponse<String> response = null;
@@ -55,13 +56,13 @@ public class downloadHtml {
                 e.printStackTrace();
             }
 
-            try {
-                Thread.sleep(1500);
+           /* try {
+                Thread.sleep(delay);
             } catch (InterruptedException e) {
                 e.printStackTrace();
-            }
+            }*/
 
-            System.out.println(linksList.indexOf(linkString) + " " + linkString + "downloading finished " + (System.currentTimeMillis() - downloadingStart) + "milllli seconds");
+            System.out.println(linksList.indexOf(linkString) + " __ " + responseBody.getBytes(StandardCharsets.UTF_8).length + " bytes " + " __ " + linkString + " downloading finished " + (System.currentTimeMillis() - downloadingStart) + "milllli seconds");
             System.out.println("----");
             System.out.print("Sleep start _____ ");
             try {
@@ -75,7 +76,7 @@ public class downloadHtml {
 
     public static void fileSaveViaStreamWOhttpclient(ArrayList<String> linksList) {
         for (String linkString : linksList) {
-            try (BufferedInputStream in = new BufferedInputStream(new URL(linkString).openStream());
+            try (BufferedInputStream in = new BufferedInputStream(new URL(linkString.replace(" ","%20")).openStream());
                  FileOutputStream fileOutputStream = new FileOutputStream(htmlDir
                          + linkString.split("/")[linkString.split("/").length - 1]/*+".html"*/);
             ) {
@@ -96,12 +97,9 @@ public class downloadHtml {
                     e.printStackTrace();
                 }
                 System.out.println("Sleep finished");
-
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
         }
     }
 
