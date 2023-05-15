@@ -1,3 +1,6 @@
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+
 import java.io.*;
 import java.net.URI;
 import java.net.URL;
@@ -12,26 +15,38 @@ import static java.time.temporal.ChronoUnit.SECONDS;
 
 public class downloadHtml {
 
-    // saving file via Jsoup.get
-       /* String docHtml = doc.html();
-        try {
-            writer = new BufferedWriter(new FileWriter(FILE_NAME_JSOUP_DOC_HTML));
-            writer.write(docHtml);
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
+    public static void savingFileViaJsoup(ArrayList<String> linksList) {
+        // saving file via Jsoup.get
+        for (String linkString : linksList) {
+            Document doc = null;
+            try {
+                doc = Jsoup.connect(linkString).get();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            String docHtml = doc.html();
+            try {
+                BufferedWriter writer = writer = new BufferedWriter(new FileWriter(htmlDir
+                        + linkString.split("/")[linkString.split("/").length - 1]/*+".html"*/));
+                writer.write(docHtml);
+                writer.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
-    static final int delay = 1750;
-    static String linksFilePath = "C:\\Users\\dmitr\\IdeaProjects\\htmlTocsv\\src\\main\\java\\stage3motorsports\\stage3motorsports_links.txt";
-    static String htmlDir = "D:\\savedHtml\\savedHtml_stage3motorsports\\";
+
+    static final int delay = 3750;
+    static String linksFilePath = "C:\\Users\\dmitr\\IdeaProjects\\htmlTocsv\\src\\main\\java\\maxtrac\\maxtracstore_links_2145.txt";
+    static String htmlDir = "D:\\savedHtml\\savedHtml_maxtracstore\\";
 
     public static void downloadViaHttpClient(ArrayList<String> linksList) {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request;
 
         for (String linkString : linksList) {
-            request = HttpRequest.newBuilder().uri(URI.create(linkString.replace(" ","%20"))).timeout(Duration.of(10, SECONDS)).GET().build();
+            request = HttpRequest.newBuilder().uri(URI.create(linkString.replace(" ","%20").replace("|","_").replace("\"","_"))).timeout(Duration.of(30, SECONDS)).GET().build();
             long downloadingStart = System.currentTimeMillis();
 
             HttpResponse<String> response = null;
@@ -62,7 +77,8 @@ public class downloadHtml {
                 e.printStackTrace();
             }*/
 
-            System.out.println(linksList.indexOf(linkString) + " __ " + responseBody.getBytes(StandardCharsets.UTF_8).length + " bytes " + " __ " + linkString + " downloading finished " + (System.currentTimeMillis() - downloadingStart) + "milllli seconds");
+            System.out.println(linksList.indexOf(linkString) + " __ " + responseBody.getBytes(StandardCharsets.UTF_8).length + " bytes " + " __ " + linkString );
+            System.out.println(" downloading finished " + (System.currentTimeMillis() - downloadingStart) + "milllli seconds");
             System.out.println("----");
             System.out.print("Sleep start _____ ");
             try {
@@ -132,9 +148,11 @@ public class downloadHtml {
 
         System.out.println(linksList);
 
-       // fileSaveViaStreamWOhttpclient(linksList);
+        fileSaveViaStreamWOhttpclient(linksList);
 
-        downloadViaHttpClient(linksList);
+       // downloadViaHttpClient(linksList);
+
+        // savingFileViaJsoup(linksList);
 
         System.out.println("downloading finished " + (System.currentTimeMillis() - start) / 1000 + " seconds"
                 + "__ OR __" + ((System.currentTimeMillis() - start) / 1000 / 60) + "minutes");

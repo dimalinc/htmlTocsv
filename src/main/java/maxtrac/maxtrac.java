@@ -1,6 +1,8 @@
 package maxtrac;
 
+import com.beust.ah.A;
 import com.opencsv.CSVWriter;
+import org.apache.commons.lang3.ArrayUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -8,10 +10,7 @@ import us.codecraft.xsoup.Xsoup;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.Callable;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -19,6 +18,9 @@ import java.util.stream.Stream;
 public class maxtrac {
 
 
+    static ArrayList<String> breadcrumdsList;
+    static String make;
+    static List<String> modelsList;
     static ArrayList<String[]> arrayListOfAllStringsForCSV = new ArrayList<String[]>();
     static ArrayList<String[]> xpathStringsList = new ArrayList<>();
     static String[] elementsStringArrayOneRow = new String[11];
@@ -28,60 +30,72 @@ public class maxtrac {
 
     private static ArrayList<String[]> xpathStringsListInit() {
         String[] stringXpathArray2 = new String[2];
-        stringXpathArray2[0] = "//h1[@class='product_title entry-title']";
+        stringXpathArray2[0] = "//h1";
         stringXpathArray2[1] = "0";
         xpathStringsList.add(stringXpathArray2);
 
         //div[@class='item-cont']/img/@src
         stringXpathArray2 = new String[2];
-        stringXpathArray2[0] = "//div[@class='item-cont']/img";
+        stringXpathArray2[0] = "//div[@id=\"ProductBreadcrumb\"]//li";
         stringXpathArray2[1] = "0";
         xpathStringsList.add(stringXpathArray2);
 
         stringXpathArray2 = new String[2];
-        stringXpathArray2[0] = "//h2/following-sibling::*";
+        stringXpathArray2[0] = "//em[@itemprop=\"price\"]";
         stringXpathArray2[1] = "0";
         xpathStringsList.add(stringXpathArray2);
 
         stringXpathArray2 = new String[2];
-        stringXpathArray2[0] = "(//div[@id=\"tab-description\"]/p)[1]";
-        stringXpathArray2[1] = "1";
-        xpathStringsList.add(stringXpathArray2);
-
-        stringXpathArray2 = new String[2];
-        stringXpathArray2[0] = "(//div[@class=\"product-detail-container\"]/span)[1]";
+        stringXpathArray2[0] = "//div[@class=\"DetailRow RetailPrice\"]";
         stringXpathArray2[1] = "0";
         xpathStringsList.add(stringXpathArray2);
 
         stringXpathArray2 = new String[2];
-        stringXpathArray2[0] = "(//div[@class=\"product-detail-container\"]/span)[2]";
-        stringXpathArray2[1] = "1";
+        stringXpathArray2[0] = "//span[@class=\"VariationProductSKU\"]";
+        stringXpathArray2[1] = "0";
         xpathStringsList.add(stringXpathArray2);
 
         stringXpathArray2 = new String[2];
-        stringXpathArray2[0] = "(//ul[@class=\"product-detail-list\"])[1]";
-        stringXpathArray2[1] = "1";
+        stringXpathArray2[0] = "//span[@class=\"VariationProductWeight\"]";
+        stringXpathArray2[1] = "0";
         xpathStringsList.add(stringXpathArray2);
 
         stringXpathArray2 = new String[2];
-        stringXpathArray2[0] = "(//table[@class=\"woocommerce-product-attributes shop_attributes\"])[1]";
-        stringXpathArray2[1] = "1";
+        stringXpathArray2[0] = "//div[@class=\"DetailRow\"]/div[@class=\"Value\"]";
+        stringXpathArray2[1] = "0";
         xpathStringsList.add(stringXpathArray2);
 
         stringXpathArray2 = new String[2];
-        stringXpathArray2[0] = "(//ul[@class='tabs wc-tabs']/following-sibling::div[@id='tab-description' and @class='panel entry-content wc-tab']/p)[1]";
-        stringXpathArray2[1] = "1";
+        stringXpathArray2[0] = "//span[@itemprop=\"description\"]";
+        stringXpathArray2[1] = "0";
+        xpathStringsList.add(stringXpathArray2);
+
+        stringXpathArray2 = new String[2];
+        stringXpathArray2[0] = "//div[@class=\"ProductWarrantyContainer prodAccordionContent\"]";
+        stringXpathArray2[1] = "0";
+        xpathStringsList.add(stringXpathArray2);
+
+        stringXpathArray2 = new String[2];
+        stringXpathArray2[0] = "//img[@id='TinyImage_0']";
+        stringXpathArray2[1] = "0";
+        xpathStringsList.add(stringXpathArray2);
+
+        stringXpathArray2 = new String[2];
+        stringXpathArray2[0] = "//div[@class='TinyOuterDiv']/div/a/img";
+        stringXpathArray2[1] = "0";
         xpathStringsList.add(stringXpathArray2);
         // xpathStringsList.add("//div[@id='apptab']/ul/li");
         // xpathStringsList.add("//div[@id='instructionstab']/a/@href");
         // xpathStringsList.add("//div[@class='data item content']");
         //xpathStringsList.add("");
+
+        System.out.println("xpathStringsList.size()" + xpathStringsList.size());
         return xpathStringsList;
     }
 
-    static String filesFolder = "D:\\savedHtml\\savedHtml_Maxtrac" + "\\";
-    static String domain = "https://maxtracsuspension.com/";
-    static String writeAllCSV_fileName = "C:\\Users\\dmitr\\IdeaProjects\\htmlTocsv\\writeAll_Maxtrac.csv";
+    static String filesFolder = "D:\\savedHtml\\savedHtml_maxtracstore" + "\\";
+    static String domain = "https://maxtracstore.com/";
+    static String writeAllCSV_fileName = "C:\\Users\\dmitr\\IdeaProjects\\htmlTocsv\\writeAll_MaxtracStore.csv";
     static CSVWriter csvWriter;
     static Document doc = null;
     static ArrayList<ArrayList<Element>> jsoup_listOfListsOfElements;
@@ -107,7 +121,7 @@ public class maxtrac {
         try {
             long jsoupParseStart = System.currentTimeMillis();
             doc = Jsoup.parse(input, "UTF-8", domain);
-            System.out.println((System.currentTimeMillis() - jsoupParseStart) + " mili_seconds" + " Jsoup.parsed in " );
+            System.out.println((System.currentTimeMillis() - jsoupParseStart) + " mili_seconds" + " Jsoup.parsed in ");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -150,9 +164,11 @@ public class maxtrac {
                     e.printStackTrace();
                 }*/
 
+          //  if (filesCount > 10) break;
             System.out.println("fileString = " + fileString);
             filesCount = filesCount + 1;
             input = new File(filesFolder + fileString);
+            System.out.println();
             System.out.println(filesCount + "___" + fileString);
             doc = docInit(input);
 
@@ -164,12 +180,12 @@ public class maxtrac {
                 System.out.println("jsoupElementsList parsed size" + jsoupElementsList.size());*/
                 /*if ((Integer.parseInt(xpathString[1]) == 0))
                     jsoupElementsList = Xsoup.compile(xpathString[0]).evaluate(doc).getElements();*/
-                jsoupElementsList=doc.selectXpath(xpathString[0]);
+                jsoupElementsList = doc.selectXpath(xpathString[0]);
                /* else
                     jsoupElementsList.add(Xsoup.compile(xpathString[0]).evaluate(doc).getElements().get(Integer.parseInt(xpathString[1])));
-               */ jsoup_listOfListsOfElements.add(jsoupElementsList);
+               */
+                jsoup_listOfListsOfElements.add(jsoupElementsList);
             }
-
            /* ArrayList<Element> jsoupElementsList9 = Xsoup.compile("//h1").evaluate(doc).getElements();
             for (int i = 0; i < jsoupElementsList9.size(); i++) {
                 //  System.out.println("------------");
@@ -227,19 +243,40 @@ public class maxtrac {
                 // System.out.println(jsoupElementsList8.get(i).text());
             }
             listOfListsOfElements.add(jsoupElementsList8);*/
-            String[] elementsStringArrayOneRow = new String[jsoup_listOfListsOfElements.size() + 1];
+            String[] elementsStringArrayOneRow = new String[jsoup_listOfListsOfElements.size() + 3];
             //page link
             elementsStringArrayOneRow[0] = domain + fileString;
             for (int i = 0; i < jsoup_listOfListsOfElements.size(); i++) {
                 cellContents = new StringBuilder();
                 for (Element element : jsoup_listOfListsOfElements.get(i)) {
                     // img links
-
-                    if (element.attr("src").length()>0)
-                    cellContents.append(element.attr("src")).append(System.getProperty("line.separator"));
+                    if (element.attr("src").length() > 0)
+                        cellContents.append(element.attr("src")).append(System.getProperty("line.separator"));
                     //if (cellContents.length()==0)
                     cellContents.append(element.text()).append(System.getProperty("line.separator"));
 
+
+                    }
+
+                //TODO
+                // 1= second coloumn
+                if (i == 1) {
+                    breadcrumdsList = new ArrayList<>();
+                    String[] cellContentsStringArray = cellContents.toString().split(System.getProperty("line.separator"));
+                    System.out.println("cellContentsStringArray.length " + cellContentsStringArray.length);
+                    breadcrumdsList.addAll(Arrays.asList(cellContentsStringArray));
+                    System.out.println("breadcrumdsList "+breadcrumdsList);
+                    System.out.println(breadcrumdsList.size());
+                    for (String s : breadcrumdsList) {
+                        if ((!s.contains("Home")) && (!s.contains(" ")) ) make = s;
+                    }
+                    int indexOfMake = breadcrumdsList.indexOf(make);
+                    if (indexOfMake>0) {
+                        System.out.println("indexOfMake = " + indexOfMake);
+                        System.out.println("breadcrumdsList.size() = " + breadcrumdsList.size());
+                        modelsList = breadcrumdsList.subList(indexOfMake+1, breadcrumdsList.size() - 1);
+                        System.out.println("modelsList  = " + modelsList);
+                    }
                     /*if ((i == 1) && (element.attr("src").length() > 0)) {
                         cellContents.append(element.attr("src")).append(System.getProperty("line.separator"));
                     }*/
@@ -257,12 +294,21 @@ public class maxtrac {
                         cellContents.append(element.attr("href")).append(System.getProperty("line.separator"));
                     }*/
                 }
-
-            elementsStringArrayOneRow[i + 1] = cellContents.toString();
+                //TODO: img links size and qty replacement
+                elementsStringArrayOneRow[i + 1] = cellContents.toString().replace(".100.100.jpg?c=2", ".500.500.jpg")
+                        .replace(".100.100.png?c=2", ".500.500.png");
             }
+            elementsStringArrayOneRow[12] = make;
+            StringBuilder modelStringBuilder = null;
+            for (String model:modelsList) {
+                 modelStringBuilder = new StringBuilder();
+                modelStringBuilder.append(model).append(System.getProperty("line.separator"));
+            }
+            if (!(modelStringBuilder ==null))
+            elementsStringArrayOneRow[13] = modelStringBuilder.toString();
             arrayListOfAllStringsForCSV.add(elementsStringArrayOneRow);
             //  System.out.println("Added line: " + Arrays.toString(elementsStringArrayOneRow));
-          //  if (filesCount > 10) break;
+            //  if (filesCount > 10) break;
         }
 
         // System.out.println("arrayListOfAllStringsForCSV SIZE= " + arrayListOfAllStringsForCSV.size());
@@ -305,4 +351,6 @@ public class maxtrac {
         System.out.println("CSV writing finished " + (System.currentTimeMillis() - start) / 1000 + " seconds"
                 + "__ OR __" + ((System.currentTimeMillis() - start) / 1000 / 60) + "minutes");
     }
+
+
 }

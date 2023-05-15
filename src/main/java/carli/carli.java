@@ -1,23 +1,19 @@
-package wheelersoffroad;
+package carli;
 
 import com.opencsv.CSVWriter;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import us.codecraft.xsoup.Xsoup;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class wheelersoffroad {
-
-
+public class carli {
 
     static ArrayList<String[]> arrayListOfAllStringsForCSV = new ArrayList<String[]>();
     static ArrayList<String> xpathStringsList = new ArrayList<>();
@@ -28,22 +24,28 @@ public class wheelersoffroad {
 
     private static ArrayList<String> xpathStringsListInit() {
         xpathStringsList.add("//h1");
-        xpathStringsList.add("//span[@class='price']");
-        xpathStringsList.add("//span[contains(@class, 'amstockstatus')]");
-        xpathStringsList.add("//div[@itemprop='sku']");
-        xpathStringsList.add("/img[starts-with(@src,'https://trail-gear.com/media/catalog/')]");
-        xpathStringsList.add("//div[@class='product attribute description']");
-        xpathStringsList.add("//div[@id='specstab']/ul/li");
-        xpathStringsList.add("//div[@id='apptab']/ul/li");
-        xpathStringsList.add("//div[@id='instructionstab']/a/@href");
-        xpathStringsList.add("//div[@class='data item content']");
+        xpathStringsList.add("(//span[@class='woocommerce-Price-amount amount'])[1]");
+        xpathStringsList.add("//div[@class='short-description']");
+        xpathStringsList.add("//div[@class='summary-container']");
+        xpathStringsList.add("//div[@class='woocommerce-product-details__short-description']");
+        // check table import col4
+        xpathStringsList.add("//div[@class='table-1']");
+        xpathStringsList.add("//div[@class='details component_data']");
+        xpathStringsList.add("//div[@id='tab-description']");
+        xpathStringsList.add("//div[@class='woocommerce-Tabs-panel woocommerce-Tabs-panel--inst_tab panel entry-content wc-tab']");
+        xpathStringsList.add("//div[@class='woocommerce-Tabs-panel woocommerce-Tabs-panel--inst_tab panel entry-content wc-tab']//@href");
+
+        xpathStringsList.add("//div[@id='tab-additional_information']//descendant::table");
+        xpathStringsList.add("//div[@id='tab-media_tab']");
+        // /@src
+        xpathStringsList.add("//img[starts-with(@src,'https://carlisuspension.com/wp-content/uploads/')]");
         //xpathStringsList.add("");
         return xpathStringsList;
     }
 
-    static String filesFolder = "D:\\Wheelersoffroad_BACKUP\\savedHtml_Replaced" + "\\";
-    static String domain = "https://wheelersoffroad.com/";
-    static String writeAllCSV_fileName = "C:\\Users\\dmitr\\IdeaProjects\\htmlTocsv\\writeAll_WHEELERSOFFROAD.csv";
+    static String filesFolder = "D:\\savedHtml\\savedHtml_carli" + "\\";
+    static String domain = "https://carlisuspension.com/";
+    static String writeAllCSV_fileName = "C:\\Users\\dmitr\\IdeaProjects\\htmlTocsv\\writeAll_CARLI.csv";
     static CSVWriter csvWriter;
     static Document doc = null;
     static ArrayList<ArrayList<Element>> jsoup_listOfListsOfElements;
@@ -97,8 +99,6 @@ public class wheelersoffroad {
         /*System.out.println("filesStringsListInDir " + filesStringsListInDir.size());
         System.out.println("--------");*/
 
-        csvWriter = csvWriterInit();
-
         for (String fileString : filesStringsListInDir) {
           /*  for (int ti = 0; ti < 1; ti++) {
 
@@ -130,23 +130,36 @@ public class wheelersoffroad {
             for (int i = 0; i < jsoup_listOfListsOfElements.size(); i++) {
                 cellContents = new StringBuilder();
                 for (Element element : jsoup_listOfListsOfElements.get(i)) {
-                    // img links
-                    if ((i == 4) && (element.attr("src").length() > 0)) {
-                        cellContents.append(element.attr("src")).append(System.getProperty("line.separator"));
-                    }
-                  //  else cellContents.append("_").append(System.getProperty("line.separator"));
+                    cellContents.append(element.text());
 
-                    if (((i != 4) || (i != 8)) /*&& (element.text().length() > 0)*/) {
+
+
+                    if (element.text().length()==0)
+                        cellContents.append(element.attr("href"));
+
+                    if ((element.text().length()==0) && (element.attr("href").length()==0 ) ) {
+                        cellContents.append(element.attr("data-src")).append(System.getProperty("line.separator"));
+                    }
+
+                    // img links
+                   /* if ((i == 11) && (element.attr("src").length() > 0)) {
+                        cellContents.append(element.attr("src")).append(System.getProperty("line.separator"));
+                        System.out.println("+++ 11th_element src =" + element.attr("src"));
+                    }
+                    else cellContents.append("_").append(System.getProperty("line.separator"));*/
+
+                    /*if (((i != 11) || (i != 8)) && (element.text().length() > 0)) {
                         //  System.out.println(element.text());
                         cellContents.append(element.text()).append(System.getProperty("line.separator"));
-                    }
-                   //  if ( (i!=4) && (element.text().length() == 0) ) cellContents.append("_").append(System.getProperty("line.separator"));
+                    }*/
 
-                    if ((i == 8) && (element.attr("href").length() > 0)) {
-                        //  System.out.println("+++ 8th_element href =" + element.attr("href"));
+                    // if ( (i!=11) && (element.text().length() == 0) ) cellContents.append("_").append(System.getProperty("line.separator"));
+
+                   /* if ((i == 11) && (element.attr("href").length() > 0)) {
+                          System.out.println("+++ 11th_element href =" + element.attr("href"));
                         cellContents = new StringBuilder();
                         cellContents.append(element.attr("href")).append(System.getProperty("line.separator"));
-                    }
+                    }*/
                 }
                 elementsStringArrayOneRow[i + 1] = cellContents.toString();
             }
@@ -167,7 +180,7 @@ public class wheelersoffroad {
             System.out.println("----------");
         }
 */
-
+        csvWriter = csvWriterInit();
         csvWriter.writeAll(arrayListOfAllStringsForCSV, false);
         try {
             csvWriter.close();

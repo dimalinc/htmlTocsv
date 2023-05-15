@@ -1,23 +1,21 @@
-package wheelersoffroad;
+package trailgear;
 
 import com.opencsv.CSVWriter;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import us.codecraft.xsoup.Xsoup;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class wheelersoffroad {
+public class trailgear {
 
-
+    
 
     static ArrayList<String[]> arrayListOfAllStringsForCSV = new ArrayList<String[]>();
     static ArrayList<String> xpathStringsList = new ArrayList<>();
@@ -41,9 +39,9 @@ public class wheelersoffroad {
         return xpathStringsList;
     }
 
-    static String filesFolder = "D:\\Wheelersoffroad_BACKUP\\savedHtml_Replaced" + "\\";
-    static String domain = "https://wheelersoffroad.com/";
-    static String writeAllCSV_fileName = "C:\\Users\\dmitr\\IdeaProjects\\htmlTocsv\\writeAll_WHEELERSOFFROAD.csv";
+    static String filesFolder = "D:\\Trail-gear_BACKUP\\savedHtml" + "\\";
+    static String domain = "https://trail-gear.com/";
+    static String writeAllCSV_fileName = "C:\\Users\\dmitr\\IdeaProjects\\htmlTocsv\\writeAll_TRAIL-GEAR.csv";
     static CSVWriter csvWriter;
     static Document doc = null;
     static ArrayList<ArrayList<Element>> jsoup_listOfListsOfElements;

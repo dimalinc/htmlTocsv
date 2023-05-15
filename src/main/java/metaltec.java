@@ -43,7 +43,6 @@ public class metaltec {
         entries.add(items2);
         entries.add(items3);*/
 
-
         try (var fos = new FileOutputStream(writeAllCSV_fileName);
              var osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8);
              var writer = new CSVWriter(osw)) {
