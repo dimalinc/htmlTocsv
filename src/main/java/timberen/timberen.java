@@ -1,6 +1,7 @@
 package timberen;
 
 import com.opencsv.CSVWriter;
+import elements.XpathElementContainer;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -15,8 +16,6 @@ import java.util.stream.Stream;
 
 public class timberen {
 
-    
-
     static ArrayList<String[]> arrayListOfAllStringsForCSV = new ArrayList<String[]>();
     static ArrayList<String> xpathStringsList = new ArrayList<>();
     static String[] elementsStringArrayOneRow = new String[11];
@@ -30,9 +29,9 @@ public class timberen {
         xpathStringsList.add("//span[@class='wsm-cat-ship-remarks-value']");
         xpathStringsList.add("//div[@itemprop='description']");
         xpathStringsList.add("//div[@id='wsm-prod-tab-details']/*");
-        xpathStringsList.add("//li[@class='wsm-file-pdf-small']/a");
-        xpathStringsList.add("//img[@itemprop='image']");
-        xpathStringsList.add("//img[@class='wsm_product_thumb_zoom']");
+        xpathStringsList.add("//li[@class='wsm-file-pdf-small']/a/@href");
+        xpathStringsList.add("//img[@itemprop='image']/@src");
+        xpathStringsList.add("//img[@class='wsm_product_thumb_zoom']/@src");
         //xpathStringsList.add("");
         return xpathStringsList;
     }
@@ -116,26 +115,26 @@ public class timberen {
 
             //jsoup elements list init
             jsoup_listOfListsOfElements = new ArrayList<>();
-            for (String xpathString : xpathStringsList) {
+            /*for (String xpathString : xpathStringsList) {
                 ArrayList<Element> jsoupElementsList=doc.selectXpath(xpathString);
                 jsoup_listOfListsOfElements.add(jsoupElementsList);
-            }
+            }*/
 
-            String[] elementsStringArrayOneRow = new String[jsoup_listOfListsOfElements.size()+1];
+            /*String[] elementsStringArrayOneRow = new String[jsoup_listOfListsOfElements.size()+1];
             //page link
-            elementsStringArrayOneRow[0] = (domain +"/" +fileString).replace(".html","");
-            for (int i = 0; i < jsoup_listOfListsOfElements.size(); i++) {
+            elementsStringArrayOneRow[0] = (domain +"/" +fileString).replace(".html","");*/
+            /*for (int i = 0; i < jsoup_listOfListsOfElements.size(); i++) {
                 cellContents = new StringBuilder();
                 for (Element element : jsoup_listOfListsOfElements.get(i)) {
                     cellContents.append(element.text()).append(System.getProperty("line.separator"));
 
-                   /* if ((i == 4) && (element.attr("src").length() > 0)) {
+                   *//* if ((i == 4) && (element.attr("src").length() > 0)) {
                         cellContents.append(element.attr("src")).append(System.getProperty("line.separator"));
                     }
 
-                    if (((i != 4) || (i != 8)) *//*&& (element.text().length() > 0)*//*) {
+                    if (((i != 4) || (i != 8)) *//**//*&& (element.text().length() > 0)*//**//*) {
                         cellContents.append(element.text()).append(System.getProperty("line.separator"));
-                    }*/
+                    }*//*
 
                     if ((i == 5) && (element.attr("href").length() > 0)) {
                         //      System.out.println("+++ 5th_element href =" + element.attr("href"));
@@ -144,16 +143,26 @@ public class timberen {
                     }
                     if ((i == 6) && (element.attr("src").length() > 0)) {
                         //      System.out.println("+++ 6th_element src =" + element.attr("src"));
-                        cellContents = new StringBuilder();
+                        //   cellContents = new StringBuilder();
                         cellContents.append(element.attr("src")).append(System.getProperty("line.separator"));
                     }
                     if ((i == 7) && (element.attr("src").length() > 0)) {
                         //    System.out.println("+++ 7th_element src =" + element.attr("src"));
-                        cellContents = new StringBuilder();
+                        //  cellContents = new StringBuilder();
                         cellContents.append(element.attr("src")).append(System.getProperty("line.separator"));
                     }
                 }
                 elementsStringArrayOneRow[i + 1] = cellContents.toString();
+            }*/
+
+            String[] elementsStringArrayOneRow = new String[xpathStringsList.size()+1];
+            //page link
+            elementsStringArrayOneRow[0] = (domain +"/" +fileString).replace(".html","");
+            int i=1;
+            for (String xpath:xpathStringsList) {
+                XpathElementContainer xpathElementContainer = new XpathElementContainer(xpath,doc);
+                elementsStringArrayOneRow[i] = xpathElementContainer.getCsvCellValue();
+                i++;
             }
             arrayListOfAllStringsForCSV.add(elementsStringArrayOneRow);
             //  System.out.println("Added line: " + Arrays.toString(elementsStringArrayOneRow));

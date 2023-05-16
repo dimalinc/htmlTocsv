@@ -144,12 +144,12 @@ public class steelcraft {
                     }
                     if ((i == 6) && (element.attr("src").length() > 0)) {
                     //      System.out.println("+++ 6th_element src =" + element.attr("src"));
-                        cellContents = new StringBuilder();
+                        //    cellContents = new StringBuilder();
                         cellContents.append(element.attr("src")).append(System.getProperty("line.separator"));
                     }
                     if ((i == 7) && (element.attr("src").length() > 0)) {
                       //    System.out.println("+++ 7th_element src =" + element.attr("src"));
-                        cellContents = new StringBuilder();
+                        //   cellContents = new StringBuilder();
                         cellContents.append(element.attr("src")).append(System.getProperty("line.separator"));
                     }
                 }
