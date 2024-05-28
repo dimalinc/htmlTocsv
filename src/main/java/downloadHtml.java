@@ -26,20 +26,23 @@ public class downloadHtml {
             }
             String docHtml = doc.html();
             try {
-                BufferedWriter writer = writer = new BufferedWriter(new FileWriter(htmlDir
-                        + linkString.split("/")[linkString.split("/").length - 1]/*+".html"*/));
+                BufferedWriter writer = new BufferedWriter(new FileWriter(htmlDir
+                        + linkString.split("=")[linkString.split("=").length - 1]/*+".html"*/));
                 writer.write(docHtml);
                 writer.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            System.out.print("Sleep start _____ ");
+            try { Thread.sleep(delay); } catch (InterruptedException e) { e.printStackTrace(); }
+            System.out.println("Sleep finished");
         }
     }
 
 
-    static final int delay = 3750;
-    static String linksFilePath = "C:\\Users\\dmitr\\IdeaProjects\\htmlTocsv\\src\\main\\java\\maxtrac\\maxtracstore_links_2145.txt";
-    static String htmlDir = "D:\\savedHtml\\savedHtml_maxtracstore\\";
+    static final int delay = 4750;
+    static String linksFilePath = "C:\\Users\\dmitr\\IdeaProjects\\htmlTocsv\\src\\main\\java\\kyb\\kyb_com_links.txt";
+    static String htmlDir = "D:\\savedHtml\\kyb_com"+"\\";
 
     public static void downloadViaHttpClient(ArrayList<String> linksList) {
         HttpClient client = HttpClient.newHttpClient();
@@ -57,7 +60,6 @@ public class downloadHtml {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
             // file save via httpclient
             String responseBody = response.body();
             // System.out.println(responseBody);
@@ -81,30 +83,28 @@ public class downloadHtml {
             System.out.println(" downloading finished " + (System.currentTimeMillis() - downloadingStart) + "milllli seconds");
             System.out.println("----");
             System.out.print("Sleep start _____ ");
-            try {
-                Thread.sleep(delay);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            try { Thread.sleep(delay); } catch (InterruptedException e) { e.printStackTrace(); }
             System.out.println("Sleep finished");
         }
     }
 
     public static void fileSaveViaStreamWOhttpclient(ArrayList<String> linksList) {
         for (String linkString : linksList) {
-            try (BufferedInputStream in = new BufferedInputStream(new URL(linkString.replace(" ","%20")).openStream());
+            try (BufferedInputStream bufferedInputStream = new BufferedInputStream(new URL(linkString.replace(" ","%20")).openStream());
                  FileOutputStream fileOutputStream = new FileOutputStream(htmlDir
-                         + linkString.split("/")[linkString.split("/").length - 1]/*+".html"*/);
+                       //  + linkString.split("/")[linkString.split("/").length - 1]/*+".html"*/);
+                         + linkString.split("=")[linkString.split("=").length - 1]/*+".html"*/); //Gabriel
+
             ) {
                 System.out.println(htmlDir
                         + linkString.split("/")[linkString.split("/").length - 1].replace('|', '_'));
                 long downloadingStart = System.currentTimeMillis();
                 byte dataBuffer[] = new byte[8192];
                 int bytesRead;
-                while ((bytesRead = in.read(dataBuffer, 0, 8192)) != -1) {
+                while ((bytesRead = bufferedInputStream.read(dataBuffer, 0, 8192)) != -1) {
                     fileOutputStream.write(dataBuffer, 0, bytesRead);
                 }
-                System.out.println(linksList.indexOf(linkString) + " " + linkString + "downloading finished " + (System.currentTimeMillis() - downloadingStart) + "milllli seconds");
+                System.out.println(linksList.indexOf(linkString) + " " + linkString + " downloading finished " + (System.currentTimeMillis() - downloadingStart) + "milllli seconds " );
                 System.out.println("----");
                 System.out.print("Sleep start _____ ");
                 try {
@@ -123,7 +123,7 @@ public class downloadHtml {
     public static void main(String[] args) {
         long start = System.currentTimeMillis();
         // reading links from file
-        File linksFile = new File(linksFilePath);
+        // File linksFile = new File(linksFilePath);
         BufferedReader reader = null;
         try {
             reader = new BufferedReader(new FileReader(linksFilePath));
@@ -148,11 +148,11 @@ public class downloadHtml {
 
         System.out.println(linksList);
 
-        fileSaveViaStreamWOhttpclient(linksList);
+        // fileSaveViaStreamWOhttpclient(linksList);
 
-       // downloadViaHttpClient(linksList);
+        // downloadViaHttpClient(linksList);
 
-        // savingFileViaJsoup(linksList);
+         savingFileViaJsoup(linksList);
 
         System.out.println("downloading finished " + (System.currentTimeMillis() - start) / 1000 + " seconds"
                 + "__ OR __" + ((System.currentTimeMillis() - start) / 1000 / 60) + "minutes");

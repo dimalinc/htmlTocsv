@@ -24,19 +24,22 @@ public class timberen {
     static int filesCount = 0;
 
     private static ArrayList<String> xpathStringsListInit() {
-        xpathStringsList.add("(//span[@class='wsm-prod-sku'])[1]");
-        xpathStringsList.add("//div[@class='wsm-prod-summary']");
+       // xpathStringsList.add(" ");
+        xpathStringsList.add("//div[@class='fitment-cell__value']/text()");
+        xpathStringsList.add("//img[@class='srcset']/@src");
+        xpathStringsList.add("//div[@class='media__thumb']/img/@src");
+        /*xpathStringsList.add("//div[@class='wsm-prod-summary']");
         xpathStringsList.add("//span[@class='wsm-cat-ship-remarks-value']");
         xpathStringsList.add("//div[@itemprop='description']");
         xpathStringsList.add("//div[@id='wsm-prod-tab-details']/*");
         xpathStringsList.add("//li[@class='wsm-file-pdf-small']/a/@href");
         xpathStringsList.add("//img[@itemprop='image']/@src");
-        xpathStringsList.add("//img[@class='wsm_product_thumb_zoom']/@src");
+        xpathStringsList.add("//img[@class='wsm_product_thumb_zoom']/@src");*/
         //xpathStringsList.add("");
         return xpathStringsList;
     }
 
-    static String brand = "Timberen";
+    static String brand = "Timbren";
     static String filesFolder = "D:\\savedHtml\\savedHtml_timberen"+ "\\";
     static String domain = "https://timbren.com";
     static String writeAllCSV_fileName = "C:\\Users\\dmitr\\IdeaProjects\\htmlTocsv\\writeAll_"+brand+".csv";
@@ -160,8 +163,10 @@ public class timberen {
             elementsStringArrayOneRow[0] = (domain +"/" +fileString).replace(".html","");
             int i=1;
             for (String xpath:xpathStringsList) {
-                XpathElementContainer xpathElementContainer = new XpathElementContainer(xpath,doc);
-                elementsStringArrayOneRow[i] = xpathElementContainer.getCsvCellValue();
+                XpathElementContainer xpathElementContainer = new XpathElementContainer(xpath,doc,i);
+                String cell =xpathElementContainer.getCsvCellValue().replace("\n","");
+
+                elementsStringArrayOneRow[i] = cell;
                 i++;
             }
             arrayListOfAllStringsForCSV.add(elementsStringArrayOneRow);

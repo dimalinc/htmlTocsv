@@ -1,6 +1,5 @@
 package maxtrac;
 
-import com.beust.ah.A;
 import com.opencsv.CSVWriter;
 import org.apache.commons.lang3.ArrayUtils;
 import org.jsoup.Jsoup;
