@@ -9,7 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Item_Eibach {
+public class Item_XpathParsed_Eibach {
 
     static ArrayList<String> xpathStringsList = Data_processing_utils_Eibach.xpathStringsListInit();
 
@@ -38,7 +38,7 @@ public class Item_Eibach {
 
 
 
-    public Item_Eibach(File file, String domain) {
+    public Item_XpathParsed_Eibach(File file, String domain) {
         this.inputFile = file;
         try {
             doc = Jsoup.parse(inputFile, "UTF-8", domain);
@@ -46,11 +46,11 @@ public class Item_Eibach {
             e.printStackTrace();
         }
         if (doc != null) {
-            fieldsInit();
+            xpath_fieldsInit();
         }
     }
 
-    public void fieldsInit() {
+    public void xpath_fieldsInit() {
         urlString = "https://eibach.com/product/" + inputFile.getName();
         urlStringSKU =  inputFile.getName().replace(".html","");
 

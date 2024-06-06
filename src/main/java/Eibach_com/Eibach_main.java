@@ -41,7 +41,9 @@ public class Eibach_main {
             Long startItem = System.currentTimeMillis();
             File newFile= new File(dir + fileString);
             System.out.println(newFile.getName());
-            Item_Eibach eibachItem = new Item_Eibach(newFile,domain);
+            Item_XpathParsed_Eibach item_xpathParsed_eibach = new Item_XpathParsed_Eibach(newFile,domain);
+            Item_DataProcssed_Eibach item_dataProcssed_eibach= new Item_DataProcssed_Eibach(item_xpathParsed_eibach);
+
             ArrayList<String> listingStringsArrayList = new ArrayList<>();
             /*listingStringsArrayList.add(eibachItem.urlString);
             listingStringsArrayList.add(eibachItem.urlStringSKU);
@@ -56,24 +58,24 @@ public class Eibach_main {
             listingStringsArrayList.add(eibachItem.applicationHTML);
              listingStringsArrayList.add(eibachItem.sku);
 */
-            listingStringsArrayList.add(eibachItem.urlString);
-            listingStringsArrayList.add(eibachItem.urlStringSKU);
-            listingStringsArrayList.add(eibachItem.sku);
-            listingStringsArrayList.add(eibachItem.title);
-            listingStringsArrayList.add(eibachItem.breadcrumbs);
-            listingStringsArrayList.add(eibachItem.carInfo);
-            listingStringsArrayList.add(eibachItem.carDetails);
-            listingStringsArrayList.add(eibachItem.shortDesc);
-            listingStringsArrayList.add(eibachItem.liftAndFitmentAttribs);
-            listingStringsArrayList.add(eibachItem.price);
-            listingStringsArrayList.add(eibachItem.longDesc);
-            listingStringsArrayList.add(eibachItem.longDescHTML);
-            listingStringsArrayList.add(eibachItem.warranty);
-            listingStringsArrayList.add(eibachItem.pdfManualLinks);
-            listingStringsArrayList.add(eibachItem.imgLinks);
-            listingStringsArrayList.add(eibachItem.imgLinksURL);
-            listingStringsArrayList.add(eibachItem.recommendedItemLinks);
-            listingStringsArrayList.add(eibachItem.recommendedItemNames);
+            listingStringsArrayList.add(item_xpathParsed_eibach.urlString);
+            listingStringsArrayList.add(item_xpathParsed_eibach.urlStringSKU);
+            listingStringsArrayList.add(item_xpathParsed_eibach.sku);
+            listingStringsArrayList.add(item_xpathParsed_eibach.title);
+            listingStringsArrayList.add(item_xpathParsed_eibach.breadcrumbs);
+            listingStringsArrayList.add(item_xpathParsed_eibach.carInfo);
+            listingStringsArrayList.add(item_xpathParsed_eibach.carDetails);
+            listingStringsArrayList.add(item_xpathParsed_eibach.shortDesc);
+            listingStringsArrayList.add(item_xpathParsed_eibach.liftAndFitmentAttribs);
+            listingStringsArrayList.add(item_xpathParsed_eibach.price);
+            listingStringsArrayList.add(item_xpathParsed_eibach.longDesc);
+            listingStringsArrayList.add(item_xpathParsed_eibach.longDescHTML);
+            listingStringsArrayList.add(item_xpathParsed_eibach.warranty);
+            listingStringsArrayList.add(item_xpathParsed_eibach.pdfManualLinks);
+            listingStringsArrayList.add(item_xpathParsed_eibach.imgLinks);
+            listingStringsArrayList.add(item_xpathParsed_eibach.imgLinksURL);
+            listingStringsArrayList.add(item_xpathParsed_eibach.recommendedItemLinks);
+            listingStringsArrayList.add(item_xpathParsed_eibach.recommendedItemNames);
 
             /*listingStringsArrayList.add(eibachItem.application_list_href);
             listingStringsArrayList.add(eibachItem.collapsable_application_list_href);*/

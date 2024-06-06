@@ -1,8 +1,9 @@
 package Eibach_com;
 
 public class SaveToXls_Eibach {
-    //  static int filesNumberStart=160, filesNumberFinish=270;
-     static int filesNumberStart=0, filesNumberFinish=0;
+    //210 269
+    //  static int filesNumberStart=210, filesNumberFinish=269;
+      static int filesNumberStart=0, filesNumberFinish=0;
     static String brandForFilename = "eibach.com" ;
     static String brandForXls = "Eibach";
     static String dir = "D:\\savedHtml\\savedHtml_Eibach.com_fitment" + "\\";
