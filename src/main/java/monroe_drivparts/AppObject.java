@@ -26,33 +26,33 @@ public class AppObject {
 
 
     String getMake() {
-        System.out.println(getAppAttrByName("Make") );
+      //  System.out.println(getAppAttrByName("Make") );
        return getAppAttrByName("Make")  ;
     }
 
     String getModel() {
-        System.out.println(getAppAttrByName("Model") );
+       // System.out.println(getAppAttrByName("Model") );
         return getAppAttrByName("Model")  ;
     }
     String getYearRange() {
-        System.out.println(getAppAttrByName("Year Range") );
+      //  System.out.println(getAppAttrByName("Year Range") );
         return getAppAttrByName("Year Range")  ;
     }
     String getPosition() {
-        System.out.println(getAppAttrByName("Position") );
+      //  System.out.println(getAppAttrByName("Position") );
         return getAppAttrByName("Position")  ;
     }
     String getDrive() {
-        System.out.println(getAppAttrByName("Drive Wheel") );
+      //  System.out.println(getAppAttrByName("Drive Wheel") );
         return getAppAttrByName("Drive Wheel")  ;
     }
     String getQty() {
-        System.out.println(getAppAttrByName("Veh. Qty.") );
+      //  System.out.println(getAppAttrByName("Veh. Qty.") );
         return getAppAttrByName("Veh. Qty.")  ;
     }
 
     String getDesc() {
-        System.out.println(getAppAttrByName("Description") );
+      //  System.out.println(getAppAttrByName("Description") );
         return getAppAttrByName("Description")  ;
     }
 
@@ -70,7 +70,7 @@ public class AppObject {
 
         //  result=replaceLastOccurrence(result,System.lineSeparator(),"");
 
-        System.out.println(result);
+       // System.out.println(result);
         return result  ;
     }
 

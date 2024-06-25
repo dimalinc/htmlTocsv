@@ -25,9 +25,11 @@ public class Item_Processed_Monroe_Drviparts {
     }
 
     void create_car_item_monroe_drviparts_ArrayList() {
-        for (AppObject appObject:appObjectsArrayList)
-        car_item_monroe_drviparts_ArrayList.add(new Car_Item_Monroe_Drviparts(this,appObject));
-
+        for (AppObject appObject:appObjectsArrayList) {
+            Car_Item_Monroe_Drviparts car_item_monroe_drviparts = new Car_Item_Monroe_Drviparts(this, appObject);
+            car_item_monroe_drviparts_ArrayList.add(car_item_monroe_drviparts);
+            System.out.println(car_item_monroe_drviparts);
+        }
     }
 
 
@@ -60,7 +62,6 @@ public class Item_Processed_Monroe_Drviparts {
 
                 item_appAttrArrayList.add(new AppAttribute(appTable_coloumsTitleElement_arrayList.get(i).text(),
                         appAtt_valuesElements_arrayList.get(i).text() ) );
-
             }
 
             appObjectsArrayList.add(new AppObject(item_appAttrArrayList));
