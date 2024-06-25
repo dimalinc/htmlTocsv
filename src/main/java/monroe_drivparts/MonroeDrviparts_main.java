@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import static classes.utils.file_utils.listFilesUsingJavaIO;
 import static classes.utils.file_utils.writeExcel;
+import static monroe_drivparts.Data_processing_utils_Monroe.itemFields_xpathStringsListInit;
 
 public class MonroeDrviparts_main {
     static String brand ;
@@ -24,10 +25,12 @@ public class MonroeDrviparts_main {
 
         brand=inputBrand; brandForXls =inputBrandForXls; dir=inputDir; writeAllCSV_fileName=inputWriteAllCSV_fileName; domain=inputDomain;
 
-        writeAllCSV_fileName = "D:\\savedHtml\\savedHtml_Camburg.com_options" + brand;
-        domain = "https://camburg.com/";
+        writeAllCSV_fileName = "D:\\savedHtml\\savedHtml_drvi_" + brand;
+        domain = "https://www.drivparts.com/";
 
         Long start = System.currentTimeMillis();
+
+        itemFields_xpathStringsListInit();
 
         filesArrayList = listFilesUsingJavaIO(dir);
         System.out.println(filesArrayList);
@@ -41,7 +44,10 @@ public class MonroeDrviparts_main {
             Long startItem = System.currentTimeMillis();
             File newFile= new File(dir + fileString);
             System.out.println(newFile.getName());
-            Item_MonroeDrviparts monroeDrvipartsItem = new Item_MonroeDrviparts(newFile,domain);
+
+            Xpath_Item_MonroeDrviparts monroeDrvipartsItem_Xpath = new Xpath_Item_MonroeDrviparts(newFile,domain);
+            Item_Processed_Monroe_Drviparts item_processed_monroe_drviparts=new Item_Processed_Monroe_Drviparts(monroeDrvipartsItem_Xpath);
+
             ArrayList<String> listingStringsArrayList = new ArrayList<>();
             /*listingStringsArrayList.add(eibachItem.urlString);
             listingStringsArrayList.add(eibachItem.urlStringSKU);
@@ -56,20 +62,20 @@ public class MonroeDrviparts_main {
             listingStringsArrayList.add(eibachItem.applicationHTML);
              listingStringsArrayList.add(eibachItem.sku);
 */
-            listingStringsArrayList.add(monroeDrvipartsItem.urlString);
-            listingStringsArrayList.add(monroeDrvipartsItem.urlStringSKU);
-            listingStringsArrayList.add(monroeDrvipartsItem.name);
-            listingStringsArrayList.add(monroeDrvipartsItem.sku);
-            listingStringsArrayList.add(monroeDrvipartsItem.imgLinks);
-            listingStringsArrayList.add(monroeDrvipartsItem.imgLinksURL);
-            listingStringsArrayList.add(monroeDrvipartsItem.specifications);
-            listingStringsArrayList.add(monroeDrvipartsItem.specificationsHTML);
-            listingStringsArrayList.add(monroeDrvipartsItem.applications);
-            listingStringsArrayList.add(monroeDrvipartsItem.applicationsHTML);
-         //   listingStringsArrayList.add(monroeDrvipartsItem.otherMedia);
-            listingStringsArrayList.add(monroeDrvipartsItem.shortDesc);
-            listingStringsArrayList.add(monroeDrvipartsItem.longDesc);
-            listingStringsArrayList.add(monroeDrvipartsItem.longDescHTML);
+            listingStringsArrayList.add(monroeDrvipartsItem_Xpath.urlString);
+            listingStringsArrayList.add(monroeDrvipartsItem_Xpath.urlStringSKU);
+            listingStringsArrayList.add(monroeDrvipartsItem_Xpath.name);
+            listingStringsArrayList.add(monroeDrvipartsItem_Xpath.sku);
+            listingStringsArrayList.add(monroeDrvipartsItem_Xpath.imgLinks);
+            listingStringsArrayList.add(monroeDrvipartsItem_Xpath.imgLinksURL);
+            listingStringsArrayList.add(monroeDrvipartsItem_Xpath.specifications);
+            listingStringsArrayList.add(monroeDrvipartsItem_Xpath.specificationsHTML);
+            listingStringsArrayList.add(monroeDrvipartsItem_Xpath.applications);
+            listingStringsArrayList.add(monroeDrvipartsItem_Xpath.applicationsHTML);
+         //   listingStringsArrayList.add(monroeDrvipartsItem_Xpath.otherMedia);
+            listingStringsArrayList.add(monroeDrvipartsItem_Xpath.shortDesc);
+            listingStringsArrayList.add(monroeDrvipartsItem_Xpath.longDesc);
+            listingStringsArrayList.add(monroeDrvipartsItem_Xpath.longDescHTML);
 
 
 

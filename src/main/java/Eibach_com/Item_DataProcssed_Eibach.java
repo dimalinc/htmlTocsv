@@ -14,9 +14,11 @@ public class Item_DataProcssed_Eibach {
     ArrayList<String> carAttributesArrayList=new ArrayList<>();
     ArrayList<String> fitmentAttributesArrayList=new ArrayList<>();
     ArrayList<String> pre_driveArrayList=new ArrayList<>();
+    ArrayList<String> pre_LiftArrayList=new ArrayList<>();
+
     ArrayList<String> final_DriveArrayList=new ArrayList<>();
     ArrayList<String> final_PositionArrayList=new ArrayList<>();
-    ArrayList<String> pre_LiftArrayList=new ArrayList<>();
+    ArrayList<String> final_LiftArrayList=new ArrayList<>();
 
     String liftStart_front_String;     String liftFinish_rear_String;
     String liftStart_rear_String;     String liftFinish_front_String;

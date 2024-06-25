@@ -20,10 +20,12 @@ public class LiftPosition_Object_Eibach {
     HashSet<String> positionHashSet=new HashSet<>();
      HashSet<String> driveHashSet =new HashSet<>();
     HashSet<String> pre_LiftHashSet =new HashSet<>(); HashSet<String> final_LiftHashSet=new HashSet<>();
-    String frontLiftStartString;
-    String frontLiftFinishString;
-    String rearLiftStartString;
-    String rearLiftFinishString;
+    String frontLiftStartString; String frontLiftFinishString;
+    String rearLiftStartString; String rearLiftFinishString;
+    double frontLiftStartDouble=-100.0; double frontLiftFinishDouble=-100.0;
+    double rearLiftStartDouble=-100.0; double rearLiftFinishDouble=-100.0;
+    ArrayList<Double> frontLiftRange = new ArrayList<>(); ArrayList<Double> rearLiftRange = new ArrayList<>();
+    ArrayList<Double> finalLiftRangeArrayList = new ArrayList<>();
 
     public LiftPosition_Object_Eibach(Item_DataProcssed_Eibach item_dataProcssed_eibach) {
         this.item_dataProcssed_eibach=item_dataProcssed_eibach;
@@ -46,8 +48,6 @@ public class LiftPosition_Object_Eibach {
     }
 
     public void driveProcessing() {
-
-
         for (String carAttributeString : item_dataProcssed_eibach.carAttributesArrayList) {
 
            /* if (s.contains("2WD") || (s.contains("4WD")) || (s.contains("FWD")) || (s.contains("RWD")) || (s.contains("AWD")))
@@ -76,9 +76,6 @@ public class LiftPosition_Object_Eibach {
 
 
         }
-
-
-
     }
 
     public void liftProcessing() {
@@ -129,7 +126,6 @@ public class LiftPosition_Object_Eibach {
                     System.out.println("liftFinish = "+liftFinish);*/
 
 
-
                     if ( preLiftString.contains("Front") )
                     {
                         frontLiftStartString=liftStart;
@@ -143,18 +139,40 @@ public class LiftPosition_Object_Eibach {
 
                 }
 
-            if ( !(frontLiftStartString==null) ) System.out.println("frontLiftStartString "+Double.parseDouble(frontLiftStartString ) );
-            if ( !(frontLiftFinishString==null) ) System.out.println("frontLiftFinishString "+Double.parseDouble(frontLiftFinishString ) );
-            if ( !(rearLiftStartString==null) ) System.out.println("rearLiftStartString "+Double.parseDouble(rearLiftStartString ) );
-            if ( !(rearLiftFinishString==null) ) System.out.println("rearLiftFinishString "+Double.parseDouble(rearLiftFinishString ) );
+            if ( !(frontLiftStartString==null) ) frontLiftStartDouble=Double.parseDouble(frontLiftStartString);
+            if ( !(frontLiftFinishString==null) ) frontLiftFinishDouble=Double.parseDouble(frontLiftFinishString);
+            if ( !(rearLiftStartString==null) ) rearLiftStartDouble=Double.parseDouble(rearLiftStartString);
+            if ( !(rearLiftFinishString==null) ) rearLiftFinishDouble=Double.parseDouble(rearLiftFinishString);
+
+             System.out.println("frontLiftStartDouble "+frontLiftStartDouble );
+             System.out.println("frontLiftFinishDouble "+frontLiftFinishDouble );
+             System.out.println("rearLiftStartDouble "+rearLiftStartDouble );
+             System.out.println("rearLiftFinishDouble "+rearLiftFinishDouble );
 
         }
 
+        generateLiftRange(frontLiftStartDouble,frontLiftFinishDouble,frontLiftRange);
+        generateLiftRange(rearLiftStartDouble,rearLiftFinishDouble,rearLiftRange);
+        generateFinalLiftRange(frontLiftRange,rearLiftRange,finalLiftRangeArrayList);
+        System.out.println(finalLiftRangeArrayList);
 
 
+    }
 
+    public ArrayList<Double> generateLiftRange(Double liftStart, Double liftFinish, ArrayList<Double> resultArrayList) {
+       if ( (liftStart!=-100.0) || (liftFinish!=-100.0) )
+        for (double d = liftStart; d <= liftFinish; d+=0.25) {
+            resultArrayList.add(d);
+          //  System.out.print(d+" ");
+        }
+      //  System.out.println();
+        return resultArrayList;
+    }
 
-
+    public ArrayList<Double> generateFinalLiftRange(ArrayList<Double> frontLiftRange, ArrayList<Double> rearLiftRange, ArrayList<Double> resultLiftRangeArrayList) {
+        if(frontLiftRange!=null) resultLiftRangeArrayList.addAll(frontLiftRange);
+        if(rearLiftRange!=null) resultLiftRangeArrayList.addAll(rearLiftRange);
+        return resultLiftRangeArrayList;
     }
 
 

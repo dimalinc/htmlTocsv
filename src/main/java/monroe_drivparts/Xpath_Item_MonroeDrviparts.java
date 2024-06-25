@@ -9,15 +9,31 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Item_MonroeDrviparts {
+public class Xpath_Item_MonroeDrviparts {
 
-    static ArrayList<String> xpathStringsList = Data_processing_utils_Monroe.xpathStringsListInit();
+
+    static ArrayList<String> xpathStringsList = Data_processing_utils_Monroe.itemFields_XpathStringsList;
 
     static ArrayList<Element> jsoupElementsList = new ArrayList<>();
 
     protected File inputFile;
     final static String domain = "https://www.drivparts.com/";
     Document doc;
+
+    final static String xpath_Spec = "//div[@class='driv-part-detail-page-specification']";
+    final static String xpath_Spec_Label = "/div[@class='driv-part-detail-page-specification-label']";
+    final static String xpath_Spec_Value = "/div[@class='driv-part-detail-page-specification-value']";
+    final static String final_Spec_xpath = xpath_Spec+xpath_Spec_Label;
+    final static String final_Label_xpath = xpath_Spec+xpath_Spec_Value;
+
+    final static String xpath_appAtt = "//tr[@class='product']";
+    final static String xpath_appAtt_field = "//tr[@class='product']/td";
+    final static String xpath_appAtt_coloumTitleElement =
+            "(//table[@class='tab-table desktop']/thead)[1]/tr/th";
+
+    ArrayList<Element> xpath_Spec_jsoupElementsList=new ArrayList<>();
+    ArrayList<Element> xpath_appAttr_jsoupElementsList=new ArrayList<>();
+
     String urlString;     String urlStringSKU;
     String name;
     String specifications; String specificationsHTML;
@@ -29,7 +45,7 @@ public class Item_MonroeDrviparts {
     String imgLinks;     String imgLinksURL;
 
 
-    public Item_MonroeDrviparts(File file, String domain) {
+    public Xpath_Item_MonroeDrviparts(File file, String domain) {
         this.inputFile = file;
         try {
             doc = Jsoup.parse(inputFile, "UTF-8", domain);
@@ -39,6 +55,7 @@ public class Item_MonroeDrviparts {
         if (doc != null) {
             fieldsInit();
         }
+
     }
 
     public void fieldsInit() {
@@ -70,6 +87,9 @@ public class Item_MonroeDrviparts {
 
        /* application_list_href=generateCellContent(xpathStringsList.get(6), doc);
         collapsable_application_list_href=generateCellContent(xpathStringsList.get(7), doc);*/
+
+        xpath_Spec_jsoupElementsList=doc.selectXpath(xpath_Spec);
+        xpath_appAttr_jsoupElementsList=doc.selectXpath(xpath_Spec);
 
 
 

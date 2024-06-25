@@ -11,6 +11,8 @@ import java.util.ArrayList;
 
 public class Item_XpathParsed_Eibach {
 
+    Item_DataProcssed_Eibach item_dataProcssed_eibach;
+
     static ArrayList<String> xpathStringsList = Data_processing_utils_Eibach.xpathStringsListInit();
 
     static ArrayList<Element> jsoupElementsList = new ArrayList<>();
@@ -37,7 +39,6 @@ public class Item_XpathParsed_Eibach {
     String collapsable_application_list_href;     String collapsable_application_list_href_HTML;
 
 
-
     public Item_XpathParsed_Eibach(File file, String domain) {
         this.inputFile = file;
         try {
@@ -48,6 +49,9 @@ public class Item_XpathParsed_Eibach {
         if (doc != null) {
             xpath_fieldsInit();
         }
+
+        item_dataProcssed_eibach= new Item_DataProcssed_Eibach(this);
+
     }
 
     public void xpath_fieldsInit() {

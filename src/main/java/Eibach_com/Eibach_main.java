@@ -8,21 +8,22 @@ import static classes.utils.file_utils.listFilesUsingJavaIO;
 import static classes.utils.file_utils.writeExcel;
 
 public class Eibach_main {
-    static String brand ;
-    static String brandForXls ;
-    static String dir ;
-    static String writeAllCSV_fileName ;
+    static String brand;
+    static String brandForXls;
+    static String dir;
+    static String writeAllCSV_fileName;
     static String domain;
     static ArrayList<String> filesArrayList = new ArrayList<>();
     static ArrayList<String[]> arrayListOfAllStringsForCSV = new ArrayList<String[]>();
 
 
+    public static void main(String inputBrand, String inputBrandForXls, String inputDir, String inputWriteAllCSV_fileName, String inputDomain, int inputFilesNumberStart, int inputFilesNumberFinish) {
 
-
-
-    public static void main(String inputBrand, String inputBrandForXls,String inputDir, String inputWriteAllCSV_fileName, String inputDomain,int inputFilesNumberStart, int inputFilesNumberFinish) {
-
-        brand=inputBrand; brandForXls =inputBrandForXls; dir=inputDir; writeAllCSV_fileName=inputWriteAllCSV_fileName; domain=inputDomain;
+        brand = inputBrand;
+        brandForXls = inputBrandForXls;
+        dir = inputDir;
+        writeAllCSV_fileName = inputWriteAllCSV_fileName;
+        domain = inputDomain;
 
         writeAllCSV_fileName = "D:\\savedHtml\\savedHtml_Camburg.com_options" + brand;
         domain = "https://camburg.com/";
@@ -31,18 +32,20 @@ public class Eibach_main {
 
         filesArrayList = listFilesUsingJavaIO(dir);
         System.out.println(filesArrayList);
-        System.out.println("filesArrayList.size() = "+filesArrayList.size());
+        System.out.println("filesArrayList.size() = " + filesArrayList.size());
 
         int n = 1;
         for (String fileString : filesArrayList) {
 
-            if ( (inputFilesNumberStart!=0) && (n<inputFilesNumberStart) ) { n++; continue; }
+            if ((inputFilesNumberStart != 0) && (n < inputFilesNumberStart)) {
+                n++;
+                continue;
+            }
 
             Long startItem = System.currentTimeMillis();
-            File newFile= new File(dir + fileString);
+            File newFile = new File(dir + fileString);
             System.out.println(newFile.getName());
-            Item_XpathParsed_Eibach item_xpathParsed_eibach = new Item_XpathParsed_Eibach(newFile,domain);
-            Item_DataProcssed_Eibach item_dataProcssed_eibach= new Item_DataProcssed_Eibach(item_xpathParsed_eibach);
+            Item_XpathParsed_Eibach item_xpathParsed_eibach = new Item_XpathParsed_Eibach(newFile, domain);
 
             ArrayList<String> listingStringsArrayList = new ArrayList<>();
             /*listingStringsArrayList.add(eibachItem.urlString);
@@ -76,20 +79,26 @@ public class Eibach_main {
             listingStringsArrayList.add(item_xpathParsed_eibach.imgLinksURL);
             listingStringsArrayList.add(item_xpathParsed_eibach.recommendedItemLinks);
             listingStringsArrayList.add(item_xpathParsed_eibach.recommendedItemNames);
+            if (item_xpathParsed_eibach.item_dataProcssed_eibach != null) {
+                listingStringsArrayList.add(item_xpathParsed_eibach.item_dataProcssed_eibach.liftPosition_object_eibach.finalLiftRangeArrayList.toString());
+                listingStringsArrayList.add(item_xpathParsed_eibach.item_dataProcssed_eibach.liftPosition_object_eibach.driveHashSet.toString());
+                listingStringsArrayList.add(item_xpathParsed_eibach.item_dataProcssed_eibach.liftPosition_object_eibach.positionHashSet.toString());
+            }
 
             /*listingStringsArrayList.add(eibachItem.application_list_href);
             listingStringsArrayList.add(eibachItem.collapsable_application_list_href);*/
 
             Long finishItem = System.currentTimeMillis();
-            System.out.println(n++ + "  processed for mS=" + ((finishItem - startItem) ));
+            System.out.println(n++ + "  processed for mS=" + ((finishItem - startItem)));
             arrayListOfAllStringsForCSV.add(listingStringsArrayList.toArray(new String[listingStringsArrayList.size()]));
 
-            if ( (inputFilesNumberFinish!=0) && (n>inputFilesNumberFinish) ) break;
+            if ((inputFilesNumberFinish != 0) && (n > inputFilesNumberFinish)) break;
         }
         // write to EXCEL
-        try { writeExcel(arrayListOfAllStringsForCSV, "_"+brand); }
-        catch (IOException e) { e.printStackTrace(); }
+        try {
+            writeExcel(arrayListOfAllStringsForCSV, "_" + brand);
+        } catch (IOException e) { e.printStackTrace(); }
 
-        }
+    }
 
 }
