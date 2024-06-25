@@ -26,7 +26,7 @@ public class Car_Item_Monroe_Drviparts {
 
     void car_item_fieldsInit() {
         car_Item_title=item_processed_monroe_drviparts.xpath_item_monroeDrviparts.name+" "+
-                appObject.getMake()+" "+appObject.getModel()+" "+appObject.getDrive()+appObject.getYearRange();
+                appObject.getMake()+" "+appObject.getModel()+" "+appObject.getDrive()+" "+appObject.getYearRange();
     }
 
     @Override
