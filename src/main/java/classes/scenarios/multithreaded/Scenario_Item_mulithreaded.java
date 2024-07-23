@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 
 
 public class Scenario_Item_mulithreaded {
-    final static int numberOfThreads = 3;
+    final static int numberOfThreads = 6;
     static ArrayList<Manufacturer_DTO> manufacturerDtosArrayList = new ArrayList<>();
 
 

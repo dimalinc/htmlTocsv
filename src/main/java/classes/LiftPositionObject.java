@@ -7,7 +7,7 @@ import static classes.utils.data_processing_utils.makeDoubleArray;
 
 public class LiftPositionObject {
 
-    LinkedHashSet<String> positionArrayList = new LinkedHashSet<>();
+    LinkedHashSet<String> positionStringsHashSet = new LinkedHashSet<>();
 
     /*String frontLiftString;
     String rearLiftString;
@@ -26,8 +26,8 @@ public class LiftPositionObject {
        // System.out.println("new LiftPositionObject");
         // Positions
         for (String s : appAttSplitArrayList) {
-            if (s.contains("Front")) positionArrayList.add("Front");
-            if (s.contains("Rear")) positionArrayList.add("Rear");
+            if (s.contains("Front")) positionStringsHashSet.add("Front");
+            if (s.contains("Rear")) positionStringsHashSet.add("Rear");
 
             //  if ((s.endsWith("Lift")) || (s.endsWith("Front/ Rear Lift"))) frontLiftString = s.trim();
             //   if ((s.endsWith("Rear Lift")) || (s.endsWith("Front/ Rear Lift"))) rearLiftString = s.trim();
@@ -39,12 +39,12 @@ public class LiftPositionObject {
         }
 
 
-        if ((positionArrayList.contains("Front")) && (positionArrayList.contains("Rear"))) {
-            positionArrayList.clear();
-            positionArrayList.add("Full Front and Rear");
-            if (positionArrayList.contains("Front and Rear")) {
-                positionArrayList.clear();
-                positionArrayList.add("Full Front and Rear");
+        if ((positionStringsHashSet.contains("Front")) && (positionStringsHashSet.contains("Rear"))) {
+            positionStringsHashSet.clear();
+            positionStringsHashSet.add("Full Front and Rear");
+            if (positionStringsHashSet.contains("Front and Rear")) {
+                positionStringsHashSet.clear();
+                positionStringsHashSet.add("Full Front and Rear");
             }
         }
 
@@ -131,8 +131,8 @@ public class LiftPositionObject {
         return rearLiftNumberFinish;
     }*/
 
-    public LinkedHashSet<String> getPositionArrayList() {
-        return positionArrayList;
+    public LinkedHashSet<String> getPositionStringsHashSet() {
+        return positionStringsHashSet;
     }
 
     public LinkedHashSet<Double> getLiftNumbersSet() {

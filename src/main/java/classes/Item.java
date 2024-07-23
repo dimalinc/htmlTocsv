@@ -223,8 +223,7 @@ public class Item implements Runnable {
         // System.out.println("Short description="+ itemShortDescription);
     }
 
-    public Item() {
-    }
+    public Item() { }
 
     void kitComponentsArrayListInit() {
         ArrayList<Element> kitComponentElementsList = new ArrayList<>();
@@ -439,11 +438,16 @@ public class Item implements Runnable {
                 listingStringsArrayList.add(car.carLiftNumbersString);
 
                 if ((this.itemFrontLiftString == null) && (this.itemRearLiftString == null))
-                    listingStringsArrayList.add(car.carWpTitleString);
-                else listingStringsArrayList.add("ItemLiftStrings=0");
+                    listingStringsArrayList.add("ItemLiftStrings=0");
+                else listingStringsArrayList.add("");
 
+                listingStringsArrayList.add(" TITLES WP ");
                 listingStringsArrayList.add(car.itemWpTitleString);
                 listingStringsArrayList.add(car.carWpTitleString);
+
+                listingStringsArrayList.add(" TITLES PRE ");
+                listingStringsArrayList.add(car.itemPrestaTitleString);
+                listingStringsArrayList.add(car.carPrestaTitleString);
 
 
                 StringBuilder subCarSb = new StringBuilder();
@@ -551,8 +555,8 @@ public class Item implements Runnable {
                 listingStringsArrayList.add(car.carLiftNumbersString);
 
                 if ((this.itemFrontLiftString == null) && (this.itemRearLiftString == null))
-                    listingStringsArrayList.add(car.carWpTitleString);
-                else listingStringsArrayList.add("ItemLiftStrings=0");
+                    listingStringsArrayList.add("ItemLiftStrings=0");
+                else listingStringsArrayList.add(car.carWpTitleString);
 
                 listingStringsArrayList.add(car.itemWpTitleString);
                 listingStringsArrayList.add(car.carWpTitleString);

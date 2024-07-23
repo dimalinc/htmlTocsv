@@ -10,6 +10,7 @@ import static classes.utils.data_processing_utils.*;
 
 
 public class Car extends Item {
+    HashSet<String> carPositionStringsHashSet = new HashSet<>();
     public Item item;
     public Document doc;
     public String carLineString;
@@ -117,14 +118,17 @@ public class Car extends Item {
         rangesSeparatorsInit();
         carCategoryInit();
         carMakeModelYearsString = yearStart + "-" + yearFinish + " " + make + " " + model;
-        titlesInit();
+
 
         carAppAttPositionArrayListInit();
         subCarValuesArrayListInit();
         appAttAndFootnoteLinkedHashSetsInit();
         carPrestaAttArraylistInit();
+
+        titlesInit();
     }
 
+    // not used
     public Car(int i, Item item, String brandForXls) {
         this.item = item;
         doc = item.doc;
@@ -143,12 +147,14 @@ public class Car extends Item {
         rangesSeparatorsInit();
         carCategoryInit();
         carMakeModelYearsString = yearStart + "-" + yearFinish + " " + make + " " + model;
-        titlesInit();
 
         carAppAttPositionArrayListInit();
+
         subCarValuesArrayListInit();
         appAttAndFootnoteLinkedHashSetsInit();
         carPrestaAttArraylistInit();
+
+        titlesInit();
     }
 
     private void subCarValuesArrayListInit() {
@@ -168,45 +174,59 @@ public class Car extends Item {
     private void carAppAttPositionArrayListInit() {
         for (SubCar subCar : subCarObjectsList)
             for (ApplicationAttribute applicationAttribute : subCar.subCarAppAttribute_ObjectsList) {
-                carAppAttPositionLinkedHashSet.addAll(applicationAttribute.appAttPositionArrayList); }
+                {
+                    carAppAttPositionLinkedHashSet.addAll(applicationAttribute.appLiftPositionObject.positionStringsHashSet);
+                }
+            }
     }
 
 
     private void titlesInit() {
-        String liftOrDropString="'' Lift ";
-        if ( (carLiftNumberStart<0) || (carLiftNumberFinish<0) ) {liftOrDropString="'' Drop ";}
+        String liftOrDropString=" Lift ";
+        if ( (carLiftNumberStart<0) || (carLiftNumberFinish<0) ) {liftOrDropString=" Drop ";}
 
-        carWpTitleString =brandForXls+" "+carLiftNumberStart+"-"+carLiftNumberFinish+liftOrDropString+item.itemType+" for "+carMakeModelYearsString +" "+subCarDrivesString +" "+ carAppAttPositionLinkedHashSet.toString();
+
+        itemWpTitleString = item.itemType+" for "+ carMakeModelYearsString +" "+subCarDrivesString +" "
+                +item.itemLiftMin +"-"+item.itemLiftMax+"'' "+item.itemPositionArrayList.toString()+carPositionStringsHashSet.toString()+" "+liftOrDropString;
+        if (item.itemLiftMin==item.itemLiftMax)
+            itemWpTitleString = item.itemType+" for "+ carMakeModelYearsString +" "+subCarDrivesString +" "
+                    +item.itemLiftMin+"'' "+item.itemPositionArrayList.toString()+carPositionStringsHashSet.toString()+" "+liftOrDropString;
+
+        itemWpTitleString = itemWpTitleString.replace("-null","").replace(" null","").replace("[]","")
+                .replace("Full ","").replace("  "," ").replace("[","").replace("]","")
+                .replace("-100--100'' Lift","").replace("-100.0--100.0'' Lift ","").replace("0.0-0.0'' Lift","").replace(".0","").replace("_x000D_","")
+        ;
+
+        carWpTitleString =brandForXls+" "+carLiftNumberStart+"-"+carLiftNumberFinish+"'' "+carPositionStringsHashSet.toString()+liftOrDropString+item.itemType+" for "+carMakeModelYearsString +" "+subCarDrivesString /*+" "+ carAppAttPositionLinkedHashSet.toString()*/;
+        if (carLiftNumberStart==carLiftNumberFinish)
+            carWpTitleString=brandForXls+" "+carLiftNumberStart+"'' "+carPositionStringsHashSet.toString()+liftOrDropString+item.itemType+" for "+carMakeModelYearsString +" "+subCarDrivesString /*+" "+ carAppAttPositionLinkedHashSet.toString()*/;
+
+
         carWpTitleString = carWpTitleString
                 .replace("-100--100'' Lift","").replace("-100.0--100.0'' Lift ","").replace("0.0-0.0'' Lift","").replace(".0","").replace("_x000D_","").replace("[","").replace("]","")
         // .replace("Four","4WD").replace("All","4WD")
         /*.replace("Rear","2WD")*/;
         // System.out.println(carWpTitleString);
 
-        carPrestaTitleString=item.itemType+" for "+carMakeModelYearsString +" "+subCarDrivesString +" "+ carAppAttPositionLinkedHashSet.toString()
-                /*+item.sku*/+" "+carLiftNumberStart+"-"+carLiftNumberFinish+liftOrDropString
-                +" "+brandForXls;
-        carPrestaTitleString = carPrestaTitleString.replace("[","").replace("]","")
-                .replace("0.0-0.0'' Lift","").replace("-100--100'' Lift","").replace("-100.0--100.0'' Lift ","").replace(".0","").replace("_x000D_","");
-
-       // System.out.println("carPrestaTitleString = " + carPrestaTitleString);
-
-        itemWpTitleString = item.itemType+" for "+ carMakeModelYearsString +" "+subCarDrivesString +" "
-                +item.itemLiftMin +"-"+item.itemLiftMax+liftOrDropString+item.itemPositionArrayList.toString();
-        itemWpTitleString = itemWpTitleString.replace("-null","").replace(" null","").replace("[]","")
-                .replace("Full ","").replace("  "," ").replace("[","").replace("]","")
-                .replace("-100--100'' Lift","").replace("-100.0--100.0'' Lift ","").replace("0.0-0.0'' Lift","").replace(".0","").replace("_x000D_","")
-        ;
 
         itemPrestaTitleString=/*item.sku+" "*/item.itemType+" for "+carMakeModelYearsString +" "+subCarDrivesString+
-                " "+item.itemLiftMin +"-"+item.itemLiftMax+liftOrDropString+item.itemPositionArrayList.toString()+" "+
+                " "+item.itemLiftMin +"-"+item.itemLiftMax+"'' "+item.itemPositionArrayList.toString()+carPositionStringsHashSet.toString()+liftOrDropString+" "+
                 brandForXls;
         itemPrestaTitleString = itemPrestaTitleString.replace("-null","").replace(" null","").replace("[","").replace("]","")
                 .replace("Full ","").replace("  "," ")
                 .replace("-100--100'' Lift","").replace("-100.0--100.0'' Lift ","").replace("0.0-0.0'' Lift","").replace(".0","").replace("_x000D_","")
         ;
 
-       // System.out.println("itemPrestaTitleString = " + itemPrestaTitleString);
+
+        carPrestaTitleString=item.itemType+" for "+carMakeModelYearsString +" "+subCarDrivesString +" "+
+                /*carAppAttPositionLinkedHashSet.toString()+*/
+                /*+item.sku*/" "+carLiftNumberStart+"-"+carLiftNumberFinish+"'' "+carPositionStringsHashSet.toString()+liftOrDropString
+                +" "+brandForXls;
+        carPrestaTitleString = carPrestaTitleString.replace("[","").replace("]","")
+                .replace("0.0-0.0'' Lift","").replace("-100--100'' Lift","").replace("-100.0--100.0'' Lift ","").replace(".0","").replace("_x000D_","");
+
+       // System.out.println("carPrestaTitleString = " + carPrestaTitleString);
+        // System.out.println("itemPrestaTitleString = " + itemPrestaTitleString);
     }
 
     public Car() {}
@@ -214,7 +234,6 @@ public class Car extends Item {
     public String getCarLineString() {
         return carLineString;
     }
-
 
 
     public void appAttAndFootnoteLinkedHashSetsInit() {
@@ -238,7 +257,15 @@ public class Car extends Item {
 
             for (ApplicationAttribute applicationAttribute:carAppAttLinkedHashSet) {
                 sbApplicationAttribute.append(applicationAttribute.applicationAttribute_Value).append(System.lineSeparator());
-                applicationAttributePositionSb.append(applicationAttribute.position).append(System.lineSeparator());
+                System.out.println("applicationAttribute.appLiftPositionObject.getPositionStringsHashSet().toString()"
+                        + applicationAttribute.appLiftPositionObject.getPositionStringsHashSet().toString());
+
+                for (String s:applicationAttribute.appLiftPositionObject.getPositionStringsHashSet()) {
+                    carPositionStringsHashSet.add(s);
+                    System.out.println("carPositionStringsHashSet ="+ carPositionStringsHashSet);
+                    //    applicationAttributePositionSb.append(applicationAttribute.appLiftPositionObject.getPositionStringsHashSet().toString())
+                }
+                /*.append(System.lineSeparator())*/;
                 applicationAttributeLiftSb.append(applicationAttribute.liftString).append(System.lineSeparator());
                 applicationAttributeLiftStartSb.append(applicationAttribute.appAttLiftNumberStart).append(System.lineSeparator());
                 applicationAttributeLiftFinishSb.append(applicationAttribute.appAttLiftNumberFinish).append(System.lineSeparator());

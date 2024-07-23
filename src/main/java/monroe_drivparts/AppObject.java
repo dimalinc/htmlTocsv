@@ -5,6 +5,7 @@ import java.util.HashSet;
 
 public class AppObject {
      static ArrayList<String> standardAppAttribsNamesList = new ArrayList<>();
+
     static void standardAppAttribsNames_init() {
         standardAppAttribsNamesList.add("Make");
         standardAppAttribsNamesList.add("Model");

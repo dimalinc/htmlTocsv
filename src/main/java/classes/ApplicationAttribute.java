@@ -25,6 +25,7 @@ public class ApplicationAttribute extends SubCar {
     public double appAttLiftNumberStart=-100.0; public double appAttLiftNumberFinish=-100.0;
     public LinkedHashSet<Double> appAttLiftNumbersSet=new LinkedHashSet<>(); public String  appAttLiftString;
     public ArrayList<String> appAttLiftStringArrayList = new ArrayList<>();
+    LiftPositionObject appLiftPositionObject;
 
 
     void applicationAttributeStringsArrayListInit() {
@@ -88,8 +89,8 @@ public class ApplicationAttribute extends SubCar {
     }
 
     void initLiftPositionFromObject(ArrayList<String> applicationAttributesArrayListSplit) {
-        LiftPositionObject appLiftPositionObject= new LiftPositionObject(applicationAttributesArrayListSplit);
-        appAttPositionArrayList=appLiftPositionObject.getPositionArrayList();
+        appLiftPositionObject= new LiftPositionObject(applicationAttributesArrayListSplit);
+        appAttPositionArrayList=appLiftPositionObject.getPositionStringsHashSet();
       //  System.out.println(appAttPositionArrayList.toString());
         liftString =appLiftPositionObject.getLiftString();
         // System.out.println(liftString);
@@ -129,6 +130,7 @@ public class ApplicationAttribute extends SubCar {
         applicationAttributeStringsArrayListInit();
         initPositionAndLiftFromAppAttr();
         initLiftPositionFromObject(appAttSplitArrayList);
+
 
     }
 
