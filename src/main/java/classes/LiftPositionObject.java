@@ -34,7 +34,7 @@ public class LiftPositionObject {
             if ( (s.contains("Lift")) && (( !s.contains("Lift Kit Suspension") )) ) {
                 s = s.replace("For", "").replace("With", "");
                 liftString = s.trim();
-              //  System.out.println("liftString = "+liftString);
+                System.out.println("liftString = "+liftString);
             }
         }
 

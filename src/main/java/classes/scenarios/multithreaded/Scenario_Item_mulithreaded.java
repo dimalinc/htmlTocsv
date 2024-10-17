@@ -14,54 +14,61 @@ import java.util.concurrent.TimeUnit;
 
 
 public class Scenario_Item_mulithreaded {
-    final static int numberOfThreads = 6;
+    final static int numberOfThreads = 1;
     static ArrayList<Manufacturer_DTO> manufacturerDtosArrayList = new ArrayList<>();
 
 
     static {
-      //  manufacturerDtosArrayList.add(new Manufacturer_DTO("Eibach_1521", "Eibach", "D:\\savedHtml\\savedHtml_eibach" + "\\"));
         manufacturerDtosArrayList.add(new Manufacturer_DTO("SuperSprings_281", "SuperSprings", "D:\\savedHtml\\savedHtml_supersprings_key" + "\\"));
-        //  manufacturerDtosArrayList.add(new Manufacturer_DTO("Monroe_2167", "Monroe", "D:\\savedHtml\\savedHtml_Monroe_key" + "\\"));
-        // manufacturerDtosArrayList.add(new Manufacturer_DTO("Ironmann_19","Ironmann","D:\\savedHtml\\savedHtml_Ironmann_key"+"\\"));
-        // manufacturerDtosArrayList.add(new Manufacturer_DTO("sky_lev_kits_66","Skyjacker", "D:\\savedHtml\\2_savedHtml_sky_lev_kits_66"+"\\"));
-        //  manufacturerDtosArrayList.add(new Manufacturer_DTO("sky_lift_kits_2031","Skyjacker", "D:\\savedHtml\\2_savedHtml_sky_liftkits"+"\\"));
-       // manufacturerDtosArrayList.add(new Manufacturer_DTO("KYB_ALL_2772", "KYB", "D:\\savedHtml\\savedHtml_KYB_key_all" + "\\"));
-       // manufacturerDtosArrayList.add(new Manufacturer_DTO("Airlift_key_732", "AirLift", "D:\\savedHtml\\airLift_key" + "\\"));
-       /*  manufacturerDtosArrayList.add(
-                new Manufacturer_DTO(
-                        "Knfilter_key_3592", "K&N Filters", "D:\\savedHtml\\knfilter_key" + "\\"
-                ) );
 
+         manufacturerDtosArrayList.add(new Manufacturer_DTO
+                ("Rancho_418", "Rancho", "D:\\savedHtml\\savedHtml_Rancho_key" + "\\"));
+
+/*
+        manufacturerDtosArrayList.add(new Manufacturer_DTO("Eibach_1521", "Eibach", "D:\\savedHtml\\savedHtml_eibach" + "\\"));
+
+        manufacturerDtosArrayList.add(new Manufacturer_DTO("Monroe_2167", "Monroe", "D:\\savedHtml\\savedHtml_Monroe_key" + "\\"));
+        manufacturerDtosArrayList.add(new Manufacturer_DTO("Ironmann_19", "Ironmann", "D:\\savedHtml\\savedHtml_Ironmann_key" + "\\"));
+        manufacturerDtosArrayList.add(new Manufacturer_DTO("sky_lev_kits_66", "Skyjacker", "D:\\savedHtml\\2_savedHtml_sky_lev_kits_66" + "\\"));
+        manufacturerDtosArrayList.add(new Manufacturer_DTO("KYB_ALL_2772", "KYB", "D:\\savedHtml\\savedHtml_KYB_key_all" + "\\"));
+        manufacturerDtosArrayList.add(new Manufacturer_DTO("Airlift_key_732", "AirLift", "D:\\savedHtml\\airLift_key" + "\\"));
 
         manufacturerDtosArrayList.add(new Manufacturer_DTO("KYB_754", "KYB", "D:\\savedHtml\\savedHtml_KYB_shocks" + "\\"));
         manufacturerDtosArrayList.add(new Manufacturer_DTO("Bilstein_1000", "Bilstein", "D:\\savedHtml\\savedHtml_Bilstein_key" + "\\"));
-        manufacturerDtosArrayList.add(new Manufacturer_DTO("ProcompCoils_39", "Procomp", "D:\\savedHtml\\savedHtml_Procomp_coils" + "\\"));
-        manufacturerDtosArrayList.add(new Manufacturer_DTO("aFe_3140", "aFe", "D:\\savedHtml\\savedhtml_aFe_key" + "\\"));
         manufacturerDtosArrayList.add(new Manufacturer_DTO("Daystar_1450", "Daystar", "D:\\savedHtml\\savedHtml_Daystar_key" + "\\"));
         manufacturerDtosArrayList.add(new Manufacturer_DTO("GoRhino_2066", "GoRhino", "D:\\savedHtml\\savedHtml_GoRhino_key" + "\\"));
         manufacturerDtosArrayList.add(new Manufacturer_DTO("Retrax_869", "Retrax", "D:\\savedHtml\\savedHtml_Retrax_key" + "\\"));
         manufacturerDtosArrayList.add(new Manufacturer_DTO("TuffCountry_2694", "TuffCountry", "D:\\savedHtml\\savedHtml_TuffCountry_key" + "\\"));
-        manufacturerDtosArrayList.add(new Manufacturer_DTO("TrailFX_Liftkits_68", "TrailFX", "D:\\savedHtml\\savedHtml_TrailFX_liftkits_68" + "\\"));
         manufacturerDtosArrayList.add(new Manufacturer_DTO("FOX_1012", "FOX", "D:\\savedHtml\\savedHtml_Fox_key" + "\\"));
-        manufacturerDtosArrayList.add(new Manufacturer_DTO("Gen-Y_415", "Gen-Y", "D:\\savedHtml\\savedHtml_Gen-Y_key" + "\\"));
-        manufacturerDtosArrayList.add(new Manufacturer_DTO("N-Fab_857", "N-Fab", "D:\\savedHtml\\savedHtml_n-fab_key" + "\\"));
-        manufacturerDtosArrayList.add(new Manufacturer_DTO("Trico_30", "Trico", "D:\\savedHtml\\savedHtml_Trico_key" + "\\"));
-        manufacturerDtosArrayList.add(new Manufacturer_DTO("Eibach_1521", "Eibach", "D:\\savedHtml\\savedHtml_eibach" + "\\"));
-        manufacturerDtosArrayList.add(new Manufacturer_DTO("B&W_trailer_hitches_179", "B&W", "D:\\savedHtml\\savedHtml_bw_trailer_hitches" + "\\"));
-        manufacturerDtosArrayList.add(new Manufacturer_DTO("NerfBar_1878", "NerfBar", "D:\\savedHtml\\savedHtml_KEY_cat_NerfBars" + "\\"));
         manufacturerDtosArrayList.add(new Manufacturer_DTO("ReadyLift_734", "ReadyLift", "D:\\savedHtml\\readyLIFT" + "\\"));
-        manufacturerDtosArrayList.add(new Manufacturer_DTO("energysuspension_3156", "EnergySuspension", "D:\\savedHtml\\savedHtml_energysuspension_KEYSTONE" + "\\"));
         manufacturerDtosArrayList.add(new Manufacturer_DTO("Fabtech_kits_1058", "Fabtech", "D:\\savedHtml\\savedHtml_fabtech_kits_KEYSTONE" + "\\"));
         manufacturerDtosArrayList.add(new Manufacturer_DTO("Fabtech_other_2035", "Fabtech", "D:\\savedHtml\\savedHtml_fabtech_others" + "\\"));
         manufacturerDtosArrayList.add(new Manufacturer_DTO("H&R_306", "H&R", "D:\\savedHtml\\savedHtml_H-n-r_spring" + "\\"));
         manufacturerDtosArrayList.add(new Manufacturer_DTO("Monroe_2167", "Monroe", "D:\\savedHtml\\savedHtml_Monroe_key" + "\\"));
         manufacturerDtosArrayList.add(new Manufacturer_DTO("Moog_3597", "Moog", "D:\\savedHtml\\savedhtml_moog_all" + "\\"));
         manufacturerDtosArrayList.add(new Manufacturer_DTO("ProComp_shocks_209", "ProComp", "D:\\savedHtml\\savedHtml_Procomp_shocks" + "\\"));
-        manufacturerDtosArrayList.add(new Manufacturer_DTO("Rancho_418", "Rancho", "D:\\savedHtml\\savedHtml_Rancho_key" + "\\"));
+        manufacturerDtosArrayList.add(new Manufacturer_DTO("ProcompCoils_39", "Procomp", "D:\\savedHtml\\savedHtml_Procomp_coils" + "\\"));
+
         manufacturerDtosArrayList.add(new Manufacturer_DTO("Skyjacker_2522", "Skyjacker", "D:\\savedHtml\\savedHtml_skyALL_BIG" + "\\"));
+        manufacturerDtosArrayList.add(new Manufacturer_DTO("sky_lift_kits_2031", "Skyjacker", "D:\\savedHtml\\2_savedHtml_sky_liftkits" + "\\"));
+
+        manufacturerDtosArrayList.add(new Manufacturer_DTO("aFe_3140", "aFe", "D:\\savedHtml\\savedhtml_aFe_key" + "\\"));
+        manufacturerDtosArrayList.add(new Manufacturer_DTO("TrailFX_Liftkits_68", "TrailFX", "D:\\savedHtml\\savedHtml_TrailFX_liftkits_68" + "\\"));
+        manufacturerDtosArrayList.add(new Manufacturer_DTO("B&W_trailer_hitches_179", "B&W", "D:\\savedHtml\\savedHtml_bw_trailer_hitches" + "\\"));
+        manufacturerDtosArrayList.add(new Manufacturer_DTO("Trico_30", "Trico", "D:\\savedHtml\\savedHtml_Trico_key" + "\\"));
+        manufacturerDtosArrayList.add(new Manufacturer_DTO("Gen-Y_415", "Gen-Y", "D:\\savedHtml\\savedHtml_Gen-Y_key" + "\\"));
+        manufacturerDtosArrayList.add(new Manufacturer_DTO("N-Fab_857", "N-Fab", "D:\\savedHtml\\savedHtml_n-fab_key" + "\\"));
         manufacturerDtosArrayList.add(new Manufacturer_DTO("Timberen_472", "Timberen", "D:\\savedHtml\\savedHtml_timberen_KEYSTONE" + "\\"));
+
+*/
+     /*   manufacturerDtosArrayList.add(
+                new Manufacturer_DTO(
+                        "Knfilter_key_3592", "K&N Filters", "D:\\savedHtml\\knfilter_key" + "\\"
+                ));
+        manufacturerDtosArrayList.add(new Manufacturer_DTO("NerfBar_1878", "NerfBar", "D:\\savedHtml\\savedHtml_KEY_cat_NerfBars" + "\\"));
         manufacturerDtosArrayList.add(new Manufacturer_DTO("Weathertech_4961", "Weathertech", "D:\\savedHtml\\savedHtml_Weathertech_key" + "\\"));
-     */   // manufacturerDtosArrayList.add(new Manufacturer_DTO("","",""+"\\"));
+        manufacturerDtosArrayList.add(new Manufacturer_DTO("energysuspension_3156", "EnergySuspension", "D:\\savedHtml\\savedHtml_energysuspension_KEYSTONE" + "\\"));
+      */  // manufacturerDtosArrayList.add(new Manufacturer_DTO("","",""+"\\"));
     }
 
     static int filesAmountLeft;
@@ -139,9 +146,11 @@ public class Scenario_Item_mulithreaded {
                 if ((finishFileNumber != 0) && (n > finishFileNumber)) break;
             }
 
+           // if (itemsPool.awaitTermination(9000000, TimeUnit.SECONDS))
             itemsPool.shutdown();
 
-            if (itemsPool.awaitTermination(9000000, TimeUnit.SECONDS))
+            // TODO: check awaitTermination https://javarush.com/quests/lectures/jru.module2.lecture19
+            if (itemsPool.awaitTermination(90000000, TimeUnit.SECONDS))
                 try {
                     System.out.println(arrayListOfAllStringsForCSV_Presta.size());
                     System.out.println(arrayListOfAllStringsForCSV_noCars_Presta.size());

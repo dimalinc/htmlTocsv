@@ -81,7 +81,7 @@ public class Item implements Runnable {
             for (Car car : this.carObjectsList) {
 
                 listingStringsArrayList.add(this.sku);
-                listingStringsArrayList.add(car.carItemSku.replace("//r//n",""));
+                listingStringsArrayList.add(car.carItemSku.replace("//r//n", ""));
                 listingStringsArrayList.add(this.itemType);
                 listingStringsArrayList.add(this.itemFullDescription);
                 listingStringsArrayList.add(this.attributesFromDesHTML);
@@ -213,9 +213,9 @@ public class Item implements Runnable {
             sb.append(lineSeparator).append("Kit components: ").append(lineSeparator);
             sb.append(kitComponentsArrayList.toString().replace("[", "").replace("]", ""));
         }
-        itemFullDescription = sb.toString().replace("For [] '' Lift","").replace("[]","").replace("null","");
+        itemFullDescription = sb.toString().replace("For [] '' Lift", "").replace("[]", "").replace("null", "");
 
-        itemShortDescription = keystoneShortDesc.replace("; ",lineSeparator);
+        itemShortDescription = keystoneShortDesc.replace("; ", lineSeparator);
         if (extendedLength != null || collapsedLength != null || upperMount != null || lowerMount != null)
             itemShortDescription = itemShortDescription + lineSeparator + "Ext. length: " + extendedLength + lineSeparator +
                     "Coll. lenght: " + collapsedLength + lineSeparator + "Upper mount: " + upperMount + "Lower mount: " + lowerMount;
@@ -223,7 +223,8 @@ public class Item implements Runnable {
         // System.out.println("Short description="+ itemShortDescription);
     }
 
-    public Item() { }
+    public Item() {
+    }
 
     void kitComponentsArrayListInit() {
         ArrayList<Element> kitComponentElementsList = new ArrayList<>();
@@ -264,7 +265,7 @@ public class Item implements Runnable {
 
             // было внутри предыдущего цикла пока не стали тестить левелинг киты https://wwwsc.ekeystone.com/Search/Detail?pid=SKYTT20MSP
             // раньше было EndsWith "Inch Lift"
-            if (s.contains("Lift") || s.contains("Drop")) {
+            if (s.contains("Lift") || s.contains("Drop") || s.contains("Level") ) {
                 if (!s.contains("Lift Kit Suspension") && !s.contains("Front Springs") && !s.contains("Rear Lift Blocks")
                         && !s.contains("Rear Add-A-Leafs") && !s.contains("Drop Pitman Arm")) {
                     s = s.replace("For", "");
@@ -273,28 +274,32 @@ public class Item implements Runnable {
                     // System.out.println(sku + " " + itemFrontLiftString + " ** " + itemRearLiftString);
                 }
 
-                if (itemType.contains("Leveling Kit")) {
-                    if ((itemFrontLiftString != null) && (itemRearLiftString != null) && (itemFrontLiftString.equals(itemRearLiftString)))
-                        itemRearLiftString = null;
-                    itemPositionArrayList.add("Front");
-                    itemPositionArrayList.remove("Rear");
-                }
-
-                if ((itemPositionArrayList.contains("Front")) && (itemPositionArrayList.contains("Rear"))
-                    /* && (!s.contains("With Front Springs")) && (!s.contains("Rear Lift Blocks") )*/) {
-                    itemPositionArrayList.clear();
-                    itemPositionArrayList.add("Full Front and Rear");
-                }
-
-                if (itemPositionArrayList.contains("Front and Rear")) {
-                    itemPositionArrayList.clear();
-                    itemPositionArrayList.add("Full Front and Rear");
-                }
             }
-
-            liftsInit();
-
         }
+
+        // было "Leveling kit"
+        if (itemType.contains("Level")) {
+            if ((itemFrontLiftString != null) && (itemRearLiftString != null) && (itemFrontLiftString.equals(itemRearLiftString)))
+                itemRearLiftString = null;
+            itemPositionArrayList.add("Front");
+            itemPositionArrayList.remove("Rear");
+        }
+
+        if ((itemPositionArrayList.contains("Front")) && (itemPositionArrayList.contains("Rear"))
+            /* && (!s.contains("With Front Springs")) && (!s.contains("Rear Lift Blocks") )*/) {
+           // System.out.println("contains Front and contains Rear");
+            itemPositionArrayList=new LinkedHashSet<>();
+            itemPositionArrayList.add("Full Front and Rear");
+        }
+
+        if (itemPositionArrayList.contains("Front and Rear")) {
+            System.out.println("contains Front and Rear");
+            itemPositionArrayList=new LinkedHashSet<>();
+            itemPositionArrayList.add("Full Front and Rear");
+        }
+
+        liftsInit();
+
     }
 
     void positionsInit(String s) {
@@ -366,7 +371,8 @@ public class Item implements Runnable {
 
         } catch (Exception e) {
             System.out.println(this.sku);
-            e.printStackTrace(); }
+            e.printStackTrace();
+        }
 
         // System.out.println(itemFrontLiftNumberStart +" "+ itemFrontLiftNumberFinish+" " + itemRearLiftNumberStart+" "+ itemRearLiftNumberFinish);
 
@@ -409,7 +415,7 @@ public class Item implements Runnable {
     }
 
     void populate_Presta_itemFullLineStringArrayForMultithreading_cars() {
-        if (this.carObjectsList.size()>0)
+        if (this.carObjectsList.size() > 0)
             for (Car car : this.carObjectsList) {
                 ArrayList<String> listingStringsArrayList = new ArrayList<>();
 
@@ -423,13 +429,13 @@ public class Item implements Runnable {
                 listingStringsArrayList.add(this.longDescWoAttribsHTML);
                 listingStringsArrayList.add(this.picUrl);
                 listingStringsArrayList.add(car.carLineString);
-                listingStringsArrayList.add((this.itemPrestaAttArrayList.toString()+car.carPrestaAttArrayList.toString())
-                        .replace("[","").replace("]","").replace("; ,",","));
+                listingStringsArrayList.add((this.itemPrestaAttArrayList.toString() + car.carPrestaAttArrayList.toString())
+                        .replace("[", "").replace("]", "").replace("; ,", ","));
                 listingStringsArrayList.add
-                        (car.carPrestaCategoryStringWoYears+", "
-                                +car.carPrestaCategoryStringWithYears+", "
-                                +"All_Items"+", "
-                                +"All_Items/"+this.itemType);
+                        (car.carPrestaCategoryStringWoYears + ", "
+                                + car.carPrestaCategoryStringWithYears + ", "
+                                + "All_Items" + ", "
+                                + "All_Items/" + this.itemType);
                 listingStringsArrayList.add(car.carWpCategoryString);
                 listingStringsArrayList.add(car.make);
                 listingStringsArrayList.add(car.model);
@@ -441,7 +447,12 @@ public class Item implements Runnable {
                     listingStringsArrayList.add("ItemLiftStrings=0");
                 else listingStringsArrayList.add("");
 
-                listingStringsArrayList.add(" TITLES WP ");
+                listingStringsArrayList.add(" FIN TITLE ");
+                if ((this.itemFrontLiftString == null) && (this.itemRearLiftString == null))
+                    listingStringsArrayList.add(car.carPrestaTitleString);
+                else listingStringsArrayList.add(car.itemWpTitleString);
+
+                    listingStringsArrayList.add(" TITLES WP ");
                 listingStringsArrayList.add(car.itemWpTitleString);
                 listingStringsArrayList.add(car.carWpTitleString);
 
@@ -496,9 +507,9 @@ public class Item implements Runnable {
 
     void populate_Presta_itemFullLineStringArrayForMultithreading_NO_cars() {
         // adding rows for  noCar items
-        if (this.carObjectsList.size()==0) {
+        if (this.carObjectsList.size() == 0) {
 
-            System.out.println("!!! found item NO_cars "+ this.sku.trim());
+            System.out.println("!!! found item NO_cars " + this.sku.trim());
             ArrayList<String> listingStringsArrayListNoCars = new ArrayList<>();
             System.out.println();
             listingStringsArrayListNoCars.add(this.sku);
@@ -516,7 +527,7 @@ public class Item implements Runnable {
 
     void populate_EGOR_itemFullLineStringArrayForMultithreading_cars() {
 
-        if (this.carObjectsList.size()>0)
+        if (this.carObjectsList.size() > 0)
             for (Car car : this.carObjectsList) {
                 ArrayList<String> listingStringsArrayList = new ArrayList<>();
 
@@ -535,16 +546,16 @@ public class Item implements Runnable {
                 listingStringsArrayList.add(car.subCarEnginesLinkedHashSet.toString());
 
                 StringBuilder sbEngine = new StringBuilder();
-                for (String subCarEngineString:car.subCarEnginesLinkedHashSet) {
+                for (String subCarEngineString : car.subCarEnginesLinkedHashSet) {
                     sbEngine.append(subCarEngineString).append(System.lineSeparator());
                 }
                 listingStringsArrayList.add(sbEngine.toString());
 
                 listingStringsArrayList.add(car.carAppAttLinkedHashSet.toString());
                 listingStringsArrayList.add(car.carAppFootnoteLinkedHashSet.toString());
-               // System.out.println(car.subCarObjectsList.toString() );
-              //  System.out.println(car.carAppAttLinkedHashSet.toString() );
-               // System.out.println(car.carAppFootnoteLinkedHashSet.toString() );
+                // System.out.println(car.subCarObjectsList.toString() );
+                //  System.out.println(car.carAppAttLinkedHashSet.toString() );
+                // System.out.println(car.carAppFootnoteLinkedHashSet.toString() );
 
 
                 listingStringsArrayList.add(car.carWpCategoryString);
@@ -561,7 +572,6 @@ public class Item implements Runnable {
                 listingStringsArrayList.add(car.itemWpTitleString);
                 listingStringsArrayList.add(car.carWpTitleString);
 
-
                 StringBuilder subCarSb = new StringBuilder();
                 StringBuilder applicationFootnoteSb = new StringBuilder();
                 StringBuilder applicationAttributeSb = new StringBuilder();
@@ -572,10 +582,11 @@ public class Item implements Runnable {
                 StringBuilder applicationAttributeLiftRangeSb = new StringBuilder();
 
                 for (SubCar subCar : car.subCarObjectsList) {
-                  //  subCarSb.append(subCar.subCarValue).append(System.lineSeparator());
+                    //  subCarSb.append(subCar.subCarValue).append(System.lineSeparator());
 
                     for (ApplicationFootnote applicationFootnote : subCar.subCarAppFootnote_ObjectsList) {
-                        applicationFootnoteSb.append(applicationFootnote.appFootnote_Value).append(System.lineSeparator()); }
+                        applicationFootnoteSb.append(applicationFootnote.appFootnote_Value).append(System.lineSeparator());
+                    }
 
                     for (ApplicationAttribute applicationAttribute : subCar.subCarAppAttribute_ObjectsList) {
                         applicationAttributeSb.append(applicationAttribute.applicationAttribute_Value).append(System.lineSeparator());
@@ -607,9 +618,9 @@ public class Item implements Runnable {
 
     void populate_EGOR_itemFullLineStringArrayForMultithreading_NO_cars() {
         // adding rows for  noCar items
-        if (this.carObjectsList.size()==0) {
+        if (this.carObjectsList.size() == 0) {
 
-            System.out.println("!!! found item NO_cars "+ this.sku.trim());
+            System.out.println("!!! found item NO_cars " + this.sku.trim());
             ArrayList<String> listingStringsArrayListNoCars = new ArrayList<>();
             System.out.println();
             listingStringsArrayListNoCars.add(this.sku);
@@ -636,7 +647,7 @@ public class Item implements Runnable {
         }
         if (doc != null) {
             lengthMountsInit();
-            sku = data_processing_utils.generateCellContentText(xpathStringsList.get(0), doc).replace("\r\n","");
+            sku = data_processing_utils.generateCellContentText(xpathStringsList.get(0), doc).replace("\r\n", "");
             keystoneItemTitle = data_processing_utils.generateCellContentText(xpathStringsList.get(1), doc);
             keystoneShortDesc = data_processing_utils.generateCellContentText(xpathStringsList.get(2), doc);
 
@@ -649,7 +660,7 @@ public class Item implements Runnable {
             attributesFromDesHTML = data_processing_utils.generateCellContentHTML(xpathStringsList.get(3), doc);
 
             longDesc = data_processing_utils.generateCellContentText(xpathStringsList.get(3), doc) + data_processing_utils.generateCellContentText(xpathStringsList.get(4), doc) + data_processing_utils.generateCellContentText(xpathStringsList.get(5), doc);
-            longDesc=longDesc.replace("\\r\\n","\\n");
+            longDesc = longDesc.replace("\\r\\n", "\\n");
             longDescWoAttribsHTML = data_processing_utils.generateCellContentText(xpathStringsList.get(4), doc) + data_processing_utils.generateCellContentText(xpathStringsList.get(5), doc);
             pdfUrl = data_processing_utils.generateCellContentText(xpathStringsList.get(8), doc);
             // picUrl = data_processing_utils.generateCellContent(xpathStringsList.get(9), doc);
@@ -663,8 +674,8 @@ public class Item implements Runnable {
             //  carObjectsList = new ArrayList<>();
             int i = 1; //xpath outnumbered from 1
             for (Element carWebElement : doc.selectXpath(Car.cars_Xpath)) {
-               // carObjectsList.add(new Car(i++, this, brandForXls));
-                carObjectsList.add(new Car(carWebElement,i++, this, brandForXls));
+                // carObjectsList.add(new Car(i++, this, brandForXls));
+                carObjectsList.add(new Car(carWebElement, i++, this, brandForXls));
             }
             // TODO: another way to make new Cars
 

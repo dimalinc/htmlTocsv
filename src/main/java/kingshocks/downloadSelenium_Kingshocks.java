@@ -1,22 +1,16 @@
-import io.github.bonigarcia.wdm.WebDriverManager;
-import io.github.bonigarcia.wdm.managers.OperaDriverManager;
-import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
+package kingshocks;
+
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.opera.OperaDriver;
-import org.openqa.selenium.opera.OperaOptions;
 
 import java.io.*;
-import java.net.URL;
-import java.time.Duration;
 import java.util.ArrayList;
 
-public class downloadSelenium {
+public class downloadSelenium_Kingshocks {
 
     static final int delay = 2750;
-    static String linksFilePath = "C:\\Users\\dmitr\\IdeaProjects\\htmlTocsv\\src\\main\\java\\Eibach\\com\\eibach.com_links";
-    static String savedHtmlDir = "D:\\savedHtml\\savedHtml_kingshocks" + "\\";
+    static String linksFilePath = "C:\\Users\\dmitr\\IdeaProjects\\htmlTocsv\\src\\main\\java\\crown\\crown_links.txt";
+    static String savedHtmlDir = "D:\\savedHtml\\savedHtml_crownautomotive.net" + "\\";
     static ArrayList<String> linksList = new ArrayList<>();
 
     public static void main(String[] args) {
@@ -24,9 +18,13 @@ public class downloadSelenium {
         int n = 1;
 
         WebDriver driver = new FirefoxDriver();
-      /*  driver.get("https://eibach.com/product/E80-23-032-01-22");
-        sleep(delay*20);
-        driver.get("https://eibach.com/product/E80-23-032-01-22");*/
+        driver.manage().window().maximize();
+        /*driver.get("https://camburg.com/shop/accessories/acc-lighting/baja-designs-chevy-1500-14-pro-a-pillar-light-kit/");
+        System.out.print(" FIRST ");
+        sleep(delay * 14);
+        driver.get("https://camburg.com/shop/accessories/acc-lighting/baja-designs-chevy-1500-14-pro-a-pillar-light-kit/");*/
+
+
 
 
 
@@ -43,9 +41,8 @@ public class downloadSelenium {
 
 
             String fileName = linkString.split("/")[linkString.split("/").length - 1];
-          //  driver.manage().timeouts().implicitlyWait(Duration.ofMillis(1500));
+            //  driver.manage().timeouts().implicitlyWait(Duration.ofMillis(1500));
             driver.get(linkString);
-            driver.manage().window().maximize();
             // TODO: remove for other except Timbren
             /*JavascriptExecutor js = (JavascriptExecutor) driver;
             // js.executeScript("document.body.style.zoom = '0.25'");
@@ -88,12 +85,39 @@ public class downloadSelenium {
                 buttonFitment.click();
             }*/
 
+            // only for camburg options
+           /* WebElement dropdownSelectWebElement = null;
 
-            writeToFile(fileName,driver);
+            try {
+                sleep(500);
+                dropdownSelectWebElement = driver.findElement(By.xpath("//div[@class='select-wrapper']/select"));
+
+                Select select = new Select(dropdownSelectWebElement);
+               // dropdownSelectWebElement.click();
+
+                List<WebElement> optionList = select.getOptions();
+                int nn=0;
+                for (WebElement child : optionList) {
+                    select.selectByIndex(nn);
+                  //  child.click();
+                    sleep(300);
+
+                    writeToFile(fileName + "_" + nn++, driver);
+
+                    // WebElement parent = child.findElement(By.xpath("./.."));
+                    //  WebElement parent = (WebElement) ((JavascriptExecutor) driver).executeScript( "return arguments[0].parentNode;", child);
+                    WebElement parent = driver.findElement(By.xpath(Item_Camburg.xpathStringsList.get(5)));
+                    parent.click();
+
+                }
+            } catch (NoSuchElementException e) { e.printStackTrace(); }
+
+            if (dropdownSelectWebElement == null)*/
+                writeToFile(fileName, driver);
 
             System.out.println(n++ + " " + fileName + " finished " + (System.currentTimeMillis() - start) /*/ 1000*/ + "miliseconds"
                     /*+ "__ OR __" + ((System.currentTimeMillis() - start) / 1000 / 60) + "minutes"*/);
-            sleep(delay);
+             sleep(delay);
         }
 
         driver.quit();
@@ -104,9 +128,7 @@ public class downloadSelenium {
         BufferedWriter writer = null;
         try {
             writer = new BufferedWriter(new FileWriter(savedHtmlDir + fileName));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException e) { e.printStackTrace(); }
         try {
             writer.write(driver.getPageSource());
             System.out.println("html Length = " + driver.getPageSource().length());
@@ -126,7 +148,6 @@ public class downloadSelenium {
         System.out.print(" " + delay + " ");
         System.out.println("Sleep finished");
     }
-
 
 
     static void readLinksFromFile() {

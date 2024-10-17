@@ -10,6 +10,7 @@ import static classes.utils.data_processing_utils.*;
 
 public class ApplicationAttribute extends SubCar {
 
+    public SubCar subCar;
     public String appAttS_Xpath;
     public String appAtt_Xpath;
     public static final String appAtts_Xpath = "/ancestor::li[1]/ul/li[@class='application-attribute']";
@@ -42,9 +43,12 @@ public class ApplicationAttribute extends SubCar {
             if (position.equals("Front and Rear")) position="Full Front and Rear";
 
             /// Lift
-            if (stringOfApplicationAttribute.contains("Lift"))
+            if (stringOfApplicationAttribute.contains("Lift") )
                 liftString = stringOfApplicationAttribute.replace("With ", "").replace(" Inch Lift", "").replace(" inch Lift", "")
                         .replace(" To ", "-").replace(" to ", "-").replace(" TO ", "-");
+
+
+            System.out.println(stringOfApplicationAttribute + " " +subCar.car.carItemSku+" "+liftString);
 
             try {
                 if (liftString != null) {
@@ -122,6 +126,7 @@ public class ApplicationAttribute extends SubCar {
 
     public ApplicationAttribute(Element webElement,int i, SubCar subCar) {
         doc = subCar.doc;
+        this.subCar=subCar;
         appAttS_Xpath = subCar.eachSubCarXpath + appAtts_Xpath;
         appAtt_Xpath = "(" + appAttS_Xpath + ")[" + i + "]";
        // applicationAttribute_Value = doc.selectXpath(appAtt_Xpath).text();
@@ -136,13 +141,13 @@ public class ApplicationAttribute extends SubCar {
 
     public ApplicationAttribute(int i, SubCar subCar) {
         doc = subCar.doc;
+        this.subCar=subCar;
         appAttS_Xpath = subCar.eachSubCarXpath + appAtts_Xpath;
         appAtt_Xpath = "(" + appAttS_Xpath + ")[" + i + "]";
         applicationAttribute_Value = doc.selectXpath(appAtt_Xpath).text();
         applicationAttributeStringsArrayListInit();
         initPositionAndLiftFromAppAttr();
         initLiftPositionFromObject(appAttSplitArrayList);
-
     }
 
     @Override

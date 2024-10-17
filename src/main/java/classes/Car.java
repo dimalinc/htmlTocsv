@@ -35,13 +35,14 @@ public class Car extends Item {
     public String carItemSku;
     public LinkedHashSet<Double> carLiftNumbersSet = new LinkedHashSet<>();
     public String carLiftNumbersString;
-    public Double carLiftNumberStart = -100.0;
-    public Double carLiftNumberFinish = -100.0;
+    public double carLiftNumberStart = -100.0;
+    public double carLiftNumberFinish = -100.0;
     public String carMakeModelYearsString;
     public String carPrestaTitleString;
     public String itemPrestaTitleString;
     public String carWpTitleString;
     public String itemWpTitleString;
+    public String finalTitle;
     public String subCarDrivesString = null;
     public LinkedHashSet<ApplicationFootnote> carAppFootnoteLinkedHashSet = new LinkedHashSet<>(); public String carAppFootnoteLinkedHashSetString;
     public LinkedHashSet<ApplicationAttribute> carAppAttLinkedHashSet = new LinkedHashSet<>(); public String carAppAttLinkedHashSetString;
@@ -105,10 +106,11 @@ public class Car extends Item {
         doc = item.doc;
         carXpath = carXpathBeginning + i + carXpathEnd;
         carLineString = carWebElement.text();
-        //TODO: other way to get carLineString - get the text i-st element of the carElementsList
-        subCarWebElementsList = doc.selectXpath(carXpath + SubCar.subCars_xpath);
         carItemSku = item.sku + "_n_" + i;
         carItemSku = carItemSku.replace("_x000D_","");
+        //TODO: other way to get carLineString - get the text i-st element of the carElementsList
+        subCarWebElementsList = doc.selectXpath(carXpath + SubCar.subCars_xpath);
+
 
         subCarObjectsListInit();
         yearsInit();
@@ -134,10 +136,11 @@ public class Car extends Item {
         doc = item.doc;
         carXpath = carXpathBeginning + i + carXpathEnd;
         carLineString = doc.selectXpath(carXpath).text();
-        //TODO: other way to get carLineString - get the text i-st element of the carElementsList
-        subCarWebElementsList = doc.selectXpath(carXpath + SubCar.subCars_xpath);
         carItemSku = item.sku + "_n_" + i;
         carItemSku = carItemSku.replace("_x000D_","");
+        //TODO: other way to get carLineString - get the text i-st element of the carElementsList
+        subCarWebElementsList = doc.selectXpath(carXpath + SubCar.subCars_xpath);
+
 
         subCarObjectsListInit();
         yearsInit();
@@ -183,58 +186,82 @@ public class Car extends Item {
 
     private void titlesInit() {
         String liftOrDropString=" Lift ";
-        if ( (carLiftNumberStart<0) || (carLiftNumberFinish<0) ) {liftOrDropString=" Drop ";}
+        if ( (carLiftNumberStart<0) || (carLiftNumberFinish<0) ||(itemLiftMin<0) || (itemLiftMax<0) ) {liftOrDropString=" Drop ";}
 
+        if ( ( (carLiftNumberStart==0.0) && (carLiftNumberFinish==0.0) )
+                &&
+                ( (itemLiftMin==0.0 ) && (itemLiftMax==0.0) ) )
+        {liftOrDropString="";}
 
-        itemWpTitleString = item.itemType+" for "+ carMakeModelYearsString +" "+subCarDrivesString +" "
+        if (!(item.itemLiftMin==item.itemLiftMax))
+            itemWpTitleString = item.itemType+" for "+ carMakeModelYearsString +" "+subCarDrivesString+" "
                 +item.itemLiftMin +"-"+item.itemLiftMax+"'' "+item.itemPositionArrayList.toString()+carPositionStringsHashSet.toString()+" "+liftOrDropString;
-        if (item.itemLiftMin==item.itemLiftMax)
+        else
             itemWpTitleString = item.itemType+" for "+ carMakeModelYearsString +" "+subCarDrivesString +" "
                     +item.itemLiftMin+"'' "+item.itemPositionArrayList.toString()+carPositionStringsHashSet.toString()+" "+liftOrDropString;
+//replace
+            itemWpTitleString = itemWpTitleString.replace("-null","").replace(" null","").replace("[]","")
+                    .replace("Suspension ","")
+                    .replace("Full ","").replace("  "," ").replace("[","").replace("]","")
+                    .replace("FrontFront","Front").replace("RearRear","Rear")
+                    .replace("-100''","").replace("-100--100'' Lift","").replace("-100.0--100.0'' Lift ","").replace("0.0-0.0'' Lift","").replace("0-0''  Lift","").replace(".0","").replace("-100''","").replace("_x000D_","")
+                    ;
 
-        itemWpTitleString = itemWpTitleString.replace("-null","").replace(" null","").replace("[]","")
-                .replace("Full ","").replace("  "," ").replace("[","").replace("]","")
-                .replace("-100--100'' Lift","").replace("-100.0--100.0'' Lift ","").replace("0.0-0.0'' Lift","").replace(".0","").replace("_x000D_","")
-        ;
+        System.out.println(itemWpTitleString);
 
-        carWpTitleString =brandForXls+" "+carLiftNumberStart+"-"+carLiftNumberFinish+"'' "+carPositionStringsHashSet.toString()+liftOrDropString+item.itemType+" for "+carMakeModelYearsString +" "+subCarDrivesString /*+" "+ carAppAttPositionLinkedHashSet.toString()*/;
-        if (carLiftNumberStart==carLiftNumberFinish)
+        if (!(carLiftNumberStart==carLiftNumberFinish))
+            carWpTitleString =brandForXls+" "+carLiftNumberStart+"-"+carLiftNumberFinish+"'' "
+                    +carPositionStringsHashSet.toString()+" "+liftOrDropString+item.itemType+" for "+carMakeModelYearsString +" "+subCarDrivesString /*+" "+ carAppAttPositionLinkedHashSet.toString()*/;
+        else
             carWpTitleString=brandForXls+" "+carLiftNumberStart+"'' "+carPositionStringsHashSet.toString()+liftOrDropString+item.itemType+" for "+carMakeModelYearsString +" "+subCarDrivesString /*+" "+ carAppAttPositionLinkedHashSet.toString()*/;
-
-
+//replace
         carWpTitleString = carWpTitleString
-                .replace("-100--100'' Lift","").replace("-100.0--100.0'' Lift ","").replace("0.0-0.0'' Lift","").replace(".0","").replace("_x000D_","").replace("[","").replace("]","")
+                .replace("Suspension ","")
+                .replace("FrontFront","Front").replace("RearRear","Rear")
+                .replace("-100--100'' Lift","").replace("-100.0--100.0'' Lift ","").replace("0.0-0.0'' Lift","").replace("0-0'' Lift","").replace(".0","").replace("-100''","").replace("_x000D_","").replace("[","").replace("]","")
         // .replace("Four","4WD").replace("All","4WD")
         /*.replace("Rear","2WD")*/;
         // System.out.println(carWpTitleString);
 
-
-        itemPrestaTitleString=/*item.sku+" "*/item.itemType+" for "+carMakeModelYearsString +" "+subCarDrivesString+
+        if (!(item.itemLiftMin==item.itemLiftMax))
+            itemPrestaTitleString=/*item.sku+" "*/item.itemType+" for "+carMakeModelYearsString +" "+subCarDrivesString+
                 " "+item.itemLiftMin +"-"+item.itemLiftMax+"'' "+item.itemPositionArrayList.toString()+carPositionStringsHashSet.toString()+liftOrDropString+" "+
                 brandForXls;
+        else
+            itemPrestaTitleString=/*item.sku+" "*/item.itemType+" for "+carMakeModelYearsString +" "+subCarDrivesString+
+                    " "+item.itemLiftMin +"'' "+item.itemPositionArrayList.toString()+carPositionStringsHashSet.toString()+liftOrDropString+" "+
+                    brandForXls;
+
         itemPrestaTitleString = itemPrestaTitleString.replace("-null","").replace(" null","").replace("[","").replace("]","")
+                .replace("Suspension ","")
                 .replace("Full ","").replace("  "," ")
-                .replace("-100--100'' Lift","").replace("-100.0--100.0'' Lift ","").replace("0.0-0.0'' Lift","").replace(".0","").replace("_x000D_","")
+                .replace("FrontFront","Front").replace("RearRear","Rear")
+                .replace("-100--100'' Lift","").replace("-100.0--100.0'' Lift ","").replace("0.0-0.0'' Lift","").replace("0.0-0.0'' Lift","").replace(".0","").replace("-100''","").replace("_x000D_","")
         ;
 
-
+        if (!(carLiftNumberStart==carLiftNumberFinish))
         carPrestaTitleString=item.itemType+" for "+carMakeModelYearsString +" "+subCarDrivesString +" "+
                 /*carAppAttPositionLinkedHashSet.toString()+*/
                 /*+item.sku*/" "+carLiftNumberStart+"-"+carLiftNumberFinish+"'' "+carPositionStringsHashSet.toString()+liftOrDropString
                 +" "+brandForXls;
+        else
+        carPrestaTitleString=item.itemType+" for "+carMakeModelYearsString +" "+subCarDrivesString +" "+
+                /*carAppAttPositionLinkedHashSet.toString()+*/
+                /*+item.sku*/" "+carLiftNumberStart+"'' "+carPositionStringsHashSet.toString()+liftOrDropString
+                +" "+brandForXls;
+                //replace
         carPrestaTitleString = carPrestaTitleString.replace("[","").replace("]","")
-                .replace("0.0-0.0'' Lift","").replace("-100--100'' Lift","").replace("-100.0--100.0'' Lift ","").replace(".0","").replace("_x000D_","");
+                .replace("Suspension ","")
+                .replace("FrontFront","Front").replace("RearRear","Rear")
+                .replace("0.0-0.0'' Lift","").replace("0-0''","").replace("-100--100'' Lift","").replace("-100.0--100.0'' Lift ","").replace(".0","").replace("-100''","").replace("_x000D_","");
 
-       // System.out.println("carPrestaTitleString = " + carPrestaTitleString);
+        // System.out.println("carPrestaTitleString = " + carPrestaTitleString);
         // System.out.println("itemPrestaTitleString = " + itemPrestaTitleString);
     }
 
     public Car() {}
 
-    public String getCarLineString() {
-        return carLineString;
-    }
-
+    public String getCarLineString() { return carLineString; }
 
     public void appAttAndFootnoteLinkedHashSetsInit() {
         StringBuilder sb1=new StringBuilder();
@@ -257,12 +284,11 @@ public class Car extends Item {
 
             for (ApplicationAttribute applicationAttribute:carAppAttLinkedHashSet) {
                 sbApplicationAttribute.append(applicationAttribute.applicationAttribute_Value).append(System.lineSeparator());
-                System.out.println("applicationAttribute.appLiftPositionObject.getPositionStringsHashSet().toString()"
-                        + applicationAttribute.appLiftPositionObject.getPositionStringsHashSet().toString());
+              //  System.out.println("applicationAttribute.appLiftPositionObject.getPositionStringsHashSet().toString()" + applicationAttribute.appLiftPositionObject.getPositionStringsHashSet().toString());
 
                 for (String s:applicationAttribute.appLiftPositionObject.getPositionStringsHashSet()) {
                     carPositionStringsHashSet.add(s);
-                    System.out.println("carPositionStringsHashSet ="+ carPositionStringsHashSet);
+                   // System.out.println("carPositionStringsHashSet ="+ carPositionStringsHashSet);
                     //    applicationAttributePositionSb.append(applicationAttribute.appLiftPositionObject.getPositionStringsHashSet().toString())
                 }
                 /*.append(System.lineSeparator())*/;

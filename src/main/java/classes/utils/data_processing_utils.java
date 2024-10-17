@@ -205,8 +205,9 @@ public class data_processing_utils {
                 result = Double.parseDouble(inputString);
             }
         }catch (Exception e) {
-            System.out.println("inputString =" + inputString);
-            e.printStackTrace(); result=0;}
+           // System.out.println("inputString =" + inputString);
+           // e.printStackTrace();
+            result=0;}
             return result;
     }
 

@@ -13,9 +13,9 @@ public class keystone_login_items_save_scenario {
     static final int stopNumber = 400;
     static final int delay = 1350;
     //  static String linksFilePath = "C:\\Users\\dmitr\\IdeaProjects\\htmlTocsv\\src\\main\\java\\Draw-Tite_key\\draw-tite_key_links.txt";
-      static String linksFilePath = "C:\\Users\\dmitr\\IdeaProjects\\htmlTocsv\\src\\main\\java\\super_springs\\superSpring_links_key.txt";
+      static String linksFilePath = "C:\\Users\\dmitr\\IdeaProjects\\htmlTocsv\\src\\main\\java\\rancho\\rancho_links.txt";
     //  static String savedHtmlDir = "D:\\savedHtml\\savedHtml_Draw-Tite_key" + "\\";
-     static String savedHtmlDir = "D:\\savedHtml\\savedHtml_supersprings_key" + "\\";
+     static String savedHtmlDir = "D:\\savedHtml\\savedHtml_Rancho_key" + "\\";
     static ArrayList<String> linksList = new ArrayList<>();
     // private static WebDriver driver = new BrowserFctory().getDriver(ConfigManager.getConfigProperty("DRIVER"));
     private static WebDriver driver = keystone.common.Browser.getInstanceOfWebDriver().getDriver();

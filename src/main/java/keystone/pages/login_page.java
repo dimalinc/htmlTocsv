@@ -18,7 +18,7 @@ public class login_page {
 
     public void populateNameANdPass() {
         usernameInput.enterText("120704");
-        passwordInput.enterText("tuwmeg-9zoxFo-juhded");
+        passwordInput.enterText("viwdEw-3fobdy-jyspud");
     }
 
     public void clickSignInButton() {

@@ -27,7 +27,7 @@ public class downloadHtml {
             String docHtml = doc.html();
             try {
                 BufferedWriter writer = new BufferedWriter(new FileWriter(htmlDir
-                        + linkString.split("=")[linkString.split("=").length - 1]/*+".html"*/));
+                        + linkString.split("/")[linkString.split("/").length - 1]/*+".html"*/));
                 writer.write(docHtml);
                 writer.close();
             } catch (IOException e) {
@@ -41,8 +41,8 @@ public class downloadHtml {
 
 
     static final int delay = 4750;
-    static String linksFilePath = "C:\\Users\\dmitr\\IdeaProjects\\htmlTocsv\\src\\main\\java\\kyb\\kyb_com_links.txt";
-    static String htmlDir = "D:\\savedHtml\\kyb_com"+"\\";
+    static String linksFilePath = "C:\\Users\\dmitr\\IdeaProjects\\htmlTocsv\\src\\main\\java\\kingshocks\\kingshock_links.txt";
+    static String htmlDir = "D:\\savedHtml\\savedHtml_kingshocks"+"\\";
 
     public static void downloadViaHttpClient(ArrayList<String> linksList) {
         HttpClient client = HttpClient.newHttpClient();

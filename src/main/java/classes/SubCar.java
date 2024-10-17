@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 
 public class SubCar extends Car{
+    public Car car;
     public String subCarStringValue;
     public String subCarXpath;
     public String eachSubCarXpath;
@@ -26,6 +27,7 @@ public class SubCar extends Car{
 
     public SubCar(Element subCarWebElement,int i, Car car) {
         doc=car.doc;
+        this.car=car;
         subCarXpath=car.carXpath+subCars_xpath;
        // ?? subCarElementsList=doc.selectXpath(subCarXpath);
         eachSubCarXpath="("+subCarXpath+")["+i+"]";
