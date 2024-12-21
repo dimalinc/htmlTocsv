@@ -62,9 +62,13 @@ public class SubCar extends Car{
         }
 
         // TODO:  находить первую точку с запятой, и отрывать по первому пробелу ДООО первой точки с запятой
-        String subCarPlusFirstEngineWord= subCarStringValue.substring(0,subCarStringValue.indexOf(";"));
-       // System.out.println("subCarPlusFirstEngineWord ="+ subCarPlusFirstEngineWord);
-        String firstEngineWord = subCarPlusFirstEngineWord.substring(subCarPlusFirstEngineWord.lastIndexOf(" ") );
+        String firstEngineWord = "";
+        if (subCarStringValue.contains(";")) {
+            String subCarPlusFirstEngineWord = subCarStringValue.substring(0, subCarStringValue.indexOf(";"));
+
+            // System.out.println("subCarPlusFirstEngineWord ="+ subCarPlusFirstEngineWord);
+            firstEngineWord = subCarPlusFirstEngineWord.substring(subCarPlusFirstEngineWord.lastIndexOf(" "));
+        }
       //  System.out.println("firstEngineWord = "+ firstEngineWord);
         subCarEngineString = (firstEngineWord+subCarStringValue.substring
                 (subCarStringValue.indexOf(" ",subCarStringValue.indexOf(";")))).trim();

@@ -8,21 +8,20 @@ import static classes.utils.file_utils.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 
 public class Scenario_Item_mulithreaded {
-    final static int numberOfThreads = 6;
+    final static int numberOfThreads = 5;
     static ArrayList<Manufacturer_DTO> manufacturerDtosArrayList = new ArrayList<>();
 
 
     static {
         manufacturerDtosArrayList.add(new Manufacturer_DTO("Bilstein_1003", "Bilstein", "D:\\savedHtml\\savedHtml_Bilstein_key" + "\\"));
-        manufacturerDtosArrayList.add(new Manufacturer_DTO("Skyjacker_2522", "Skyjacker", "D:\\savedHtml\\savedHtml_skyALL_BIG" + "\\"));
+        //  manufacturerDtosArrayList.add(new Manufacturer_DTO("Bilstein_1003", "Bilstein", "D:\\savedHtml\\savedHtml_Bilstein_key" + "\\",300,900));
+       // manufacturerDtosArrayList.add(new Manufacturer_DTO("Skyjacker_2522", "Skyjacker", "D:\\savedHtml\\savedHtml_skyALL_BIG" + "\\"));
 
-      //  manufacturerDtosArrayList.add(new Manufacturer_DTO("Rancho_418", "Rancho", "D:\\savedHtml\\savedHtml_Rancho_key" + "\\"));
+        manufacturerDtosArrayList.add(new Manufacturer_DTO("Rancho_418", "Rancho", "D:\\savedHtml\\savedHtml_Rancho_key" + "\\"));
 
       /* manufacturerDtosArrayList.add(new Manufacturer_DTO("Bilstein_1003", "Bilstein", "D:\\savedHtml\\savedHtml_Bilstein_key" + "\\",0,100));
         manufacturerDtosArrayList.add(new Manufacturer_DTO("Bilstein_1003", "Bilstein", "D:\\savedHtml\\savedHtml_Bilstein_key" + "\\",101,200));
@@ -49,8 +48,8 @@ public class Scenario_Item_mulithreaded {
         manufacturerDtosArrayList.add(new Manufacturer_DTO("Eibach_1521", "Eibach", "D:\\savedHtml\\savedHtml_eibach" + "\\"));
         manufacturerDtosArrayList.add(new Manufacturer_DTO("Daystar_1450", "Daystar", "D:\\savedHtml\\savedHtml_Daystar_key" + "\\"));
        */
-      //  manufacturerDtosArrayList.add(new Manufacturer_DTO("FOX_1012", "FOX", "D:\\savedHtml\\savedHtml_Fox_key" + "\\"));
-      /*  manufacturerDtosArrayList.add(new Manufacturer_DTO("ReadyLift_734", "ReadyLift", "D:\\savedHtml\\readyLIFT" + "\\"));
+        manufacturerDtosArrayList.add(new Manufacturer_DTO("FOX_1012", "FOX", "D:\\savedHtml\\savedHtml_Fox_key" + "\\"));
+        manufacturerDtosArrayList.add(new Manufacturer_DTO("ReadyLift_734", "ReadyLift", "D:\\savedHtml\\readyLIFT" + "\\"));
         manufacturerDtosArrayList.add(new Manufacturer_DTO("Fabtech_kits_1058", "Fabtech", "D:\\savedHtml\\savedHtml_fabtech_kits_KEYSTONE" + "\\"));
         manufacturerDtosArrayList.add(new Manufacturer_DTO("Fabtech_other_2035", "Fabtech", "D:\\savedHtml\\savedHtml_fabtech_others" + "\\"));
         manufacturerDtosArrayList.add(new Manufacturer_DTO("TuffCountry_2694", "TuffCountry", "D:\\savedHtml\\savedHtml_TuffCountry_key" + "\\"));
@@ -61,7 +60,6 @@ public class Scenario_Item_mulithreaded {
 
         manufacturerDtosArrayList.add(new Manufacturer_DTO("Monroe_2167", "Monroe", "D:\\savedHtml\\savedHtml_Monroe_key" + "\\"));
         manufacturerDtosArrayList.add(new Manufacturer_DTO("Moog_3597", "Moog", "D:\\savedHtml\\savedhtml_moog_all" + "\\"));
-       */
         // manufacturerDtosArrayList.add(new Manufacturer_DTO("Airlift_key_732", "AirLift", "D:\\savedHtml\\airLift_key" + "\\"));
         //   manufacturerDtosArrayList.add(new Manufacturer_DTO("GoRhino_2066", "GoRhino", "D:\\savedHtml\\savedHtml_GoRhino_key" + "\\"));
         //   manufacturerDtosArrayList.add(new Manufacturer_DTO("Retrax_869", "Retrax", "D:\\savedHtml\\savedHtml_Retrax_key" + "\\"));
@@ -77,7 +75,7 @@ public class Scenario_Item_mulithreaded {
         manufacturerDtosArrayList.add(new Manufacturer_DTO("Timberen_472", "Timberen", "D:\\savedHtml\\savedHtml_timberen_KEYSTONE" + "\\"));
 */
 
-        manufacturerDtosArrayList.add(new Manufacturer_DTO("Monroe_2167", "Monroe", "D:\\savedHtml\\savedHtml_Monroe_key" + "\\"));
+ /*       manufacturerDtosArrayList.add(new Manufacturer_DTO("Monroe_2167", "Monroe", "D:\\savedHtml\\savedHtml_Monroe_key" + "\\"));
         manufacturerDtosArrayList.add(new Manufacturer_DTO("Moog_3597", "Moog", "D:\\savedHtml\\savedhtml_moog_all" + "\\"));
 
 
@@ -88,7 +86,7 @@ public class Scenario_Item_mulithreaded {
         manufacturerDtosArrayList.add(new Manufacturer_DTO("NerfBar_1878", "NerfBar", "D:\\savedHtml\\savedHtml_KEY_cat_NerfBars" + "\\"));
         manufacturerDtosArrayList.add(new Manufacturer_DTO("Weathertech_4961", "Weathertech", "D:\\savedHtml\\savedHtml_Weathertech_key" + "\\"));
         manufacturerDtosArrayList.add(new Manufacturer_DTO("energysuspension_3156", "EnergySuspension", "D:\\savedHtml\\savedHtml_energysuspension_KEYSTONE" + "\\"));
-        // manufacturerDtosArrayList.add(new Manufacturer_DTO("","",""+"\\"));
+*/        // manufacturerDtosArrayList.add(new Manufacturer_DTO("","",""+"\\"));
     }
 
     static int filesAmountLeft;
@@ -153,6 +151,7 @@ public class Scenario_Item_mulithreaded {
             ExecutorService itemsPool = Executors.newFixedThreadPool(numberOfThreads);
 
             int n = 0;
+            Future<?> future = null;
             for (String fileString : filesArrayList) {
 
                 if ((startFileNumber != 0) && (n < startFileNumber)) {
@@ -160,7 +159,11 @@ public class Scenario_Item_mulithreaded {
                     continue;
                 }
 
-                itemsPool.submit(() -> item_processing(fileString,
+              /*  itemsPool.execute(new Item(new File(dir + fileString), brandForXls, arrayListOfAllStringsForCSV_EGOR, arrayListOfAllStringsForCSV_noCars_EGOR, arrayListOfAllStringsForCSV_Presta, arrayListOfAllStringsForCSV_noCars_Presta) );
+                System.out.println("filesAmountLeft = " + (filesAmountLeft--));*/
+
+
+               future = itemsPool.submit(() -> item_processing(fileString,
                         arrayListOfAllStringsForCSV_EGOR, arrayListOfAllStringsForCSV_noCars_EGOR,
                         arrayListOfAllStringsForCSV_Presta, arrayListOfAllStringsForCSV_noCars_Presta));
 
@@ -168,8 +171,17 @@ public class Scenario_Item_mulithreaded {
                 if ((finishFileNumber != 0) && (n > finishFileNumber)) break;
             }
 
+            try {
+                System.out.println("Result of Future: " + future.get());
+            } catch (ExecutionException e) {
+                //  throw new RuntimeException(e);
+                e.printStackTrace();
+            }
+
+
             //if (itemsPool.awaitTermination(9000000, TimeUnit.MINUTES))
             itemsPool.shutdown();
+
 
             // TODO: check awaitTermination https://javarush.com/quests/lectures/jru.module2.lecture19
             if (itemsPool.awaitTermination(90000000, TimeUnit.SECONDS))
