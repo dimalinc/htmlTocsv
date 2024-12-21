@@ -206,7 +206,7 @@ public class Item implements Runnable {
         sb.append(productInfoAttributesDesc).append(lineSeparator);
         sb.append(pdfUrl).append(lineSeparator);
         // sb.append(kitComponents).append(lineSeparator); //TODO: тут не KitComponents а почему-то цены выводятся - проверить?
-        if (stringListItemLiAttributes != null)
+        if (!stringListItemLiAttributes.isEmpty())
             sb.append(stringListItemLiAttributes).append(lineSeparator); //TODO: сделать с новой строки каждый элемент списка?
         // if (itemPrestaAttArrayList!=null) sb.append(itemPrestaAttArrayList).append(lineSeparator);
         if (kitComponentsArrayList.size() > 0) {
@@ -238,22 +238,26 @@ public class Item implements Runnable {
     void lengthMountsInit() {
         //  System.out.println("void lengthMountsInit()");
         String liAttributesOneString = data_processing_utils.generateCellContentText("//div[@class='product-detail-attributes']/ul/li", doc);
-        if (liAttributesOneString != null)
-            Collections.addAll(stringListItemLiAttributes, liAttributesOneString.split(lineSeparator));
-        // System.out.println(stringListItemLiAttributes.size());
+        if (!liAttributesOneString.isEmpty())
+            Collections.addAll(stringListItemLiAttributes, liAttributesOneString.split("\\r\\n")); // \r\n
+        // System.out.println("stringListItemLiAttributes.size() = "+stringListItemLiAttributes.size());
 
-        if (stringListItemLiAttributes != null) {
+        if (!stringListItemLiAttributes.isEmpty()) {
             for (String attributeLiString : stringListItemLiAttributes) {
-                if (attributeLiString.contains("Extended Length"))
+              //  System.out.println("attributeLiString = "+attributeLiString);
+              //  attributeLiString=attributeLiString.replace("&nbsp","");
+                if (attributeLiString.contains("Extended Length")) {
                     extendedLength = attributeLiString.split(":")[1].trim();
+                //    System.out.println("Extended length found = "+extendedLength);
+                }
                 if (attributeLiString.contains("Compressed Length"))
                     collapsedLength = attributeLiString.split(":")[1].trim();
                 if (attributeLiString.contains("Upper Mounting")) upperMount = attributeLiString.split(":")[1].trim();
                 if (attributeLiString.contains("Lower Mounting")) lowerMount = attributeLiString.split(":")[1].trim();
             }
         }
-       /* System.out.println(extendedLength);
-        System.out.println(collpasedLength);
+      /* System.out.println(extendedLength);
+        System.out.println(collapsedLength);
         System.out.println(upperMount);
         System.out.println(lowerMount);*/
     }
@@ -620,9 +624,9 @@ public class Item implements Runnable {
         // adding rows for  noCar items
         if (this.carObjectsList.size() == 0) {
 
-            System.out.println("!!! found item NO_cars " + this.sku.trim());
+           // System.out.println("!!! found item NO_cars " + this.sku.trim());
             ArrayList<String> listingStringsArrayListNoCars = new ArrayList<>();
-            System.out.println();
+          //  System.out.println();
             listingStringsArrayListNoCars.add(this.sku);
             listingStringsArrayListNoCars.add(brandForXls);
             int k = 0;
@@ -713,6 +717,8 @@ public class Item implements Runnable {
         itemPrestaAttArrayListInit();
 
         fullAndShortDescInit();
+
+        System.out.println("Item "+ sku + " finished");
 
         // System.out.println("itemPrestaAttArrayList = "+itemPrestaAttArrayList);
     }

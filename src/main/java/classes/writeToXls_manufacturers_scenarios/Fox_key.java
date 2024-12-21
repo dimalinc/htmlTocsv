@@ -1,5 +1,7 @@
 package classes.writeToXls_manufacturers_scenarios;
 
+import classes.scenarios.writeToXls_Base_Scenario_ItemList;
+import classes.scenarios.writeToXls_CsvAtts_Scenario;
 import classes.scenarios.writeToXls_PRESTA_CsvAtts_Scenario;
 import classes.scenarios.old_for_multithread.*;
 
@@ -16,7 +18,7 @@ public class Fox_key implements Runnable{
     public static void main(String[] args) {
         //  writeToXls_Base_Scenario_EGOR.main(brand,brandForXls,dir,writeAllCSV_fileName,domain,filesNumberStart,filesNumberFinish);
         // writeToXls_CsvAtts_Scenario.main(brand,brandForXls,dir,writeAllCSV_fileName,domain,filesNumberStart,filesNumberFinish);
-        //   writeToXls_Base_Scenario_ItemList.main(brand,brandForXls,dir,writeAllCSV_fileName,domain,filesNumberStart,filesNumberFinish);
+        writeToXls_CsvAtts_Scenario.main(brandForFilename,brandForXls,dir,writeAllCSV_fileName,domain,filesNumberStart,filesNumberFinish);
           writeToXls_PRESTA_CsvAtts_Scenario.main(brandForFilename,brandForXls,dir,writeAllCSV_fileName,domain,filesNumberStart,filesNumberFinish);
 
     }

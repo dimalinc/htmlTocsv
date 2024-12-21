@@ -36,7 +36,7 @@ public class writeToXls_PRESTA_CsvAtts_Scenario_Eibach {
         int n = 1;
         for (String fileString : filesArrayList) {
 
-              if ( (inputFilesNumberStart!=0) && (n<inputFilesNumberStart) ) { n++; continue; }
+            if ( (inputFilesNumberStart!=0) && (n<inputFilesNumberStart) ) { n++; continue; }
 
             Long startItem = System.currentTimeMillis();
             Item item = new Item(new File(dir + fileString), brandForXls);
@@ -236,13 +236,13 @@ public class writeToXls_PRESTA_CsvAtts_Scenario_Eibach {
         try { writeExcel(arrayListOfAllStringsForCSV, "PRESTA_"+brand); }
         catch (IOException e) { e.printStackTrace(); }
         // write to CSV
-       /* CSVWriter csvWriter = csvWriterInit();
+        CSVWriter csvWriter = csvWriterInit();
         csvWriter.writeAll(arrayListOfAllStringsForCSV, true);
         try {
             csvWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
-        }*/
+        }
 
         Long finish = System.currentTimeMillis();
         System.out.println(filesArrayList.size() + " files processed in " + ((finish - start) / 1000) + " seconds");

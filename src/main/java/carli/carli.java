@@ -1,6 +1,7 @@
 package carli;
 
 import com.opencsv.CSVWriter;
+import org.bouncycastle.tsp.TSPUtil;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -37,15 +38,19 @@ public class carli {
 
         xpathStringsList.add("//div[@id='tab-additional_information']//descendant::table");
         xpathStringsList.add("//div[@id='tab-media_tab']");
+        xpathStringsList.add("//div[@class='details component_data']");
+        xpathStringsList.add("//div[@class='component_title_wrapper']");
         // /@src
-        xpathStringsList.add("//img[starts-with(@src,'https://carlisuspension.com/wp-content/uploads/')]");
+       // xpathStringsList.add("//img[@alt='' and starts-with(@src,'https://www.carlisuspension.com/wp-content/uploads/')]");
+        xpathStringsList.add("//img[@class='zoomImg' and contains(@src,'https://www.carlisuspension.com/wp-content/uploads/')]");
+        xpathStringsList.add("//ol/li/img[@draggable='false' and contains(@src,'https://www.carlisuspension.com/wp-content/uploads/')]");
         //xpathStringsList.add("");
         return xpathStringsList;
     }
 
-    static String filesFolder = "D:\\savedHtml\\savedHtml_carli" + "\\";
+    static String filesFolder = "D:\\savedHtml\\savedHtml_carli_2024" + "\\";
     static String domain = "https://carlisuspension.com/";
-    static String writeAllCSV_fileName = "C:\\Users\\dmitr\\IdeaProjects\\htmlTocsv\\writeAll_CARLI.csv";
+    static String writeAllCSV_fileName = "C:\\Users\\dmitr\\IdeaProjects\\htmlTocsv\\writeAll_CARLI_2024.csv";
     static CSVWriter csvWriter;
     static Document doc = null;
     static ArrayList<ArrayList<Element>> jsoup_listOfListsOfElements;
@@ -124,7 +129,7 @@ public class carli {
                 jsoup_listOfListsOfElements.add(jsoupElementsList);
             }
 
-            String[] elementsStringArrayOneRow = new String[jsoup_listOfListsOfElements.size()+1];
+            String[] elementsStringArrayOneRow = new String[xpathStringsList.size()+1];
             //page link
             elementsStringArrayOneRow[0] = domain + fileString;
             for (int i = 0; i < jsoup_listOfListsOfElements.size(); i++) {
@@ -137,16 +142,16 @@ public class carli {
                     if (element.text().length()==0)
                         cellContents.append(element.attr("href"));
 
-                    if ((element.text().length()==0) && (element.attr("href").length()==0 ) ) {
-                        cellContents.append(element.attr("data-src")).append(System.getProperty("line.separator"));
-                    }
+                   /* if ((element.text().length()==0) && (element.attr("href").length()==0 ) ) {
+                        cellContents.append(element.attr("src")).append(System.getProperty("line.separator"));
+                    }*/
 
                     // img links
-                   /* if ((i == 11) && (element.attr("src").length() > 0)) {
+                    if ((14<=i) && (i<=18) && (element.attr("src").length() > 0)) {
                         cellContents.append(element.attr("src")).append(System.getProperty("line.separator"));
-                        System.out.println("+++ 11th_element src =" + element.attr("src"));
+                        System.out.println("+++  src =" + element.attr("src"));
                     }
-                    else cellContents.append("_").append(System.getProperty("line.separator"));*/
+                    else cellContents.append("_").append(System.getProperty("line.separator"));
 
                     /*if (((i != 11) || (i != 8)) && (element.text().length() > 0)) {
                         //  System.out.println(element.text());

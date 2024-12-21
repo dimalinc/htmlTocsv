@@ -48,7 +48,7 @@ public class ApplicationAttribute extends SubCar {
                         .replace(" To ", "-").replace(" to ", "-").replace(" TO ", "-");
 
 
-            System.out.println(stringOfApplicationAttribute + " " +subCar.car.carItemSku+" "+liftString);
+        //    System.out.println(stringOfApplicationAttribute + " " +subCar.car.carItemSku+" "+liftString);
 
             try {
                 if (liftString != null) {
@@ -74,7 +74,7 @@ public class ApplicationAttribute extends SubCar {
                     }
                 }
             } catch (Exception e) {
-               // System.out.println("Exception with item sku = " + item.sku);
+                System.out.println("Exception in ApplicationAttribute with item sku = " + item.sku);
                 e.printStackTrace();
             }
 

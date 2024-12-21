@@ -15,8 +15,8 @@ import java.util.ArrayList;
 public class downloadSelenium {
 
     static final int delay = 2750;
-    static String linksFilePath = "C:\\Users\\dmitr\\IdeaProjects\\htmlTocsv\\src\\main\\java\\Eibach\\com\\eibach.com_links";
-    static String savedHtmlDir = "D:\\savedHtml\\savedHtml_kingshocks" + "\\";
+    static String linksFilePath = "C:\\Users\\dmitr\\IdeaProjects\\htmlTocsv\\src\\main\\java\\carli\\carli.txt";
+    static String savedHtmlDir = "D:\\savedHtml\\savedHtml_carli_2024" + "\\";
     static ArrayList<String> linksList = new ArrayList<>();
 
     public static void main(String[] args) {

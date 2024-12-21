@@ -26,11 +26,15 @@ public class file_utils {
     static Document doc = null;
 
     public static ArrayList<String> listFilesUsingJavaIO(String dir) {
-        return (ArrayList<String>) Stream.of(new File(dir).listFiles()).sorted(Comparator.comparingLong(File::lastModified))
+        return (ArrayList<String>) Stream.of(new File(dir).listFiles()).sorted(Comparator.reverseOrder()/*Comparator.comparingLong(File::lastModified)*/)
                 .filter(file -> !file.isDirectory())
                 .map(File::getName)
                 .collect(Collectors.toList());
     }
+
+
+
+
 
     private static CSVWriter csvWriterInit(String brand) {
         CSVWriter csvWriter = null;
@@ -141,4 +145,15 @@ public class file_utils {
             ws.value(2, 1, 20L);*/
         }
     }
+
+    //   write to CSV
+/*    CSVWriter csvWriter = csvWriterInit();
+        csvWriter.writeAll(arrayListOfAllStringsForCSV, true);
+        try {
+        csvWriter.close();
+    } catch (IOException e) {
+        e.printStackTrace();
+    }*/
+
+
 }

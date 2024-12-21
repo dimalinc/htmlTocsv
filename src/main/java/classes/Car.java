@@ -207,7 +207,7 @@ public class Car extends Item {
                     .replace("-100''","").replace("-100--100'' Lift","").replace("-100.0--100.0'' Lift ","").replace("0.0-0.0'' Lift","").replace("0-0''  Lift","").replace(".0","").replace("-100''","").replace("_x000D_","")
                     ;
 
-        System.out.println(itemWpTitleString);
+      //  System.out.println(itemWpTitleString);
 
         if (!(carLiftNumberStart==carLiftNumberFinish))
             carWpTitleString =brandForXls+" "+carLiftNumberStart+"-"+carLiftNumberFinish+"'' "
@@ -347,7 +347,7 @@ public class Car extends Item {
         for (int i : yearNumbersSet) {
             sb.append(i).append("|");
         }
-        if (yearNumbersSet.size()>0)
+        if (!yearNumbersSet.isEmpty())
         try { yearNumbersString=sb.substring(0,sb.toString().length()-1); }
         catch (StringIndexOutOfBoundsException e) {e.printStackTrace(); yearNumbersString=null;}
 
@@ -355,7 +355,7 @@ public class Car extends Item {
         for (double d : carLiftNumbersSet) {
             sb.append(d).append("|");
         }
-        if (carLiftNumbersSet.size()>0)
+        if (!carLiftNumbersSet.isEmpty())
         try {carLiftNumbersString=sb.substring(0,sb.toString().length()-1);
             carLiftNumbersString=carLiftNumbersString.replace(".0","");
         }
@@ -365,7 +365,7 @@ public class Car extends Item {
         for(String driveValue: driveHashSet) {
             sb.append(driveValue).append("|");
         }
-        if (driveHashSet.size()>0)
+        if (!driveHashSet.isEmpty())
         try {driveRangeString=sb.substring(0,sb.toString().length()-1);}
         catch (StringIndexOutOfBoundsException e) {e.printStackTrace(); carLiftNumbersString=null;}
         if (driveRangeString!=null) driveRangeString=driveRangeString.replace("Four","4WD").replace("Rear","2WD");
