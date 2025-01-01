@@ -60,10 +60,8 @@ public class Item implements Runnable {
     public String kitComponents;
     public ArrayList<KitComponent> kitComponentsArrayList = new ArrayList<>();
     public ArrayList<String> stringListItemLiAttributes = new ArrayList<>();
-    public String extendedLength;
-    String collapsedLength;
-    String upperMount;
-    String lowerMount;
+    public String extendedLength; public String collapsedLength;
+    public String upperMount;     public String lowerMount;
     public ArrayList<PrestaAttribute> itemPrestaAttArrayList = new ArrayList<>();
 
     public String itemShortDescription;
@@ -246,12 +244,12 @@ public class Item implements Runnable {
             for (String attributeLiString : stringListItemLiAttributes) {
               //  System.out.println("attributeLiString = "+attributeLiString);
               //  attributeLiString=attributeLiString.replace("&nbsp","");
-                if (attributeLiString.contains("Extended Length")) {
+                if ( (attributeLiString.contains("Extended Length")) || (attributeLiString.contains ("Extended Height")))
                     extendedLength = attributeLiString.split(":")[1].trim();
-                //    System.out.println("Extended length found = "+extendedLength);
-                }
-                if (attributeLiString.contains("Compressed Length"))
+
+                if ( (attributeLiString.contains("Compressed Length")) || (attributeLiString.contains ("Compressed Height")))
                     collapsedLength = attributeLiString.split(":")[1].trim();
+
                 if (attributeLiString.contains("Upper Mounting")) upperMount = attributeLiString.split(":")[1].trim();
                 if (attributeLiString.contains("Lower Mounting")) lowerMount = attributeLiString.split(":")[1].trim();
             }
@@ -324,6 +322,12 @@ public class Item implements Runnable {
     }
 
     void liftsInit() {
+        // "Height Adjustable "
+        if (itemFrontLiftString != null)
+            itemFrontLiftString= itemFrontLiftString.replace("Ride ", "").replace("Height Adjustable ","");
+        if (itemRearLiftString != null)
+            itemRearLiftString= itemRearLiftString.replace("Ride ", "").replace("Height Adjustable ","");
+
 
         // checking if contains word Lift twice
         if (itemFrontLiftString != null &&
