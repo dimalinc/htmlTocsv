@@ -1,7 +1,6 @@
 package carli;
 
 import com.opencsv.CSVWriter;
-import org.bouncycastle.tsp.TSPUtil;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;

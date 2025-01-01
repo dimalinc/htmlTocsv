@@ -15,7 +15,7 @@ public class Browser {
 
     private Browser() {
         try {
-            driver = new BrowserFactory().getDriver(ConfigManager.getConfigProperty("DRIVER"));
+            driver = new BrowserFactory().getDriver("firefox"/*ConfigManager.getConfigProperty("DRIVER")*/);
         } catch (RuntimeException exception) {
             log.log(Level.SEVERE, exception.getMessage());
         }
