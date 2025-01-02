@@ -17,40 +17,27 @@ public class Scenario_Item_mulithreaded {
 
 
     static {
-      //  manufacturerDtosArrayList.add(new Manufacturer_DTO("Bilstein_1003", "Bilstein", "C:\\savedHtml\\savedHtml_Bilstein_key" + "\\"));
-        //  manufacturerDtosArrayList.add(new Manufacturer_DTO("Bilstein_1003", "Bilstein", "D:\\savedHtml\\savedHtml_Bilstein_key" + "\\",300,900));
-       // manufacturerDtosArrayList.add(new Manufacturer_DTO("Skyjacker_2522", "Skyjacker", "D:\\savedHtml\\savedHtml_skyALL_BIG" + "\\"));
+        //  manufacturerDtosArrayList.add(new Manufacturer_DTO("Bilstein_1003", "Bilstein", "C:\\savedHtml\\savedHtml_Bilstein_key" + "\\"));
+        manufacturerDtosArrayList.add(new Manufacturer_DTO("Rancho_418", "Rancho", "C:\\savedHtml\\savedHtml_Rancho_key" + "\\"));
+        manufacturerDtosArrayList.add(new Manufacturer_DTO("Skyjacker_2522", "Skyjacker", "C:\\savedHtml\\savedHtml_skyALL_BIG" + "\\"));
 
-      //  manufacturerDtosArrayList.add(new Manufacturer_DTO("Rancho_418", "Rancho", "C:\\savedHtml\\savedHtml_Rancho_key" + "\\"));
+        //  manufacturerDtosArrayList.add(new Manufacturer_DTO("Bilstein_1000", "Bilstein", "D:\\savedHtml\\savedHtml_Bilstein_key" + "\\"));
+        manufacturerDtosArrayList.add(new Manufacturer_DTO("Ironmann_19", "Ironmann", "C:\\savedHtml\\savedHtml_Ironmann_key" + "\\"));
 
-      /* manufacturerDtosArrayList.add(new Manufacturer_DTO("Bilstein_1003", "Bilstein", "D:\\savedHtml\\savedHtml_Bilstein_key" + "\\",0,100));
-        manufacturerDtosArrayList.add(new Manufacturer_DTO("Bilstein_1003", "Bilstein", "D:\\savedHtml\\savedHtml_Bilstein_key" + "\\",101,200));
-        manufacturerDtosArrayList.add(new Manufacturer_DTO("Bilstein_1003", "Bilstein", "D:\\savedHtml\\savedHtml_Bilstein_key" + "\\",201,300));
-        manufacturerDtosArrayList.add(new Manufacturer_DTO("Bilstein_1003", "Bilstein", "D:\\savedHtml\\savedHtml_Bilstein_key" + "\\",301,500));
-        manufacturerDtosArrayList.add(new Manufacturer_DTO("Bilstein_1003", "Bilstein", "D:\\savedHtml\\savedHtml_Bilstein_key" + "\\",501,700));
-        manufacturerDtosArrayList.add(new Manufacturer_DTO("Bilstein_1003", "Bilstein", "D:\\savedHtml\\savedHtml_Bilstein_key" + "\\",701,900));
-        manufacturerDtosArrayList.add(new Manufacturer_DTO("Bilstein_1003", "Bilstein", "D:\\savedHtml\\savedHtml_Bilstein_key" + "\\",901,1002));
-    */    //  manufacturerDtosArrayList.add(new Manufacturer_DTO("Bilstein_1003", "Bilstein", "D:\\savedHtml\\savedHtml_Bilstein_key" + "\\",331,660));
-        //   manufacturerDtosArrayList.add(new Manufacturer_DTO("Bilstein_1003", "Bilstein", "D:\\savedHtml\\savedHtml_Bilstein_key" + "\\",661,990));
-        //  manufacturerDtosArrayList.add(new Manufacturer_DTO("Bilstein_1003", "Bilstein", "D:\\savedHtml\\savedHtml_Bilstein_key" + "\\",991,1003));
+        manufacturerDtosArrayList.add(new Manufacturer_DTO("ProcompCoils_39", "Procomp", "C:\\savedHtml\\savedHtml_Procomp_coils" + "\\"));
+        manufacturerDtosArrayList.add(new Manufacturer_DTO("ProComp_shocks_209", "ProComp", "C:\\savedHtml\\savedHtml_Procomp_shocks" + "\\"));
 
-     /*   manufacturerDtosArrayList.add(new Manufacturer_DTO("Bilstein_1000", "Bilstein", "D:\\savedHtml\\savedHtml_Bilstein_key" + "\\"));
-        manufacturerDtosArrayList.add(new Manufacturer_DTO("Ironmann_19", "Ironmann", "D:\\savedHtml\\savedHtml_Ironmann_key" + "\\"));
+        manufacturerDtosArrayList.add(new Manufacturer_DTO("SuperSprings_281", "SuperSprings", "C:\\savedHtml\\savedHtml_supersprings_key" + "\\"));
+        manufacturerDtosArrayList.add(new Manufacturer_DTO("H&R_306", "H&R", "C:\\savedHtml\\savedHtml_H-n-r_spring" + "\\"));
 
-        manufacturerDtosArrayList.add(new Manufacturer_DTO("ProcompCoils_39", "Procomp", "D:\\savedHtml\\savedHtml_Procomp_coils" + "\\"));
-        manufacturerDtosArrayList.add(new Manufacturer_DTO("ProComp_shocks_209", "ProComp", "D:\\savedHtml\\savedHtml_Procomp_shocks" + "\\"));
+        manufacturerDtosArrayList.add(new Manufacturer_DTO("KYB_754", "KYB", "C:\\savedHtml\\savedHtml_KYB_shocks" + "\\"));
+        manufacturerDtosArrayList.add(new Manufacturer_DTO("Eibach_1521", "Eibach", "C:\\savedHtml\\savedHtml_eibach" + "\\"));
+        manufacturerDtosArrayList.add(new Manufacturer_DTO("Daystar_1450", "Daystar", "C:\\savedHtml\\savedHtml_Daystar_key" + "\\"));
 
-        manufacturerDtosArrayList.add(new Manufacturer_DTO("SuperSprings_281", "SuperSprings", "D:\\savedHtml\\savedHtml_supersprings_key" + "\\"));
-        manufacturerDtosArrayList.add(new Manufacturer_DTO("H&R_306", "H&R", "D:\\savedHtml\\savedHtml_H-n-r_spring" + "\\"));
-        manufacturerDtosArrayList.add(new Manufacturer_DTO("sky_lev_kits_66", "Skyjacker", "D:\\savedHtml\\2_savedHtml_sky_lev_kits_66" + "\\"));
-
-        manufacturerDtosArrayList.add(new Manufacturer_DTO("KYB_754", "KYB", "D:\\savedHtml\\savedHtml_KYB_shocks" + "\\"));
-        manufacturerDtosArrayList.add(new Manufacturer_DTO("Eibach_1521", "Eibach", "D:\\savedHtml\\savedHtml_eibach" + "\\"));
-        manufacturerDtosArrayList.add(new Manufacturer_DTO("Daystar_1450", "Daystar", "D:\\savedHtml\\savedHtml_Daystar_key" + "\\"));
-       */
-        manufacturerDtosArrayList.add(new Manufacturer_DTO("FOX_1012", "FOX", "C:\\savedHtml\\savedHtml_Fox_key" + "\\"));
-      //  manufacturerDtosArrayList.add(new Manufacturer_DTO("ReadyLift_734", "ReadyLift", "C:\\savedHtml\\readyLIFT" + "\\"));
-        //    manufacturerDtosArrayList.add(new Manufacturer_DTO("Fabtech_kits_1058", "Fabtech", "C:\\savedHtml\\savedHtml_fabtech_kits_KEYSTONE" + "\\"));
+        //         manufacturerDtosArrayList.add(new Manufacturer_DTO("sky_lev_kits_66", "Skyjacker", "C:\\savedHtml\\2_savedHtml_sky_lev_kits_66" + "\\"));
+        //  manufacturerDtosArrayList.add(new Manufacturer_DTO("FOX_1012", "FOX", "C:\\savedHtml\\savedHtml_Fox_key" + "\\"));
+        //  manufacturerDtosArrayList.add(new Manufacturer_DTO("ReadyLift_734", "ReadyLift", "C:\\savedHtml\\readyLIFT" + "\\"));
+        //     manufacturerDtosArrayList.add(new Manufacturer_DTO("Fabtech_kits_1058", "Fabtech", "C:\\savedHtml\\savedHtml_fabtech_kits_KEYSTONE" + "\\"));
         //   manufacturerDtosArrayList.add(new Manufacturer_DTO("Fabtech_other_2035", "Fabtech", "C:\\savedHtml\\savedHtml_fabtech_others" + "\\"));
         //  manufacturerDtosArrayList.add(new Manufacturer_DTO("TuffCountry_2694", "TuffCountry", "C:\\savedHtml\\savedHtml_TuffCountry_key" + "\\"));
 
@@ -141,7 +128,7 @@ public class Scenario_Item_mulithreaded {
             int finishFileNumber = manufacturer_DTO.getFinishItemNumber();
 
             filesArrayList = listFilesUsingJavaIO(dir);
-            System.out.println("filesArrayList.size() = "+filesArrayList.size());
+            System.out.println("filesArrayList.size() = " + filesArrayList.size());
             if ((finishFileNumber == 0) && (startFileNumber == 0))
                 filesAmountLeft = filesArrayList.size() - 1;
             else filesAmountLeft = finishFileNumber - startFileNumber + 1;
@@ -162,11 +149,9 @@ public class Scenario_Item_mulithreaded {
               /*  itemsPool.execute(new Item(new File(dir + fileString), brandForXls, arrayListOfAllStringsForCSV_EGOR, arrayListOfAllStringsForCSV_noCars_EGOR, arrayListOfAllStringsForCSV_Presta, arrayListOfAllStringsForCSV_noCars_Presta) );
                 System.out.println("filesAmountLeft = " + (filesAmountLeft--));*/
 
-
-               future = itemsPool.submit(() -> item_processing(fileString,
+                future = itemsPool.submit(() -> item_processing(fileString,
                         arrayListOfAllStringsForCSV_EGOR, arrayListOfAllStringsForCSV_noCars_EGOR,
                         arrayListOfAllStringsForCSV_Presta, arrayListOfAllStringsForCSV_noCars_Presta));
-
                 n++;
                 if ((finishFileNumber != 0) && (n > finishFileNumber)) break;
             }
@@ -178,22 +163,21 @@ public class Scenario_Item_mulithreaded {
                 e.printStackTrace();
             }
 
-
             //if (itemsPool.awaitTermination(9000000, TimeUnit.MINUTES))
             itemsPool.shutdown();
 
 
             // TODO: check awaitTermination https://javarush.com/quests/lectures/jru.module2.lecture19
             if (itemsPool.awaitTermination(90000000, TimeUnit.SECONDS))
-            try {
+                try {
                     System.out.println(arrayListOfAllStringsForCSV_Presta.size());
                     System.out.println(arrayListOfAllStringsForCSV_noCars_Presta.size());
 
-                    writeExcel(arrayListOfAllStringsForCSV_Presta, brand + "_Presta_multi_"+startFileNumber+"-"+finishFileNumber);
-                    writeExcel(arrayListOfAllStringsForCSV_noCars_Presta, brand + "_noCars_Presta_multi_"+startFileNumber+"-"+finishFileNumber);
+                    writeExcel(arrayListOfAllStringsForCSV_Presta, brand + "_Presta_multi_" + startFileNumber + "-" + finishFileNumber);
+                    writeExcel(arrayListOfAllStringsForCSV_noCars_Presta, brand + "_noCars_Presta_multi_" + startFileNumber + "-" + finishFileNumber);
 
-                    writeExcel(arrayListOfAllStringsForCSV_EGOR, brand + "_EGOR_multi_"+startFileNumber+"-"+finishFileNumber);
-                    writeExcel(arrayListOfAllStringsForCSV_noCars_EGOR, brand + "_noCars_EGOR_multi_"+startFileNumber+"-"+finishFileNumber);
+                    writeExcel(arrayListOfAllStringsForCSV_EGOR, brand + "_EGOR_multi_" + startFileNumber + "-" + finishFileNumber);
+                    writeExcel(arrayListOfAllStringsForCSV_noCars_EGOR, brand + "_noCars_EGOR_multi_" + startFileNumber + "-" + finishFileNumber);
 
                 } catch (IOException e) {
                     e.printStackTrace();

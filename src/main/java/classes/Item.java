@@ -215,8 +215,13 @@ public class Item implements Runnable {
 
         itemShortDescription = keystoneShortDesc.replace("; ", lineSeparator);
         if (extendedLength != null || collapsedLength != null || upperMount != null || lowerMount != null)
-            itemShortDescription = itemShortDescription + lineSeparator + "Ext. length: " + extendedLength + lineSeparator +
-                    "Coll. lenght: " + collapsedLength + lineSeparator + "Upper mount: " + upperMount + "Lower mount: " + lowerMount;
+
+            itemShortDescription = itemShortDescription + lineSeparator ;
+
+        if (extendedLength != null) itemShortDescription = itemShortDescription + "Ext. length: " + extendedLength + lineSeparator;
+        if (collapsedLength != null) itemShortDescription = itemShortDescription + "Coll. lenght: " + collapsedLength + lineSeparator ;
+        if (upperMount != null) itemShortDescription = itemShortDescription + "Upper mount: " + upperMount + lineSeparator;
+        if (lowerMount != null) itemShortDescription = itemShortDescription +  "Lower mount: " + lowerMount;
 
         // System.out.println("Short description="+ itemShortDescription);
     }
