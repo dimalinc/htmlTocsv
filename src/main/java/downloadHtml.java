@@ -41,8 +41,8 @@ public class downloadHtml {
 
 
     static final int delay = 4750;
-    static String linksFilePath = "C:\\Users\\dmitr\\IdeaProjects\\htmlTocsv\\src\\main\\java\\carli\\carli.txt";
-    static String htmlDir = "D:\\savedHtml\\savedHtml_carli_2024"+"\\";
+    static String linksFilePath = "C:\\Users\\dmitr\\IdeaProjects\\htmlTocsv\\src\\main\\java\\ads\\ads_links.txt";
+    static String htmlDir = "C:\\savedHtml\\savedHtml_ads"+"\\";
 
     public static void downloadViaHttpClient(ArrayList<String> linksList) {
         HttpClient client = HttpClient.newHttpClient();

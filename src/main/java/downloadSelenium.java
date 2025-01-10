@@ -14,27 +14,28 @@ import java.util.ArrayList;
 
 public class downloadSelenium {
 
-    static final int delay = 2750;
-    static String linksFilePath = "C:\\Users\\dmitr\\IdeaProjects\\htmlTocsv\\src\\main\\java\\carli\\carli.txt";
-    static String savedHtmlDir = "D:\\savedHtml\\savedHtml_carli_2024" + "\\";
+    static final int delay = 32750;
+    static String linksFilePath = "C:\\Users\\dmitr\\IdeaProjects\\htmlTocsv\\src\\main\\java\\ads\\ads_links.txt";
+    static String savedHtmlDir = "C:\\savedHtml\\savedHtml_ads" + "\\";
     static ArrayList<String> linksList = new ArrayList<>();
 
     public static void main(String[] args) {
         readLinksFromFile();
         int n = 1;
 
-        WebDriver driver = new FirefoxDriver();
+      //  WebDriver driver = new FirefoxDriver();
       /*  driver.get("https://eibach.com/product/E80-23-032-01-22");
         sleep(delay*20);
         driver.get("https://eibach.com/product/E80-23-032-01-22");*/
 
 
 
-      /*  System.setProperty("webdriver.opera.driver", "C:/operadriver_win64/operadriver.exe");
-        WebDriver driver = operaDriver;
+        /*System.setProperty("webdriver.opera.driver", "C:/operadriver_win64/operadriver.exe");
+        WebDriver driver = new ChromeDriver();
         driver.get("https://duckduckgo.com/");*/
 
         for (String linkString : linksList) {
+            WebDriver driver = new FirefoxDriver();
 
             long start = System.currentTimeMillis();
             /*ChromeOptions opt = new ChromeOptions();
@@ -94,9 +95,10 @@ public class downloadSelenium {
             System.out.println(n++ + " " + fileName + " finished " + (System.currentTimeMillis() - start) /*/ 1000*/ + "miliseconds"
                     /*+ "__ OR __" + ((System.currentTimeMillis() - start) / 1000 / 60) + "minutes"*/);
             sleep(delay);
+
+            driver.quit();
         }
 
-        driver.quit();
 
     }
 
